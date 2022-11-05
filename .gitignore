@@ -1,0 +1,9 @@
+
+*.txt
+*.json
+*.lnk
+*.exe
+*.DDS
+*.rar
+*.7zip
+.vscode
