@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+declare function local:createSeed()
+as xs:long?
+{
+    return (0xf437579a7a76d819)
+};
