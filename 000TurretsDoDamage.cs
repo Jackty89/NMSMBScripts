@@ -16,31 +16,6 @@ public class TurretsDoDamage : cmk.NMS.Script.ModClass
 	{
 		var mbin = ExtractMbin<GcProjectileDataTable>("METADATA/PROJECTILES/PROJECTILETABLE.MBIN");
 		
-		var freightGun = mbin.Table.Find(PROJECTILE => PROJECTILE.Id == "FREIGHTGUN");
-		freightGun.Scale = 4;
-		freightGun.Radius = 85;
-		freightGun.DefaultSpeed = 1750;
-		freightGun.Life = 10;
-		freightGun.DefaultDamage = 1000;
-		freightGun.CriticalHitModifier = 2.5f;
-		freightGun.UseCustomBulletData = true; 
-		
-		freightGun.CustomBulletData.BulletLength = 25;
-		freightGun.CustomBulletData.BulletGlowWidthTime = 0.15f;
-		freightGun.CustomBulletData.BulletGlowWidthMax = 25;
-		freightGun.CustomBulletData.BulletGlowWidthMin = 35;
-		freightGun.CustomBulletData.BulletMaxScaleDistance = 8000;
-		
-		freightGun.Colour.R = 0.973f;
-		freightGun.Colour.G = 0.172f;
-		freightGun.Colour.B = 0.358f;
-
-		freightGun.OverrideLightColour = true;
-
-		freightGun.LightColour.R = 0.8f;
-		freightGun.LightColour.G = 0.2f;
-
-
 		var freighterProjectile = CloneMbin(mbin.Table.Find(PROJECTILE => PROJECTILE.Id == "SHIPPLASMAGUN"));
 		freighterProjectile.Id = "FREIGHTPLASMAGUN";
 		freighterProjectile.FireAudioEvent.AkEvent = GcAudioWwiseEvents.AkEventEnum.WPN_PL_NEUTRON_CANNON_FIRE;
