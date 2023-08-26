@@ -33,7 +33,7 @@ public class UniqueSpaceShips : cmk.NMS.Script.ModClass
 		float NormalValue     = 1f;
 		float LowValue        = 1.1f;
 		float LowMedValue     = 1.25f;
-		float MedVale         = 1.5f;
+		float MedVal         = 1.5f;
 		float MedHighValue    = 1.75f;
 		float HighValue       = 2f;
 		float HighExtrValue   = 2.5f;
@@ -52,6 +52,7 @@ public class UniqueSpaceShips : cmk.NMS.Script.ModClass
 		var Scientific        = ShipClassEnum.Scientific;
 		var Sail              = ShipClassEnum.Sail;
 		var Alien             = ShipClassEnum.Alien;
+		var Robot             = ShipClassEnum.Robot;
 
 		string HyperDrive     = "SHIP_HYPERDRIVE";
 		string Damage         = "SHIP_DAMAGE";
@@ -78,7 +79,7 @@ public class UniqueSpaceShips : cmk.NMS.Script.ModClass
 		ShipData.Add(new ShipMultiplierData {
 			ShipType = Fighter,
 			StatId = HyperDrive,
-			CclassMultiplier = MedVale,
+			CclassMultiplier = MedVal,
 			BclassMultiplier = MedHighValue,
 			AclassMultiplier = HighValue,
 			SclassMultiplier = HighExtrValue
@@ -89,20 +90,28 @@ public class UniqueSpaceShips : cmk.NMS.Script.ModClass
 			CclassMultiplier = NormalValue,
 			BclassMultiplier = LowValue,
 			AclassMultiplier = LowMedValue,
-			SclassMultiplier = MedVale
+			SclassMultiplier = MedVal
 		});
 		ShipData.Add(new ShipMultiplierData {
 			ShipType = Royal,
 			StatId = HyperDrive,
+			CclassMultiplier = 0f,
+			BclassMultiplier = 0f,
+			AclassMultiplier = 0f,
+			SclassMultiplier = HighValue
+		});
+		ShipData.Add(new ShipMultiplierData {
+			ShipType = Robot,
+			StatId = HyperDrive,
 			CclassMultiplier = LowMedValue,
-			BclassMultiplier = MedVale,
+			BclassMultiplier = MedVal,
 			AclassMultiplier = MedHighValue,
 			SclassMultiplier = HighValue
 		});
 		ShipData.Add(new ShipMultiplierData {
 			ShipType = Sail,
 			StatId = HyperDrive,
-			CclassMultiplier = MedVale,
+			CclassMultiplier = MedVal,
 			BclassMultiplier = MedHighValue,
 			AclassMultiplier = HighValue,
 			SclassMultiplier = HighExtrValue
@@ -121,13 +130,13 @@ public class UniqueSpaceShips : cmk.NMS.Script.ModClass
 			StatId = Damage,
 			CclassMultiplier = LowValue,
 			BclassMultiplier = LowMedValue,
-			AclassMultiplier = MedVale,
+			AclassMultiplier = MedVal,
 			SclassMultiplier = MedHighValue
 		});
 		ShipData.Add(new ShipMultiplierData {
 			ShipType = Dropship,
 			StatId = Damage,
-			CclassMultiplier = MedVale,
+			CclassMultiplier = MedVal,
 			BclassMultiplier = MedHighValue,
 			AclassMultiplier = HighValue,
 			SclassMultiplier = HighExtrValue
@@ -146,20 +155,28 @@ public class UniqueSpaceShips : cmk.NMS.Script.ModClass
 			CclassMultiplier = NormalValue,
 			BclassMultiplier = LowValue,
 			AclassMultiplier = LowMedValue,
-			SclassMultiplier = MedVale
+			SclassMultiplier = MedVal
 		});
 		ShipData.Add(new ShipMultiplierData {
 			ShipType = Royal,
 			StatId = Damage,
+			CclassMultiplier = 0f,
+			BclassMultiplier = 0f,
+			AclassMultiplier = 0f,
+			SclassMultiplier = HighValue
+		});
+		ShipData.Add(new ShipMultiplierData {
+			ShipType = Robot,
+			StatId = Damage,
 			CclassMultiplier = LowMedValue,
-			BclassMultiplier = MedVale,
+			BclassMultiplier = MedVal,
 			AclassMultiplier = MedHighValue,
 			SclassMultiplier = HighValue
 		});
 		ShipData.Add(new ShipMultiplierData {
 			ShipType = Sail,
 			StatId = Damage,
-			CclassMultiplier = MedVale,
+			CclassMultiplier = MedVal,
 			BclassMultiplier = MedHighValue,
 			AclassMultiplier = HighValue,
 			SclassMultiplier = HighExtrValue
@@ -194,7 +211,7 @@ public class UniqueSpaceShips : cmk.NMS.Script.ModClass
 			StatId = Shield,
 			CclassMultiplier = LowValue,
 			BclassMultiplier = LowMedValue,
-			AclassMultiplier = MedVale,
+			AclassMultiplier = MedVal,
 			SclassMultiplier = MedHighValue
 		});
 		ShipData.Add(new ShipMultiplierData {
@@ -203,23 +220,96 @@ public class UniqueSpaceShips : cmk.NMS.Script.ModClass
 			CclassMultiplier = NormalValue,
 			BclassMultiplier = LowValue,
 			AclassMultiplier = LowMedValue,
-			SclassMultiplier = MedVale
+			SclassMultiplier = MedVal
 		});
 		ShipData.Add(new ShipMultiplierData {
 			ShipType = Royal,
 			StatId = Shield,
 			CclassMultiplier = LowMedValue,
-			BclassMultiplier = MedVale,
+			BclassMultiplier = MedVal,
+			AclassMultiplier = MedHighValue,
+			SclassMultiplier = HighValue
+		});
+		ShipData.Add(new ShipMultiplierData {
+			ShipType = Robot,
+			StatId = Shield,
+			CclassMultiplier = LowMedValue,
+			BclassMultiplier = MedVal,
 			AclassMultiplier = MedHighValue,
 			SclassMultiplier = HighValue
 		});
 		ShipData.Add(new ShipMultiplierData {
 			ShipType = Sail,
 			StatId = Shield,
-			CclassMultiplier = MedVale,
-			BclassMultiplier = MedHighValue,
-			AclassMultiplier = HighValue,
-			SclassMultiplier = HighExtrValue
+			CclassMultiplier = NormalValue,
+			BclassMultiplier = LowValue,
+			AclassMultiplier = LowMedValue,
+			SclassMultiplier = MedVal
+		});
+		ShipData.Add(new ShipMultiplierData {
+			ShipType = Alien,
+			StatId = Shield,
+			CclassMultiplier = 0f,
+			BclassMultiplier = 0f,
+			AclassMultiplier = 0f,
+			SclassMultiplier = HighValue
+		});
+		//AGILITY MP's Added
+		ShipData.Add(new ShipMultiplierData {
+			ShipType = Scientific,
+			StatId = Shield,
+			CclassMultiplier = NormalValue,
+			BclassMultiplier = LowValue,
+			AclassMultiplier = LowMedValue,
+			SclassMultiplier = MedVal
+		});
+		ShipData.Add(new ShipMultiplierData {
+			ShipType = Dropship,
+			StatId = Shield,
+			CclassMultiplier = NormalValue,
+			BclassMultiplier = LowValue,
+			AclassMultiplier = LowMedValue,
+			SclassMultiplier = MedVal
+		});
+		ShipData.Add(new ShipMultiplierData {
+			ShipType = Fighter,
+			StatId = Shield,
+			CclassMultiplier = LowValue,
+			BclassMultiplier = LowMedValue,
+			AclassMultiplier = MedVal,
+			SclassMultiplier = MedHighValue
+		});
+		ShipData.Add(new ShipMultiplierData {
+			ShipType = Shuttle,
+			StatId = Shield,
+			CclassMultiplier = NormalValue,
+			BclassMultiplier = LowValue,
+			AclassMultiplier = LowMedValue,
+			SclassMultiplier = MedVal
+		});
+		ShipData.Add(new ShipMultiplierData {
+			ShipType = Royal,
+			StatId = Shield,
+			CclassMultiplier = 0f,
+			BclassMultiplier = 0f,
+			AclassMultiplier = 0f,
+			SclassMultiplier = HighValue
+		});
+		ShipData.Add(new ShipMultiplierData {
+			ShipType = Robot,
+			StatId = Shield,
+			CclassMultiplier = MedHighValue,
+			BclassMultiplier = HighValue,
+			AclassMultiplier = HighExtrValue,
+			SclassMultiplier = ExtremeValue
+		});
+		ShipData.Add(new ShipMultiplierData {
+			ShipType = Sail,
+			StatId = Shield,
+			CclassMultiplier = ReduceLow,
+			BclassMultiplier = NormalValue,
+			AclassMultiplier = LowValue,
+			SclassMultiplier = LowMedValue
 		});
 		ShipData.Add(new ShipMultiplierData {
 			ShipType = Alien,
@@ -238,17 +328,8 @@ public class UniqueSpaceShips : cmk.NMS.Script.ModClass
 			AclassMultiplier = FreighterA,
 			SclassMultiplier = FreighterS
 		});
-
-		SpaceShipEdits();
-	//	EditSalvage();
 	}
 
-	//...........................................................
-	//protected void EditSalvage()
-	//{
-	//	var mbin = ExtractMbin<GcModelExplosionRules>("METADATA/SIMULATION/INTERACTIONS/SHIPSALVAGEMODELEXPLODERULES.MBIN");		
-	//	mbin.UseRules[(int)ShipClassEnum.Alien] = true;
-	//}
 	protected void SpaceShipEdits()
 	{
 		var mbin = ExtractMbin<GcInventoryTable>("METADATA/REALITY/TABLES/INVENTORYTABLE.MBIN");
@@ -257,13 +338,6 @@ public class UniqueSpaceShips : cmk.NMS.Script.ModClass
 		var Bclass = InventoryClassEnum.B;
 		var Aclass = InventoryClassEnum.A;
 		var Sclass = InventoryClassEnum.S;
-
-		foreach( var alienSize in AlienSizes ) {
-			mbin.GenerationData.GenerationDataPerSizeType[(int)alienSize].MinSlots     = 48;
-			mbin.GenerationData.GenerationDataPerSizeType[(int)alienSize].MaxSlots 	   = 48;
-			mbin.GenerationData.GenerationDataPerSizeType[(int)alienSize].MinTechSlots = 35;
-			mbin.GenerationData.GenerationDataPerSizeType[(int)alienSize].MaxTechSlots = 35;
-		}
 
 		foreach( var shipData in ShipData ) {
 			var shipType = shipData.ShipType;

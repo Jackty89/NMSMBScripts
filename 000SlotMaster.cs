@@ -22,7 +22,6 @@ public class SlotMaster : cmk.NMS.Script.ModClass
 	public int MaxUnlockedCargoSlots = 120;
 	public int MaxSpecialSlots = 60;
 
-
 	public int MaxInventoryCapacity = 120;
 	public int MaxTechInventoryCapacity = 60;
 
@@ -77,16 +76,18 @@ public class SlotMaster : cmk.NMS.Script.ModClass
         SizeTypeEnum.SailMedium,
         SizeTypeEnum.SailLarge,
         
+        SizeTypeEnum.RobotSmall,
+        SizeTypeEnum.RobotMedium,
+        SizeTypeEnum.RobotLarge,
+        
         SizeTypeEnum.RoySmall,
         SizeTypeEnum.RoyMedium,
-        SizeTypeEnum.FreighterLarge
+        SizeTypeEnum.RoyLarge
     };
 
 	protected GcInventoryLayoutSizeType.SizeTypeEnum[] PlayerSizes = new[] {
 		SizeTypeEnum.Suit
 	};
-
-	//...........................................................
 
 	protected override void Execute()
     {
@@ -106,8 +107,6 @@ public class SlotMaster : cmk.NMS.Script.ModClass
             ImproveFreighterInventory(mbin);
     }
 
-	//...........................................................
-
 	protected void SetUnlockedSlots( GcInventoryTable inventoryTable, GcInventoryLayoutSizeType.SizeTypeEnum[] sizes )
 	{
 		foreach( var size in sizes ) {
@@ -125,12 +124,6 @@ public class SlotMaster : cmk.NMS.Script.ModClass
 			inventoryTable.GenerationData.GenerationDataPerSizeType[(int)size].SpecialTechSlotMaxIndex.X = 6;
 			inventoryTable.GenerationData.GenerationDataPerSizeType[(int)size].SpecialTechSlotMaxIndex.Y = 10;
 		}
-		//var mbin = ExtractMbin<GcDefaultSaveData>("METADATA/GAMESTATE/DEFAULTSAVEDATA.MBIN");
-
-		//for( int i = 0; i <= 6; i++ )
-		//	for( int j = 0; j <= 10; j++ )
-		//		mbin.State.Inventory_TechOnly.SpecialSlots.Add(GcInventorySpecialSlot.);
-		
 	}
 	protected void SetGridSizes( GcInventoryTable inventoryTable, GcInventoryLayoutSizeType.SizeTypeEnum[] sizes )
 	{
@@ -196,8 +189,6 @@ public class SlotMaster : cmk.NMS.Script.ModClass
 			SetGridSizes(inventoryTable, sizes);
 		}
     }
-
-
 
     protected void ImproveVehicleInventory(GcInventoryTable inventoryTable )
     {

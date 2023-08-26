@@ -28,16 +28,16 @@ public class CustomModsGaloreNuke : cmk.NMS.Script.ModClass
         new (LanguageId.English, "CL_WEAP_NAME", "Custom weapon"),
         new (LanguageId.English, "CL_SHOT_NAME", "Custom Scatter-blaster weapon"),
         new (LanguageId.English, "CL_JET_NAME", "Custom jetpack"),
-        new (LanguageId.English, "CL_SHIP_NAME", "Customship"),
+        new (LanguageId.English, "CL_SHIP_NAME", "Custom ship weapon"),
         new (LanguageId.English, "CL_SHIELD_NAME", "Custom shield mod massively increases health and shields"),
         
         new (LanguageId.English, "CL_ENGY_NAME", "Custom Hazard Module"),
-		
-		new (LanguageId.English, "CL_DRIFT_NAME", "Custom Wheel"),
-		new (LanguageId.English, "CL_EXOB_NAME", "Custom Exocraft Boost"),
-		new (LanguageId.English, "CL_COLD_NAME", "Custom Cold Protection"),
+        
+        new (LanguageId.English, "CL_DRIFT_NAME", "Custom Wheel"),
+        new (LanguageId.English, "CL_EXOB_NAME", "Custom Exocraft Boost"),
+        new (LanguageId.English, "CL_COLD_NAME", "Custom Cold Protection"),
         new (LanguageId.English, "CL_HEAT_NAME", "Custom Heat Protection"),
-        new (LanguageId.English, "CL_TOXIC_NAME", "Custom Toxi Protection"),
+        new (LanguageId.English, "CL_TOXIC_NAME", "Custom Toxic Protection"),
         new (LanguageId.English, "CL_RAD_NAME", "Custom Radiation Protection"),
 
         new (LanguageId.English, "CL_ROCK_TECH1", "Large Missle Tubes"),
@@ -50,11 +50,11 @@ public class CustomModsGaloreNuke : cmk.NMS.Script.ModClass
     readonly Tuple<LanguageId, string, string>[] CustomLangDescStrings = new Tuple<LanguageId, string, string>[]
     {
         new (LanguageId.English, "CL_WEAP_DESC", "A custom procedural weapon"),
-        new (LanguageId.English, "CL_SHOT_DESC", "Add some bounce and damege to the scatter blaster"),
+        new (LanguageId.English, "CL_SHOT_DESC", "Add some bounce and damage to the scatter blaster"),
         new (LanguageId.English, "CL_JET_DESC", "Jetpack mod that will yeet you to space and beyond"),
-		new (LanguageId.English, "CL_DRIFT_DESC", "When the eurobeat kicks in"),
-		new (LanguageId.English, "CL_EXOB_DESC", "When you need a little extra oompf for the mech boost"),
-		new (LanguageId.English, "CL_SHIP_DESC", "A custom procedural ship mod"),
+        new (LanguageId.English, "CL_DRIFT_DESC", "When the eurobeat kicks in"),
+        new (LanguageId.English, "CL_EXOB_DESC", "When you need a little extra oompf for the mech boost"),
+        new (LanguageId.English, "CL_SHIP_DESC", "A custom procedural ship mod"),
         new (LanguageId.English, "CL_SHIELD_DESC", "A custom procedural shield mod adding armour and health beyond what has seen before"),
         new (LanguageId.English, "CL_ENGY_DESC", "A custom procedural hazard mod"),
         
@@ -293,27 +293,27 @@ public class CustomModsGaloreNuke : cmk.NMS.Script.ModClass
             }
         },
         new CustomProcMod {
-			BaseTechID        = "U_ENERGY",
-			BaseDeploy        = "UP_ENGY",
-			StaticDeloy       = false,
-			NewTechID         = "UC_ENGY",
-			TemplateName      = "T_ENERGY",
-			HighestClassNo    = 3,
-			lowestClassNo     = 1,
-			MinStats          = 2,
-			MaxStats          = 2,
-			MultiplierPerRank = 0.3f,
-			IconFileName      = "LIFESUPPORT.DDS",
-			Name              = "CL_ENGY_NAME",
-			ProcName          = "UP_LIFEBOOST",
-			Description       = "CL_ENGY_DESC",
-			TradeData         = "SuitTechSpecialist",
-			StatBonuses       = new List<GcProceduralTechnologyStatLevel>() {
-				ProceduralTechnologyStatLevel.Create(StatsTypeEnum.Suit_Energy, 1.5f, 2.5f, WeightingCurveEnum.MaxIsUncommon, true),
-				ProceduralTechnologyStatLevel.Create(StatsTypeEnum.Suit_Energy_Regen, 1.5f, 2.5f, WeightingCurveEnum.MaxIsUncommon, true),
-			}
-		},
-		new CustomProcMod {
+            BaseTechID        = "U_ENERGY",
+            BaseDeploy        = "UP_ENGY",
+            StaticDeloy       = false,
+            NewTechID         = "UC_ENGY",
+            TemplateName      = "T_ENERGY",
+            HighestClassNo    = 3,
+            lowestClassNo     = 1,
+            MinStats          = 2,
+            MaxStats          = 2,
+            MultiplierPerRank = 0.3f,
+            IconFileName      = "LIFESUPPORT.DDS",
+            Name              = "CL_ENGY_NAME",
+            ProcName          = "UP_LIFEBOOST",
+            Description       = "CL_ENGY_DESC",
+            TradeData         = "SuitTechSpecialist",
+            StatBonuses       = new List<GcProceduralTechnologyStatLevel>() {
+                ProceduralTechnologyStatLevel.Create(StatsTypeEnum.Suit_Energy, 1.5f, 2.5f, WeightingCurveEnum.MaxIsUncommon, true),
+                ProceduralTechnologyStatLevel.Create(StatsTypeEnum.Suit_Energy_Regen, 1.5f, 2.5f, WeightingCurveEnum.MaxIsUncommon, true),
+            }
+        },
+        new CustomProcMod {
             BaseTechID        = "U_COLDPROT",
             BaseDeploy        = "UP_COLD",
             StaticDeloy       = false,
@@ -466,51 +466,51 @@ public class CustomModsGaloreNuke : cmk.NMS.Script.ModClass
                 ProceduralTechnologyStatLevel.Create(StatsTypeEnum.Suit_Jetpack_Ignition, 1.5f, 2.5f, WeightingCurveEnum.MaxIsUncommon, true),
             }
         },
-		new CustomProcMod {
-			BaseTechID        = "U_EXOBOOST",
-			BaseDeploy        = "UP_BOOST",
-			StaticDeloy       = false,
-			NewTechID         = "UC_DRIFT",
-			TemplateName      = "T_BOOST",
-			HighestClassNo    = 4,
-			lowestClassNo     = 1,
-			MinStats          = 1,
-			MaxStats          = 3,
-			MultiplierPerRank = 0.25f,
-			IconFileName      = "VEHICLEBOOST.DDS",
-			Name              = "CL_DRIFT_NAME",
-			ProcName          = "UP_JETBOOST",
-			Description       = "CL_DRIFT_DESC",
-			TradeData         = "VehicleTechSpecialist",
-			StatBonuses       = new List<GcProceduralTechnologyStatLevel>() {
-				ProceduralTechnologyStatLevel.Create(StatsTypeEnum.Vehicle_SkidGrip, -0.05f, -0.1f, WeightingCurveEnum.MaxIsUncommon, true),
-				ProceduralTechnologyStatLevel.Create(StatsTypeEnum.Vehicle_BoostTanks, 0.6f, 0.7f, WeightingCurveEnum.MaxIsUncommon, true),
-				ProceduralTechnologyStatLevel.Create(StatsTypeEnum.Vehicle_BoostSpeed, 0.75f, 0.95f, WeightingCurveEnum.MaxIsUncommon, true),
-			}
-		},
-		new CustomProcMod {
-			BaseTechID        = "U_EXOBOOST",
-			BaseDeploy        = "UP_BOOST",
-			StaticDeloy       = false,
-			NewTechID         = "UC_EXOB",
-			TemplateName      = "T_BOOST",
-			HighestClassNo    = 4,
-			lowestClassNo     = 1,
-			MinStats          = 1,
-			MaxStats          = 3,
-			MultiplierPerRank = 0.25f,
-			IconFileName      = "VEHICLEBOOST.DDS",
-			Name              = "CL_EXOB_NAME",
-			ProcName          = "UP_JETBOOST",
-			Description       = "CL_EXOB_DESC",
-			TradeData         = "VehicleTechSpecialist",
-			StatBonuses       = new List<GcProceduralTechnologyStatLevel>() {
-				ProceduralTechnologyStatLevel.Create(StatsTypeEnum.Vehicle_BoostTanks, 2.5f, 5, WeightingCurveEnum.MaxIsUncommon, true),
-				ProceduralTechnologyStatLevel.Create(StatsTypeEnum.Vehicle_BoostSpeed, 1, 2, WeightingCurveEnum.MaxIsUncommon, true)
-			}
-		}
+        new CustomProcMod {
+            BaseTechID        = "U_EXOBOOST",
+            BaseDeploy        = "UP_BOOST",
+            StaticDeloy       = false,
+            NewTechID         = "UC_DRIFT",
+            TemplateName      = "T_BOOST",
+            HighestClassNo    = 4,
+            lowestClassNo     = 1,
+            MinStats          = 1,
+            MaxStats          = 3,
+            MultiplierPerRank = 0.25f,
+            IconFileName      = "VEHICLEBOOST.DDS",
+            Name              = "CL_DRIFT_NAME",
+            ProcName          = "UP_JETBOOST",
+            Description       = "CL_DRIFT_DESC",
+            TradeData         = "VehicleTechSpecialist",
+            StatBonuses       = new List<GcProceduralTechnologyStatLevel>() {
+                ProceduralTechnologyStatLevel.Create(StatsTypeEnum.Vehicle_SkidGrip, -0.05f, -0.1f, WeightingCurveEnum.MaxIsUncommon, true),
+                ProceduralTechnologyStatLevel.Create(StatsTypeEnum.Vehicle_BoostTanks, 0.6f, 0.7f, WeightingCurveEnum.MaxIsUncommon, true),
+                ProceduralTechnologyStatLevel.Create(StatsTypeEnum.Vehicle_BoostSpeed, 0.75f, 0.95f, WeightingCurveEnum.MaxIsUncommon, true),
+            }
+        },
+        new CustomProcMod {
+            BaseTechID        = "U_EXOBOOST",
+            BaseDeploy        = "UP_BOOST",
+            StaticDeloy       = false,
+            NewTechID         = "UC_EXOB",
+            TemplateName      = "T_BOOST",
+            HighestClassNo    = 4,
+            lowestClassNo     = 1,
+            MinStats          = 1,
+            MaxStats          = 3,
+            MultiplierPerRank = 0.25f,
+            IconFileName      = "VEHICLEBOOST.DDS",
+            Name              = "CL_EXOB_NAME",
+            ProcName          = "UP_JETBOOST",
+            Description       = "CL_EXOB_DESC",
+            TradeData         = "VehicleTechSpecialist",
+            StatBonuses       = new List<GcProceduralTechnologyStatLevel>() {
+                ProceduralTechnologyStatLevel.Create(StatsTypeEnum.Vehicle_BoostTanks, 2.5f, 5, WeightingCurveEnum.MaxIsUncommon, true),
+                ProceduralTechnologyStatLevel.Create(StatsTypeEnum.Vehicle_BoostSpeed, 1, 2, WeightingCurveEnum.MaxIsUncommon, true)
+            }
+        }
 
-	};
+    };
     //====================================================================
     protected class TreeExpansion
     {
@@ -786,6 +786,8 @@ public class CustomModsGaloreNuke : cmk.NMS.Script.ModClass
             
             if (lowestClassNo != MinProcModLimit)
                 lowestClassNo = MinProcModLimit;
+            if( lowestClassNo > highestClassNo )
+                lowestClassNo = highestClassNo;
 
             var field = Reality_mbin.TradeSettings.GetType().GetField(newTradeData);
             GcTradeData addTradePorduct = field.GetValue(Reality_mbin.TradeSettings) as GcTradeData;
@@ -911,6 +913,8 @@ public class CustomModsGaloreNuke : cmk.NMS.Script.ModClass
             
             if (lowestClassNo != MinProcModLimit)
                 lowestClassNo = MinProcModLimit;
+            if( lowestClassNo > highestClassNo )
+                lowestClassNo = highestClassNo;
 
             if (Mod.HighestClassNo == 0)
             {
@@ -964,6 +968,8 @@ public class CustomModsGaloreNuke : cmk.NMS.Script.ModClass
             
             if (lowestClassNo != MinProcModLimit)
                 lowestClassNo = MinProcModLimit;
+            if( lowestClassNo > highestClassNo )
+                lowestClassNo = highestClassNo;
 
             Root.Children.Add(CreateChildNode(productBase, lowestClassNo, highestClassNo));
         }

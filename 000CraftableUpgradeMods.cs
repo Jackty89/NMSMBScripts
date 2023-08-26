@@ -4,20 +4,20 @@
 
 public class CraftableUpgradeMods : cmk.NMS.Script.ModClass
 {
-    public int RecipeCostPriceMultiplier       = 1;
+    public int RecipeCostPriceMultiplier = 1;
 
-    readonly string CostTypeFactory            = "FACTORY";
-    readonly string CostTypeNanite             = "NANITES";
+    readonly string CostTypeFactory = "FACTORY";
+    readonly string CostTypeNanite = "NANITES";
 
-    readonly string ShipRootTech               = "SHIPJUMP1";
-    readonly string SuitRootTech               = "ENERGY";
-    readonly string WeaponRootTech             = "LASER";
-    readonly string ExoRootTech                = "VEHICLE_ENGINE";
-    readonly string FreighterRootTech          = "FRIGATE_FUEL_1";
-    readonly string FactoryTreeTech            = "PRODFUEL2";
+    readonly string ShipRootTech = "SHIPJUMP1";
+    readonly string SuitRootTech = "ENERGY";
+    readonly string WeaponRootTech = "LASER";
+    readonly string ExoRootTech = "VEHICLE_ENGINE";
+    readonly string FreighterRootTech = "FRIGATE_FUEL_1";
+    readonly string FactoryTreeTech = "PRODFUEL2";
 
     readonly string CraftedFreighterModDescrId = "UP_FR_CRAFTED_DESC";
-    readonly string[] Classes                  = { "C", "B", "A", "S" };
+    readonly string[] Classes = { "C", "B", "A", "S" };
 
     protected class Data
     {
@@ -149,6 +149,14 @@ public class CraftableUpgradeMods : cmk.NMS.Script.ModClass
     List<CraftableUpgradeMod> XclassMods6 = new List<CraftableUpgradeMod>() {
         new CraftableUpgradeMod { UpgradeBase = "U_SENTGUN",  HighestClassNo = 0, LowestClassNo = 0 },
         new CraftableUpgradeMod { UpgradeBase = "U_SENTSUIT", HighestClassNo = 0, LowestClassNo = 0 },
+        new CraftableUpgradeMod { UpgradeBase = "ROGUE_SGUNBOX", HighestClassNo = 0, LowestClassNo = 0 },
+        new CraftableUpgradeMod { UpgradeBase = "ROGUE_SMARTBOX", HighestClassNo = 0, LowestClassNo = 0 },
+        new CraftableUpgradeMod { UpgradeBase = "ROGUE_GUNBOX", HighestClassNo = 0, LowestClassNo = 0 }
+    };
+
+    List<CraftableUpgradeMod> XclassMods7 = new List<CraftableUpgradeMod>() {
+        new CraftableUpgradeMod { UpgradeBase = "ROGUE_TECHBOX",  HighestClassNo = 0, LowestClassNo = 0 },
+        new CraftableUpgradeMod { UpgradeBase = "ROGUE_CLASSBOX", HighestClassNo = 0, LowestClassNo = 0 },
         new CraftableUpgradeMod { UpgradeBase = "ROGUE_CARBOX", HighestClassNo = 0, LowestClassNo = 0 },
         new CraftableUpgradeMod { UpgradeBase = "ROGUE_HAZBOX", HighestClassNo = 0, LowestClassNo = 0 },
         new CraftableUpgradeMod { UpgradeBase = "ROGUE_STARTBOX", HighestClassNo = 0, LowestClassNo = 0 }

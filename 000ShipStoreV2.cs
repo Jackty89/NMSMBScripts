@@ -5,7 +5,10 @@
 
 public class ShipStoreV2 : cmk.NMS.Script.ModClass
 {
-	private int Total_Seeds_Per_Class = 1;
+	private int Total_Seeds_Per_Class = 10000;
+	private int Total_Classes = 1;
+	private float Price_Multiplier = 1;
+
 	private List<Tuple<string, LanguageId, string, string>> Custom_Language_Desccription_Strings = new List<Tuple<string,LanguageId, string, string>>
 	{
 		new("CL_BFREIGH", LanguageId.English, "H.G. Corp. Freighter", "H.G. Corp. Spacecraft Dynamics Freighter"),
@@ -16,6 +19,7 @@ public class ShipStoreV2 : cmk.NMS.Script.ModClass
 		new("CL_BSHUT", LanguageId.English, "H.G. Corp. Shuttle", "H.G. Corp. Spacecraft Dynamics Shuttle"),
 		new("CL_BROYAL", LanguageId.English, "H.G. Corp. Exotic", "H.G. Corp. Spacecraft Dynamics Exotic"),
 		new("CL_BALIEN", LanguageId.English, "H.G. Corp. Alien", "H.G. Corp. Spacecraft Dynamics Bioship"),
+		new("CL_BROBOT", LanguageId.English, "H.G. Corp. Sentinel Ship", "H.G. Corp. Spacecraft Dynamics Bioship"),
 		new("CL_STORE", LanguageId.English, "H.G. Corp. Spacecraft Dynamics", "Spacecraft constucted by H.G. Corp."),
 	};
 	protected ShipClassEnum[] Ship_Types = new[] {
@@ -26,6 +30,7 @@ public class ShipStoreV2 : cmk.NMS.Script.ModClass
 		ShipClassEnum.Royal,
 		ShipClassEnum.Scientific,
 		ShipClassEnum.Sail,
+		ShipClassEnum.Robot,
 		ShipClassEnum.Alien
 	};
 	////Maybe add frigate(s) too
@@ -46,7 +51,37 @@ public class ShipStoreV2 : cmk.NMS.Script.ModClass
 	};
 	protected override void Execute()
 	{
-		Random random = new Random();
+		switch( Total_Classes ) {
+			case 3:
+				Classes = new[] {
+					InventoryClassEnum.B,
+					InventoryClassEnum.A,
+					InventoryClassEnum.S
+				};
+				break;
+			case 2:
+				Classes = new[] {
+					InventoryClassEnum.A,
+					InventoryClassEnum.S
+				};
+				break;
+			case 1:
+				Classes = new[] {
+					InventoryClassEnum.S
+				};
+				break;
+			default:
+				Classes = new[] {
+					InventoryClassEnum.C,
+					InventoryClassEnum.B,
+					InventoryClassEnum.A,
+					InventoryClassEnum.S
+				};
+				break;
+		}
+
+
+				Random random = new Random();
 		List<GcInventoryBaseStatEntry> ship_stats = new List<GcInventoryBaseStatEntry>();
 		List<GcProductData> consumable_products = new List<GcProductData>();
 		List<GcConsumableItem> consumables = new List<GcConsumableItem>();
@@ -121,55 +156,61 @@ public class ShipStoreV2 : cmk.NMS.Script.ModClass
 			case ShipClassEnum.Freighter:
 				ship_type_string = "Freighter";
 				ship_model = freighter_models[rand];
-				base_price = 25000000;
+				base_price = (int)(25000000 * Price_Multiplier);
 				custom_language_string = "CL_BFREIGH";
 				break;
 			case ShipClassEnum.Dropship:
 				ship_type_string = "Dropship";
 				ship_model = "MODELS/COMMON/SPACECRAFT/DROPSHIPS/DROPSHIP_PROC.SCENE.MBIN";
-				base_price = 2500000;
+				base_price = (int)(2500000 * Price_Multiplier);
 				custom_language_string = "CL_BHAUL";
 				break;
 			case ShipClassEnum.Shuttle:
 				ship_type_string = "Shuttle";
 				ship_model = "MODELS/COMMON/SPACECRAFT/SHUTTLE/SHUTTLE_PROC.SCENE.MBIN";
-				base_price = 1000000;
+				base_price = (int)(1000000 * Price_Multiplier);
 				custom_language_string = "CL_BSHUT";
 				break;
 			case ShipClassEnum.Fighter:
 				ship_type_string = "Fighter";
 				ship_model = "MODELS/COMMON/SPACECRAFT/FIGHTERS/FIGHTER_PROC.SCENE.MBIN";
-				base_price = 2500000;
+				base_price = (int)(2500000 * Price_Multiplier);
 				custom_language_string = "CL_BFIGHT";
 				break;
 			case ShipClassEnum.Royal:
 				ship_type_string = "Royal";
 				ship_model = "MODELS/COMMON/SPACECRAFT/S-CLASS/S-CLASS_PROC.SCENE.MBIN";
-				base_price = 5000000;
+				base_price = (int)(5000000 * Price_Multiplier);
 				custom_language_string = "CL_BROYAL";
 				break;
 			case ShipClassEnum.Scientific:
 				ship_type_string = "Scientific";
 				ship_model = "MODELS/COMMON/SPACECRAFT/SCIENTIFIC/SCIENTIFIC_PROC.SCENE.MBIN";
-				base_price = 1000000;
+				base_price = (int)(1000000 * Price_Multiplier);
 				custom_language_string = "CL_BEXPLO";
 				break;
 			case ShipClassEnum.Sail:
 				ship_type_string = "Sail";
 				ship_model = "MODELS/COMMON/SPACECRAFT/SAILSHIP/SAILSHIP_PROC.SCENE.MBIN";
-				base_price = 2000000;
+				base_price = (int)(2000000 * Price_Multiplier);
 				custom_language_string = "CL_BSOLAR";
 				break;
 			case ShipClassEnum.Alien:
 				ship_type_string = "Alien";
 				ship_model = "MODELS/COMMON/SPACECRAFT/S-CLASS/BIOPARTS/BIOSHIP_PROC.SCENE.MBIN";
-				base_price = 2500000;
+				base_price = (int)(2500000 * Price_Multiplier);
 				custom_language_string = "CL_BALIEN";
+				break;
+			case ShipClassEnum.Robot:
+				ship_type_string = "Robot";
+				ship_model = "MODELS/COMMON/SPACECRAFT/SENTINELSHIP/SENTINELSHIP_PROC.SCENE.MBIN";
+				base_price = (int)(2500000 * Price_Multiplier);
+				custom_language_string = "CL_BROBOT";
 				break;
 			default:
 				ship_type_string = "Shuttle";
 				ship_model = "MODELS/COMMON/SPACECRAFT/SHUTTLE/SHUTTLE_PROC.SCENE.MBIN";
-				base_price = 1000000;
+				base_price = (int)(1000000 * Price_Multiplier);
 				custom_language_string = "CL_BSHUT";
 				break;
 		}
@@ -241,6 +282,16 @@ public class ShipStoreV2 : cmk.NMS.Script.ModClass
 					Inventory.Technology(ship_weapons[rand], 200, 200, 0)
 				};
 				break;
+			case ShipClassEnum.Robot:
+				ship_technologies = new() {
+					Inventory.Technology("SHIPJUMP_ROBO", 200, 200, 0),
+					Inventory.Technology("SHIPSHIELD_ROBO", 200, 200, 0),
+					Inventory.Technology("LAUNCHER_ROBO", 100, 100, 0),
+					Inventory.Technology("HYPERDRIVE_ROBO", 200, 200, 0),
+					Inventory.Technology("LIFESUP_ROBO", 100, 100, 0),
+					Inventory.Technology("SHIPGUN_ROBO", 200, 200, 0)
+				};
+				break;
 			default:
 				ship_technologies = new() {
 					Inventory.Technology("SHIPJUMP1", 200, 200, 0),
@@ -268,6 +319,14 @@ public class ShipStoreV2 : cmk.NMS.Script.ModClass
 					InventoryBaseStat.Create("SHIP_SHIELD"),
 					InventoryBaseStat.Create("SHIP_HYPERDRIVE"),
 					InventoryBaseStat.Create("ALIEN_SHIP")
+				};
+				break;
+			case ShipClassEnum.Robot:
+				ship_stats = new() {
+					InventoryBaseStat.Create("SHIP_DAMAGE"),
+					InventoryBaseStat.Create("SHIP_SHIELD"),
+					InventoryBaseStat.Create("SHIP_HYPERDRIVE"),
+					InventoryBaseStat.Create("ROBOT_SHIP")
 				};
 				break;
 			default:
@@ -321,6 +380,7 @@ public class ShipStoreV2 : cmk.NMS.Script.ModClass
 			ship_class,
 			ship_model,
 			ship_seed,
+			true,
 			ship_number_of_slots,
 			ship_technologies,
 			ship_stats

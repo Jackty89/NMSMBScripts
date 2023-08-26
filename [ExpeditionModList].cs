@@ -21,7 +21,8 @@ public class ExpeditionModList : cmk.NMS.Script.ModClass
         Script<CheapPetSlots>().IsExecutable                        = true;
         Script<CleanMultiplayer>().IsExecutable                     = true;
         Script<CraftableAlienToken>().IsExecutable                  = true;
-        Script<CraftableModules>().IsExecutable                     = true;
+        Script<CraftableModules>().IsExecutable                     = false;
+        Script<CraftableModulesPersonal>().IsExecutable             = true;
 
         var CraftableUpgradeMods = Script<CraftableUpgradeMods>();
         CraftableUpgradeMods.IsExecutable                           = !runSandXonly;
@@ -30,13 +31,13 @@ public class ExpeditionModList : cmk.NMS.Script.ModClass
         var CraftableUpgradeModsSandXonly = Script<CraftableUpgradeModsSandXonly>();
         CraftableUpgradeModsSandXonly.IsExecutable                  = runSandXonly;
         CraftableUpgradeModsSandXonly.RecipeCostPriceMultiplier     = 1;
-		
+        
         var CustomModsGaloreNuke = Script<CustomModsGaloreNuke>();
-        CustomModsGaloreNuke.IsExecutable                               = false;
+        CustomModsGaloreNuke.IsExecutable                           = false;
         if (runSandXonly)
         {
-            CustomModsGaloreNuke.MinProcModLimit                        = 4;
-            CustomModsGaloreNuke.RecipeCostPriceMultiplier              = 1;
+            CustomModsGaloreNuke.MinProcModLimit                    = 4;
+            CustomModsGaloreNuke.RecipeCostPriceMultiplier          = 1;
         }
         
         var CustomModsGalore = Script<CustomModsGalore>();
@@ -64,6 +65,9 @@ public class ExpeditionModList : cmk.NMS.Script.ModClass
         ExocraftRechargeRate.RechargeRate                           = 15f;
 
         Script<ExtendedExocraftAndShipScanner>().IsExecutable       = true;
+        var FrigateTimerReduction = Script<FrigateTimerReduction>();
+        FrigateTimerReduction.IsExecutable                          = true;
+        FrigateTimerReduction.Multiplier                            = 0.1f;
         Script<FuelEconomy>().IsExecutable                          = true;
         Script<GalaxyMapUpgrade>().IsExecutable                     = false;
 
@@ -118,8 +122,12 @@ public class ExpeditionModList : cmk.NMS.Script.ModClass
 
         //SettlementTimerReduction Edits
         var SettlementTimerReduction = Script<SettlementTimerReduction>();
-        SettlementTimerReduction.IsExecutable                       = true;        
+        SettlementTimerReduction.IsExecutable                       = true;
         SettlementTimerReduction.Multiplier                         = 0.25f;  // 25% of vanilla value
+
+        Script<ShipStore>().IsExecutable                           = false;
+        Script<ShipStoreV2>().IsExecutable                         = true;
+
 
         // CoreMissionEdits might not be necessary, DEBUG options edits work just fine
         Script<SkipTutorial>().IsExecutable                         = false; //!noShipStart; // also in no shipstart
@@ -155,7 +163,7 @@ public class ExpeditionModList : cmk.NMS.Script.ModClass
         FastRefiners.IsExecutable                                   = true;
         FastRefiners.TimeToMake                                     = 1f;
         
-    	Script<test>().IsExecutable                                 = false;
+        Script<test>().IsExecutable                                 = false;
     }
 
     //..............PickUpGeoBaysAndHarvesters.............................................

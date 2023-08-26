@@ -4,6 +4,8 @@
 
 public class UniqueExocrafts: cmk.NMS.Script.ModClass
 {
+	protected bool ImproveVehicle = true;
+	
 	protected GcInventoryLayoutSizeType.SizeTypeEnum[] VehicleSizes = new[]
 		{
 			GcInventoryLayoutSizeType.SizeTypeEnum.VehicleSmall,
@@ -92,8 +94,10 @@ public class UniqueExocrafts: cmk.NMS.Script.ModClass
 	protected override void Execute()
 	{
 		ImproveExoCrafts();
-		ImproveExoCraftInv();
-		//ChangeMechTechDamage(); 
+		if( ImproveVehicle ){
+			ImproveExoCraftInv();
+		}
+		ChangeMechTechDamage(); 
 	}
 
 	//...........................................................

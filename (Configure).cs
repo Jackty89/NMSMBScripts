@@ -7,7 +7,7 @@ public class Global : cmk.NMS.Script.ModClass
 {
     protected override void Execute()
     {
-        switch (-2)
+        switch (2)
         {
             case 0:
                 Execute<MustHave>();

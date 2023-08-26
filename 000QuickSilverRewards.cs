@@ -5,7 +5,7 @@
 public class QuickSilverRewards : cmk.NMS.Script.ModClass
 {
 	public int MBRewardChance 	= 15;
-	public int FleetRewardChance = 30;
+	public int FleetRewardChance = 80;
 	
 	Tuple<string, int, int>[] MissionBoardRewards = new Tuple<string, int, int>[] {
 		new ("R_MB_LOW",  	   100, 150),

@@ -4,7 +4,9 @@
 
 public class NoShipStart: cmk.NMS.Script.ModClass
 {
-	public int GarageChoice             = 4;     //PickUpListIds => 4 == GARAGE_MECH
+	public int GarageChoice = 4;     //PickUpListIds => 4 == GARAGE_MECH
+	public bool WantGarage = true;
+	public bool WantBeacon = true;
 
 	private List <string> PickUpListIds = new List<string>()
 	{
@@ -58,8 +60,10 @@ public class NoShipStart: cmk.NMS.Script.ModClass
 		defaultSaveData.State.KnownTech.AddUnique("STRONGLASER");    // quest related
 		
 		// might be Inventory_Cargo
-		defaultSaveData.State.Inventory.Add(Inventory.Product(PickUpListIds[GarageChoice],1,1));
-		defaultSaveData.State.Inventory.Add(Inventory.Product("BUILDBEACON",1,1));
+		if (WantGarage)
+			defaultSaveData.State.Inventory.Add(Inventory.Product(PickUpListIds[GarageChoice],1,1));
+		if (WantBeacon)		
+			defaultSaveData.State.Inventory.Add(Inventory.Product("BUILDBEACON",1,1));
 		
 		var gameplayGlobals = ExtractMbin<GcGameplayGlobals>("GCGAMEPLAYGLOBALS.GLOBAL.MBIN");
 		
