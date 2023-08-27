@@ -104,13 +104,13 @@ public class EqualPlantTimers : cmk.NMS.Script.ModClass
 			var data         = GetLanguageData(language, oldDescriptionID);
 			var newDescrText = regex.Replace(data.Text, ": <IMG>CLOCK<> 01h : 00m : 00s");  // Regex.Replace(data.Text, ": .*<>", ": <IMG>CLOCK<> 01h : 00m : 00s");
 			SetLanguageText(language, customDescriptionID, newDescrText);
-			Log.AddSuccess(language.Text);
-			Log.AddInformation(
-				$"oldDescriptionID = {oldDescriptionID}\n" +
-				$"customDescriptionID = {customDescriptionID}\n" +
-				$"data.Text = {data.Text}\n" +
-				$"newDescrText = {newDescrText}\n"
-			);
+			// Log.AddSuccess(language.Text);
+			// Log.AddInformation(
+			//	$"oldDescriptionID = {oldDescriptionID}\n" +
+			//	$"customDescriptionID = {customDescriptionID}\n" +
+			//	$"data.Text = {data.Text}\n" +
+			//	$"newDescrText = {newDescrText}\n"
+			// );
 		}
 	}
 }

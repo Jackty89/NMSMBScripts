@@ -103,7 +103,8 @@ public class MyModList : cmk.NMS.Script.ModClass
 		MoreSalvageData.IsExecutable = true;
 		MoreSalvageData.Min = 5;
 		MoreSalvageData.Max = 15;
-
+		
+        Script<NoAtmoNoDustAndFog>().IsExecutable = true;
 		Script<NoLadderAutoGrab>().IsExecutable = true;
 		Script<NoPortalCharge>().IsExecutable = true;
 

@@ -12,7 +12,7 @@ public class KeepTalkingChef : cmk.NMS.Script.ModClass
 		{
 			foreach(var option in options.Options)
 			{				
-				Log.AddInformation($"option.Cost.Value  = {option.Cost.Value }");
+				// Log.AddInformation($"option.Cost.Value  = {option.Cost.Value }");
 				if(option.Cost == "C_NEXUSCHEF1" || option.Cost == "C_NEXUSCHEF2" || option.Cost == "C_NEXUSCHEF3")
 					option.KeepOpen = true;
 			}

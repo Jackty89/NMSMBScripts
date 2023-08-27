@@ -100,7 +100,8 @@ public class MustHave : cmk.NMS.Script.ModClass
 		MoreSalvageData.IsExecutable = false;
 		MoreSalvageData.Min = 5;
 		MoreSalvageData.Max = 15;
-
+		
+        Script<NoAtmoNoDustAndFog>().IsExecutable = true;
 		Script<NoLadderAutoGrab>().IsExecutable = true;
 		Script<NoPortalCharge>().IsExecutable = true;
 

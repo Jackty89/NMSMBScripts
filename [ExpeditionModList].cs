@@ -106,6 +106,7 @@ public class ExpeditionModList : cmk.NMS.Script.ModClass
         Script<NoLadderAutoGrab>().IsExecutable                     = true;
         Script<NoPortalCharge>().IsExecutable                       = true;
         
+        Script<NoAtmoNoDustAndFog>().IsExecutable                   = true;
         Script<NoShipStart>().IsExecutable                          = noShipStart;
         Script<PickUpGeoBays>().IsExecutable                        = !noShipStart; // this is already included in NoShipStart
 
