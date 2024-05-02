@@ -16,23 +16,11 @@ public class InventoryRebalance : cmk.NMS.Script.ModClass
 	protected void EditGrid()
 	{
 		var invTable = ExtractMbin<GcInventoryTable>("METADATA/REALITY/TABLES/INVENTORYTABLE.MBIN");
-		//invTable.GenerationData.GenerationDataPerSizeType[(int)SizeTypeEnum.Suit].MinSlots = 20;
-		//invTable.GenerationData.GenerationDataPerSizeType[(int)SizeTypeEnum.Suit].MaxSlots = 20;
-		
-		//invTable.GenerationData.GenerationDataPerSizeType[(int)SizeTypeEnum.Suit].Bounds.MaxWidthSmall     = 10; //7
-		//invTable.GenerationData.GenerationDataPerSizeType[(int)SizeTypeEnum.Suit].Bounds.MaxHeightSmall    = 12; //5
-		//invTable.GenerationData.GenerationDataPerSizeType[(int)SizeTypeEnum.Suit].Bounds.MaxWidthStandard  = 10; //10 
-		//invTable.GenerationData.GenerationDataPerSizeType[(int)SizeTypeEnum.Suit].Bounds.MaxHeightStandard = 12; //5
 		invTable.GenerationData.GenerationDataPerSizeType[(int)SizeTypeEnum.Suit].Bounds.MaxWidthLarge     = 10; //10
 		invTable.GenerationData.GenerationDataPerSizeType[(int)SizeTypeEnum.Suit].Bounds.MaxHeightLarge    = 12; // 12
 		
-		//invTable.GenerationData.GenerationDataPerSizeType[(int)SizeTypeEnum.Suit].TechBounds.MaxWidthSmall     = 10; //6
-		//invTable.GenerationData.GenerationDataPerSizeType[(int)SizeTypeEnum.Suit].TechBounds.MaxHeightSmall    = 10; //3
-		//invTable.GenerationData.GenerationDataPerSizeType[(int)SizeTypeEnum.Suit].TechBounds.MaxWidthStandard  = 10; //10
-		//invTable.GenerationData.GenerationDataPerSizeType[(int)SizeTypeEnum.Suit].TechBounds.MaxHeightStandard = 10; //3
 		invTable.GenerationData.GenerationDataPerSizeType[(int)SizeTypeEnum.Suit].TechBounds.MaxWidthLarge     = 10; //10
 		invTable.GenerationData.GenerationDataPerSizeType[(int)SizeTypeEnum.Suit].TechBounds.MaxHeightLarge    = 12; //6
-		
 	}
 	protected void EditRestrictedOptions( int substanceAndProcductSizeLimit )
 	{
@@ -55,8 +43,10 @@ public class InventoryRebalance : cmk.NMS.Script.ModClass
 		int ProductVehicleInventorySizeRestricted    = 10;
 		int ProductChestAndCapSizeRestricted         = 25;
 
-		var mbin = ExtractMbin<GcGameplayGlobals>("GCGAMEPLAYGLOBALS.GLOBAL.MBIN");
-		var restricted_stacks = mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)InventoryStackLimitsDifficultyEnum.Normal];
+		//var mbin = ExtractMbin<GcGameplayGlobals>("GCGAMEPLAYGLOBALS.GLOBAL.MBIN");
+		//var standard_stacks = mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)InventoryStackLimitsDifficultyEnum.Normal];
+		var difficultyConfigGlobal = ExtractMbin<GcDifficultyConfig>("METADATA/GAMESTATE/DIFFICULTYCONFIG.MBIN");
+		var restricted_stacks = difficultyConfigGlobal.InventoryStackLimitsOptionData[(int)InventoryStackLimitsDifficultyEnum.Normal];
 
 		restricted_stacks.ProductStackLimit   = substanceAndProcductSizeLimit;
 		restricted_stacks.SubstanceStackLimit = substanceAndProcductSizeLimit;
@@ -97,9 +87,11 @@ public class InventoryRebalance : cmk.NMS.Script.ModClass
 		int SubstanceCargoSizeStandard               = 100000;
 		int ProductInventorySizeStandard             = 50;
 		int ProductCargoSizeStandard                 = 100;
-		
-		var mbin = ExtractMbin<GcGameplayGlobals>("GCGAMEPLAYGLOBALS.GLOBAL.MBIN");
-		var standard_stacks = mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)InventoryStackLimitsDifficultyEnum.High];
+
+		//var mbin = ExtractMbin<GcGameplayGlobals>("GCGAMEPLAYGLOBALS.GLOBAL.MBIN");
+		//var standard_stacks = mbin.DifficultyConfig.InventoryStackLimitsOptionData[(int)InventoryStackLimitsDifficultyEnum.High];
+		var difficultyConfigGlobal = ExtractMbin<GcDifficultyConfig>("METADATA/GAMESTATE/DIFFICULTYCONFIG.MBIN");
+		var standard_stacks = difficultyConfigGlobal.InventoryStackLimitsOptionData[(int)InventoryStackLimitsDifficultyEnum.High];
 
 		standard_stacks.ProductStackLimit   = substanceAndProcductSizeLimit;
 		standard_stacks.SubstanceStackLimit = substanceAndProcductSizeLimit;

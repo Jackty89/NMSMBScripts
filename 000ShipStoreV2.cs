@@ -5,7 +5,7 @@
 
 public class ShipStoreV2 : cmk.NMS.Script.ModClass
 {
-	private int Total_Seeds_Per_Class = 10000;
+	private int Total_Seeds_Per_Class = 10;
 	private int Total_Classes = 1;
 	private float Price_Multiplier = 1;
 
@@ -31,7 +31,7 @@ public class ShipStoreV2 : cmk.NMS.Script.ModClass
 		ShipClassEnum.Scientific,
 		ShipClassEnum.Sail,
 		ShipClassEnum.Robot,
-		ShipClassEnum.Alien
+		ShipClassEnum.Alien,
 	};
 	////Maybe add frigate(s) too
 	//protected FrigateClassEnum[] Frigate_types = new[] {
@@ -344,7 +344,8 @@ public class ShipStoreV2 : cmk.NMS.Script.ModClass
 	{
 		var prod_mbin = ExtractMbin<GcProductTable>("METADATA/REALITY/TABLES/NMS_REALITY_GCPRODUCTTABLE.MBIN", false, false);
 		var new_consumable_product = CloneMbin(prod_mbin.Table.Find(PRODUCT => PRODUCT.ID == "SENTINEL_LOOT"));
-
+		//change to SHIP_GOLD? this will require to remove GiveRewardOnSpecialPurchase
+		
 		new_consumable_product.ID = product_name;
 		new_consumable_product.Name = custom_language_name.ToUpper() + "_NAME";
 		new_consumable_product.NameLower = custom_language_name.ToUpper() + "_NAME_L";
@@ -357,6 +358,13 @@ public class ShipStoreV2 : cmk.NMS.Script.ModClass
 		new_consumable_product.StackMultiplier = 1;
 		new_consumable_product.EggModifierIngredient = false;
 		new_consumable_product.PinObjective = "";
+		
+		new_consumable_product.Cost.SpaceStationMarkup = 0;
+		new_consumable_product.Cost.LowPriceMod = 0;
+		new_consumable_product.Cost.HighPriceMod = 0;
+		new_consumable_product.Cost.BuyBaseMarkup = 0;
+		new_consumable_product.Cost.BuyMarkupMod = 0;
+		//cahnges cost to 0?
 
 		return new_consumable_product;
 	}

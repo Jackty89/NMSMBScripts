@@ -71,6 +71,11 @@ public class CraftableModules : cmk.NMS.Script.ModClass
                 new GcTechnologyRequirement { ID = "COMPUTER",   Type = Product,   Amount = 15},
                 new GcTechnologyRequirement { ID = "ROBOT1",     Type = Substance, Amount = 150},
                 new GcTechnologyRequirement { ID = "CAVE2",      Type = Substance, Amount = 250}
+            }),
+            new("FACT_TOKEN", new [] {
+                new GcTechnologyRequirement { ID = "COMPUTER",   Type = Product,   Amount = 15},
+                new GcTechnologyRequirement { ID = "AF_METAL",     Type = Substance, Amount = 150},
+                new GcTechnologyRequirement { ID = "SPIDER_PROD",      Type = Product, Amount = 5}
             })
         };
     }
@@ -81,6 +86,7 @@ public class CraftableModules : cmk.NMS.Script.ModClass
             "METADATA/REALITY/TABLES/NMS_REALITY_GCPRODUCTTABLE.MBIN"
         );
 
+    	prod_mbin.Table.Find(PRODUCT => PRODUCT.ID == "REPAIRKIT").RecipeCost = 1;
         foreach (var prod in AlteredProductPrices)
         {
             prod_mbin.Table.Find(PRODUCT => PRODUCT.ID == prod.Item1).BaseValue = prod.Item2;
@@ -114,7 +120,12 @@ public class CraftableModules : cmk.NMS.Script.ModClass
         {
             Unlockable = "NAV_DATA",
             Children   = new(){
-                new GcUnlockableItemTreeNode { Unlockable = "BP_SALVAGE", Children = new() }
+                new GcUnlockableItemTreeNode {
+            		Unlockable = "BP_SALVAGE", 
+            		Children = new() {
+            			new GcUnlockableItemTreeNode { Unlockable = "FACT_TOKEN", Children = new() },
+            		}
+            	}
             }
         });
 

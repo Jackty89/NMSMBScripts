@@ -14,12 +14,14 @@ public class ExpeditionModList : cmk.NMS.Script.ModClass
         Script<AddDerelictFreighterLootToStore>().IsExecutable      = true;
         Script<AddExpeditionTech>().IsExecutable                    = false;
         Script<AddNewFoods>().IsExecutable                          = false;
+        Script<AtlasOrbWordoRama>().IsExecutable                    = true;
 
         Script<BasePartsDeluxe>().IsExecutable                      = !noShipStart; // included in NoShipStart
         Script<BuildAboveAndUnderWater>().IsExecutable              = true;
         Script<BurnBabyBurn>().IsExecutable                         = !enableCustomModsGalore; // CMG also adds incinerator
         Script<CheapPetSlots>().IsExecutable                        = true;
-        Script<CleanMultiplayer>().IsExecutable                     = true;
+		Script<ClaimExpeditionShipsForFree>().IsExecutable          = true;
+		Script<CleanMultiplayer>().IsExecutable                     = true;
         Script<CraftableAlienToken>().IsExecutable                  = true;
         Script<CraftableModules>().IsExecutable                     = false;
         Script<CraftableModulesPersonal>().IsExecutable             = true;
@@ -57,7 +59,7 @@ public class ExpeditionModList : cmk.NMS.Script.ModClass
 
         var EqualPlantTimers = Script<EqualPlantTimers>();
         EqualPlantTimers.IsExecutable                               = true;
-        EqualPlantTimers.HarvestAmount                              = 50;
+        EqualPlantTimers.HarvestAmount                              = 250;
         EqualPlantTimers.PlantTimer                                 = 3600; // time in seconds => 60 min
 
         var ExocraftRechargeRate = Script<ExocraftRechargeRate>();

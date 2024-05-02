@@ -65,14 +65,14 @@ public class NoShipStart: cmk.NMS.Script.ModClass
 		if (WantBeacon)		
 			defaultSaveData.State.Inventory.Add(Inventory.Product("BUILDBEACON",1,1));
 		
-		var gameplayGlobals = ExtractMbin<GcGameplayGlobals>("GCGAMEPLAYGLOBALS.GLOBAL.MBIN");
-		
+		var difficultyConfigGlobal = ExtractMbin<GcDifficultyConfig>("METADATA/GAMESTATE/DIFFICULTYCONFIG.MBIN");
+
 		// has been moved to gameplayglobals
-		gameplayGlobals.DifficultyConfig.StartWithAllItemsKnownDisabledData.InitialWeaponInventory.Slots.Find(Element => Element.Id =="SCAN1").DamageFactor = 0;
-		gameplayGlobals.DifficultyConfig.StartWithAllItemsKnownDisabledData.InitialShipInventory.Slots.Clear();
-		
-		gameplayGlobals.DifficultyConfig.StartWithAllItemsKnownEnabledData.InitialWeaponInventory.Slots.Find(Element => Element.Id =="SCAN1").DamageFactor = 0;
-		gameplayGlobals.DifficultyConfig.StartWithAllItemsKnownEnabledData.InitialShipInventory.Slots.Clear();
+		difficultyConfigGlobal.StartWithAllItemsKnownDisabledData.InitialWeaponInventory.Slots.Find(Element => Element.Id =="SCAN1").DamageFactor = 0;
+		difficultyConfigGlobal.StartWithAllItemsKnownDisabledData.InitialShipInventory.Slots.Clear();
+
+		difficultyConfigGlobal.StartWithAllItemsKnownEnabledData.InitialWeaponInventory.Slots.Find(Element => Element.Id =="SCAN1").DamageFactor = 0;
+		difficultyConfigGlobal.StartWithAllItemsKnownEnabledData.InitialShipInventory.Slots.Clear();
 	}
 	protected void EditStartShipStarterLocation()
 	{

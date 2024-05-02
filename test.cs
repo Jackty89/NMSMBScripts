@@ -5,7 +5,7 @@ public class test : cmk.NMS.Script.ModClass
 	protected override void Execute()
 	{
 		
-		var defaultSaveData = ExtractMbin<GcDefaultSaveData>("METADATA/GAMESTATE/DEFAULTSAVEDATA.MBIN");
+		/*var defaultSaveData = ExtractMbin<GcDefaultSaveData>("METADATA/GAMESTATE/DEFAULTSAVEDATA.MBIN");
 		defaultSaveData.State.ShipInventory.Slots.Add(Inventory.Product("HYPERFUEL1", 1, 1));		
 		defaultSaveData.State.ShipInventory.Slots.Add(Inventory.Product("LAUNCHFUEL", 1, 1));
 		
@@ -24,7 +24,7 @@ public class test : cmk.NMS.Script.ModClass
 		gameplayGlobals.DifficultyConfig.StartWithAllItemsKnownDisabledData.InitialShipInventory.Slots.Find(Element => Element.Id =="LAUNCHER").DamageFactor = 0;
 		
 		var debugGlobals = ExtractMbin<GcDebugOptions>("GCDEBUGOPTIONS.GLOBAL.MBIN");
-		debugGlobals.ForceInitialShip = false;
+		debugGlobals.ForceInitialShip = false;*/
 	}
 
 	//...........................................................

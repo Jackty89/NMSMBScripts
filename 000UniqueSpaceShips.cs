@@ -319,7 +319,7 @@ public class UniqueSpaceShips : cmk.NMS.Script.ModClass
 			AclassMultiplier = 0f,
 			SclassMultiplier = HighValue
 		});
-		//Frieghter HD MP Added
+		//Freighter HD MP Added
 		ShipData.Add(new ShipMultiplierData {
 			ShipType = Freighter,
 			StatId = FreighterHyper,

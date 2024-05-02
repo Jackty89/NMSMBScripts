@@ -14,7 +14,7 @@ public class SlotMaster : cmk.NMS.Script.ModClass
     
     public bool MaxStartingSlot  = false;
     public bool MaxSlot			 = true;
-	public bool MaxSpecialSlot	 = false; //doesnt work
+	public bool MaxSpecialSlot	 = true; //doesnt work
 
 	public int MinUnlockedTechSlots = 60;
 	public int MinUnlockedCargoSlots = 120;

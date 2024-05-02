@@ -37,19 +37,19 @@ public class MoreAndCheaperStarMaps : cmk.NMS.Script.ModClass
 		Products.Find(SETTLE => SETTLE.ID == settleMentId).RecipeCost = 1;
 
 		//Make a copy of hive map to make custom made
-		var crashedShipMap           = CloneMbin(Products.Find(PRODUCT => PRODUCT.ID == "CHART_HIVE"));
+		var crashedShipMap           = CloneMbin(Products.Find(PRODUCT => PRODUCT.ID == "STARCHART_A"));
 		crashedShipMap.ID            = starMapCrashedShipId;
 		crashedShipMap.Icon.Filename = "TEXTURES/UI/FRONTEND/ICONS/U4PRODUCTS/PRODUCT.STARCHART.CRASHEDSHIP.dds";
 		Products.Add(crashedShipMap);
 
 		//Make a copy of hive map to make custom made
-		var consumable      = CloneMbin(Consumables.Find(CONSUMABLE => CONSUMABLE.ID == "CHART_HIVE"));
+		var consumable      = CloneMbin(Consumables.Find(CONSUMABLE => CONSUMABLE.ID == "STARCHART_A"));
 		consumable.ID       = starMapCrashedShipId;
 		consumable.RewardID = starMapCrashedShipRewardId;
 		Consumables.Add(consumable);
 
 		//Make a copy of hice map to make custom made
-		var reward                   = CloneMbin(Rewards.Find(REWARD => REWARD.Id == "R_SHOW_HIVEONLY"));
+		var reward                   = CloneMbin(Rewards.Find(REWARD => REWARD.Id == "R_STARCHART_A"));
 		reward.List.List.RemoveRange(1, reward.List.List.Count - 1);  // only need 1 reward in clone
 		var reward_item              = reward.List.List[0];
 		var reward_scan              = reward_item.Reward as GcRewardScanEvent;
