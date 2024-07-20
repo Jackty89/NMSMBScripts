@@ -1,5 +1,6 @@
 ﻿//=============================================================================
 // Author: Jackty89
+// THIS HAS BEEN ADDED TO GAME
 //=============================================================================
 
 public class QuickSilverRewards : cmk.NMS.Script.ModClass

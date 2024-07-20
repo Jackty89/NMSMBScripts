@@ -22,7 +22,7 @@ public class ExpeditionModList : cmk.NMS.Script.ModClass
         Script<CheapPetSlots>().IsExecutable                        = true;
 		Script<ClaimExpeditionShipsForFree>().IsExecutable          = true;
 		Script<CleanMultiplayer>().IsExecutable                     = true;
-        Script<CraftableAlienToken>().IsExecutable                  = true;
+        Script<CraftableAlienToken>().IsExecutable                  = false;
         Script<CraftableModules>().IsExecutable                     = false;
         Script<CraftableModulesPersonal>().IsExecutable             = true;
 
@@ -116,7 +116,7 @@ public class ExpeditionModList : cmk.NMS.Script.ModClass
         PirateTimerRedux.IsExecutable                               = true;
         PirateTimerRedux.Multiplier                                 = 3;
 
-        Script<QuickSilverRewards>().IsExecutable                   = true;
+        Script<QuickSilverRewards>().IsExecutable                   = false;
         
         Script<RealisticTimers>().IsExecutable                      = challengeMode;
 
@@ -130,6 +130,7 @@ public class ExpeditionModList : cmk.NMS.Script.ModClass
 
         Script<ShipStore>().IsExecutable                           = false;
         Script<ShipStoreV2>().IsExecutable                         = true;
+        Script<ShipStoreV3_WIP>().IsExecutable                         = true;
 
 
         // CoreMissionEdits might not be necessary, DEBUG options edits work just fine

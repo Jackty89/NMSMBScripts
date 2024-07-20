@@ -39,7 +39,7 @@ public class MoreAndCheaperStarMaps : cmk.NMS.Script.ModClass
 		//Make a copy of hive map to make custom made
 		var crashedShipMap           = CloneMbin(Products.Find(PRODUCT => PRODUCT.ID == "STARCHART_A"));
 		crashedShipMap.ID            = starMapCrashedShipId;
-		crashedShipMap.Icon.Filename = "TEXTURES/UI/FRONTEND/ICONS/U4PRODUCTS/PRODUCT.STARCHART.CRASHEDSHIP.dds";
+		crashedShipMap.Icon.Filename = "TEXTURES/UI/FRONTEND/ICONS/U4PRODUCTS/PRODUCT.STARCHART.SEASON9.DDS";
 		Products.Add(crashedShipMap);
 
 		//Make a copy of hive map to make custom made

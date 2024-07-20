@@ -54,6 +54,7 @@ public class NoShipStart: cmk.NMS.Script.ModClass
 		defaultSaveData.State.KnownProducts.AddUnique("BP_ANALYSER");// quest related
 		defaultSaveData.State.KnownProducts.AddUnique("ANTIMATTER"); // quest related
 		defaultSaveData.State.KnownProducts.AddUnique("AM_HOUSING"); // quest related
+		defaultSaveData.State.KnownProducts.AddUnique("BASE_SWAMP3");		
 		
 		defaultSaveData.State.KnownTech.AddUnique("TERRAINEDITOR");  // quest related
 		defaultSaveData.State.KnownTech.AddUnique("HYPERDRIVE");     // quest related

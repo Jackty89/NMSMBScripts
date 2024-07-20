@@ -32,11 +32,10 @@ public class BurnBabyBurn : cmk.NMS.Script.ModClass
 
 	protected void ChangeIncineratorStats( GcTechnologyTable technology, string incineratorId )
 	{
-		var addBounce       = new GcStatsBonus { Stat = new GcStatsTypes { StatsType = StatsTypeEnum.Weapon_Projectile_Bounce }, Bonus =   2, Level = 3 };
-		var moreProjectiles = new GcStatsBonus { Stat = new GcStatsTypes { StatsType = StatsTypeEnum.Weapon_Projectile },		 Bonus =   1, Level = 1 };
-		var addDot          = new GcStatsBonus { Stat = new GcStatsTypes { StatsType = StatsTypeEnum.Weapon_FireDOT },			 Bonus = 100, Level = 1 };
-		var addDotDuratiom  = new GcStatsBonus { Stat = new GcStatsTypes { StatsType = StatsTypeEnum.Weapon_FireDOT_Duration },	 Bonus =  10, Level = 1 };
-		var addDotDPS       = new GcStatsBonus { Stat = new GcStatsTypes { StatsType = StatsTypeEnum.Weapon_FireDOT_DPS },		 Bonus = 500, Level = 3 };
+		var addBounce       = new GcStatsBonus { Stat = new GcStatsTypes { StatsType = StatsTypeEnum.Weapon_Projectile_Bounce }, Bonus = 2, Level = 3 };
+		var addDot          = new GcStatsBonus { Stat = new GcStatsTypes { StatsType = StatsTypeEnum.Weapon_FireDOT }, Bonus = 100, Level = 1 };
+		var addDotDuratiom  = new GcStatsBonus { Stat = new GcStatsTypes { StatsType = StatsTypeEnum.Weapon_FireDOT_Duration }, Bonus =  10, Level = 1 };
+		var addDotDPS       = new GcStatsBonus { Stat = new GcStatsTypes { StatsType = StatsTypeEnum.Weapon_FireDOT_DPS }, Bonus = 500, Level = 3 };
 
 		var tech = technology.Table.Find(TECH => TECH.ID == incineratorId);
 		tech.StatBonuses.Find(STAT => STAT.Stat.StatsType == StatsTypeEnum.Weapon_Projectile_Dispersion).Bonus		=  15;
@@ -46,7 +45,6 @@ public class BurnBabyBurn : cmk.NMS.Script.ModClass
 		tech.StatBonuses.Find(STAT => STAT.Stat.StatsType == StatsTypeEnum.Weapon_Projectile_Rate).Bonus			=  12;
 
 		tech.StatBonuses.Add(addBounce);
-		tech.StatBonuses.Add(moreProjectiles);
 		tech.StatBonuses.Add(addDot);
 		tech.StatBonuses.Add(addDotDPS);
 		tech.StatBonuses.Add(addDotDuratiom);
