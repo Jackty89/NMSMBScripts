@@ -351,7 +351,15 @@ public class ShipStoreV2 : cmk.NMS.Script.ModClass
 		new_consumable_product.Description = custom_language_name.ToUpper() + "_DESC";
 		new_consumable_product.Subtitle = custom_language_name.ToUpper() + "_DESC";
 		new_consumable_product.Icon.Filename = "TEXTURES/UI/FRONTEND/ICONS/EXPEDITION/PATCH.SHIPCLASS" + ship_class.ToUpper() + ".DDS";
+		
+		new_consumable_product.Cost.BuyBaseMarkup = 0;
+		new_consumable_product.Cost.BuyMarkupMod = 0;
+		new_consumable_product.Cost.HighPriceMod = 0;
+		new_consumable_product.Cost.LowPriceMod = 0;
+		new_consumable_product.Cost.SpaceStationMarkup = 0;
+
 		new_consumable_product.BaseValue = price;
+		
 
 		new_consumable_product.CraftAmountMultiplier = 1;
 		new_consumable_product.StackMultiplier = 1;

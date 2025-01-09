@@ -1,9 +1,8 @@
 ﻿//=============================================================================
 // Author: Jackty89
 //=============================================================================
-using static libMBIN.NMS.GameComponents.GcProceduralProductCategory;
 
-public class CraftableUpgradeModsSandXonly: cmk.NMS.Script.ModClass
+public class CraftableUpgradeMods_OLD : cmk.NMS.Script.ModClass
 {
 	public int RecipeCostPriceMultiplier = 1;
 
@@ -17,9 +16,7 @@ public class CraftableUpgradeModsSandXonly: cmk.NMS.Script.ModClass
 	readonly string FreighterRootTech = "FRIGATE_FUEL_1";
 	readonly string FactoryTreeTech = "PRODFUEL2";
 
-	readonly string CraftedFreighterModDescrId = "FR_CRAFTED_DESC";
-	readonly string CraftedFreighterModNameId = "FR_CRAFTED_NAME";
-
+	readonly string CraftedFreighterModDescrId = "UP_FR_CRAFTED_DESC";
 	readonly string[] Classes = { "C", "B", "A", "S" };
 
 	protected class Data
@@ -48,7 +45,6 @@ public class CraftableUpgradeModsSandXonly: cmk.NMS.Script.ModClass
 		public string NewTechName;
 		public int HighestClassNo;
 		public int LowestClassNo;
-		public ProceduralProductCategoryEnum Category;
 	}
 
 	protected class RequirementPerClass
@@ -177,13 +173,13 @@ public class CraftableUpgradeModsSandXonly: cmk.NMS.Script.ModClass
 	};
 
 	protected CustomMod[] NewFreighterMods = new[] {
-		new CustomMod { BaseTechName = "U_FR_SPE", NewTechName = "FREIG_SPE", HighestClassNo = 4, LowestClassNo = 1, Category = ProceduralProductCategoryEnum.FreighterTechSpeed},
-		new CustomMod { BaseTechName = "U_FR_COM", NewTechName = "FREIG_COM", HighestClassNo = 4, LowestClassNo = 1, Category = ProceduralProductCategoryEnum.FreighterTechCombat},
-		new CustomMod { BaseTechName = "U_FR_EXP", NewTechName = "FREIG_EXP", HighestClassNo = 4, LowestClassNo = 1, Category = ProceduralProductCategoryEnum.FreighterTechExp},
-		new CustomMod { BaseTechName = "U_FR_FUEL", NewTechName = "FREIG_FUEL", HighestClassNo = 4, LowestClassNo = 1, Category = ProceduralProductCategoryEnum.FreighterTechFuel},
-		new CustomMod { BaseTechName = "U_FR_MINE", NewTechName = "FREIG_MINE", HighestClassNo = 4, LowestClassNo = 1, Category = ProceduralProductCategoryEnum.FreighterTechMine},
-		new CustomMod { BaseTechName = "U_FR_TRA", NewTechName = "FREIG_TRA", HighestClassNo = 4, LowestClassNo = 1, Category = ProceduralProductCategoryEnum.FreighterTechTrade},
-		new CustomMod { BaseTechName = "U_FR_HYP", NewTechName = "FREIG_HYP", HighestClassNo = 4, LowestClassNo = 1, Category = ProceduralProductCategoryEnum.FreighterTechHyp}
+		new CustomMod { BaseTechName = "U_FR_SPE", NewTechName = "FREIG_SPE", HighestClassNo = 4, LowestClassNo = 1 },
+		new CustomMod { BaseTechName = "U_FR_COM", NewTechName = "FREIG_COM", HighestClassNo = 4, LowestClassNo = 1 },
+		new CustomMod { BaseTechName = "U_FR_EXP", NewTechName = "FREIG_EXP", HighestClassNo = 4, LowestClassNo = 1 },
+		new CustomMod { BaseTechName = "U_FR_FUEL", NewTechName = "FREIG_FUEL", HighestClassNo = 4, LowestClassNo = 1 },
+		new CustomMod { BaseTechName = "U_FR_MINE", NewTechName = "FREIG_MINE", HighestClassNo = 4, LowestClassNo = 1 },
+		new CustomMod { BaseTechName = "U_FR_TRA", NewTechName = "FREIG_TRA", HighestClassNo = 4, LowestClassNo = 1 },
+		new CustomMod { BaseTechName = "U_FR_HYP", NewTechName = "FREIG_HYP", HighestClassNo = 4, LowestClassNo = 1 }
 	};
 
 	readonly GcInventoryType Product = new GcInventoryType { InventoryType = InventoryTypeEnum.Product };
@@ -214,22 +210,26 @@ public class CraftableUpgradeModsSandXonly: cmk.NMS.Script.ModClass
 		};
 
 		Data[] XmodsData = new[] {
-			new Data { Tree = FactoryTreeExpansion, Mods = new(){ XclassMods1, XclassMods2, XclassMods3, XclassMods4, XclassMods5, XclassMods6, XclassMods7 }},
+			new Data { Tree = FactoryTreeExpansion, Mods = new(){ XclassMods1, XclassMods2, XclassMods3, XclassMods4, XclassMods5, XclassMods6 }},
 		};
 
-		foreach( var ModData in AllModData ) {
+		foreach(var ModData in AllModData)
+		{
 			TreeExpansion Expansion = ModData.Tree;
 			List<List<CraftableUpgradeMod>> ListOfMods = ModData.Mods;
-			foreach( var Mods in ListOfMods ) {
+			foreach(var Mods in ListOfMods)
+			{
 				SetCraftabletoTrueAndAddRequirements(Mods);
 				AddUnlockableTrees(Mods, Expansion);
 			}
 		}
 
-		foreach( var XData in XmodsData ) {
+		foreach(var XData in XmodsData)
+		{
 			TreeExpansion Expansion = XData.Tree;
 			List<List<CraftableUpgradeMod>> ListOfMods = XData.Mods;
-			foreach( var Mods in ListOfMods ) {
+			foreach(var Mods in ListOfMods)
+			{
 				SetCraftabletoTrueAndAddRequirements(Mods);
 			}
 			AddXClassUnlockableTrees(ListOfMods, Expansion);
@@ -289,69 +289,53 @@ public class CraftableUpgradeModsSandXonly: cmk.NMS.Script.ModClass
 
 	protected void CreateCustomFreighterMods()
 	{
-		var Product_Table_Mbin = ExtractMbin<GcProductTable>("METADATA/REALITY/TABLES/NMS_REALITY_GCPRODUCTTABLE.MBIN");
-		var Consumable_Table_Mbin = ExtractMbin<GcConsumableItemTable>("METADATA/REALITY/TABLES/CONSUMABLEITEMTABLE.MBIN");
-		var Reward_Table_Mbin = ExtractMbin<GcRewardTable>("METADATA/REALITY/TABLES/REWARDTABLE.MBIN");
+		var Prod_mbin = ExtractMbin<GcProductTable>("METADATA/REALITY/TABLES/NMS_REALITY_GCPRODUCTTABLE.MBIN");
+		var Proc_mbin = ExtractMbin<GcProceduralTechnologyTable>("METADATA/REALITY/TABLES/NMS_REALITY_GCPROCEDURALTECHNOLOGYTABLE.MBIN");
 
-		foreach( CustomMod Mod in NewFreighterMods ) {
+		foreach(CustomMod Mod in NewFreighterMods)
+		{
 			string BaseTechName = Mod.BaseTechName;
+			string BaseDeployString = BaseTechName.Replace("U_FR_", "UP_FR").Substring(0, 8);
 			string NewTechName = Mod.NewTechName;
-			ProceduralProductCategoryEnum Category = Mod.Category;
-
+			string NewTechDeployName = Mod.NewTechName;
+			NewTechDeployName = NewTechDeployName.Replace("_", "");
+			NewTechDeployName = NewTechDeployName.Replace("FREIG", "");
 			int HighestClassNo = Mod.HighestClassNo;
 			int LowestClassNo = Mod.LowestClassNo;
-
-			for(int i = HighestClassNo; i <= HighestClassNo; i++)
+			for(int i = LowestClassNo; i <= HighestClassNo; i++)
 			{
-				string Copy_Tech_ID = BaseTechName + i.ToString();
-				string New_Product_ID = "U_" + NewTechName + i.ToString();
-				string New_Reward_ID = "R_" + NewTechName + i.ToString();
+				string CopyTech = BaseTechName + i.ToString();
+				string CopyDeployTech = BaseDeployString + i.ToString();
+				string NewTechID = "U_" + NewTechName + i.ToString();
+				string NewTechDeployID = "UP_" + Classes[i - 1] + NewTechDeployName.ToLower() + "Deploy" + "_" + Classes[i - 1];
 
-				var Copy_Tech = CloneMbin(Product_Table_Mbin.Table.Find(PROD => PROD.ID == Copy_Tech_ID));
-				string Icon_path = Copy_Tech.Icon.Filename;
+				var Proc = CloneMbin(Proc_mbin.Table.Find(PROC => PROC.ID == CopyDeployTech));
+				Proc.ID = NewTechDeployID;
+				Proc_mbin.Table.Add(Proc);
 
-				var Product_Copy = CloneMbin(Product_Table_Mbin.Table.Find(PROD => PROD.ID == "SENTINEL_LOOT"));
-				Product_Copy.ID = New_Product_ID;
-				Product_Copy.Name = CraftedFreighterModNameId;
-				Product_Copy.NameLower = CraftedFreighterModNameId;
-				Product_Copy.Subtitle = CraftedFreighterModNameId;
-				Product_Copy.Description = CraftedFreighterModDescrId;
-				Product_Copy.Icon.Filename = Icon_path;
-				Product_Table_Mbin.Table.Add(Product_Copy);
-
-				var Consumable_Item_Copy = CloneMbin(Consumable_Table_Mbin.Table.Find(PROD => PROD.ID == "SENTINEL_LOOT"));
-				Consumable_Item_Copy.ID = New_Product_ID;
-				Consumable_Item_Copy.RewardID = New_Reward_ID;
-				Consumable_Table_Mbin.Table.Add(Consumable_Item_Copy);
-
-				//i == class number since HG file is in consistent here class No starts at 0 for C compared to other files it being 1
-				var Procedural_Tech_Reward = RewardTableItem.ProceduralProduct(
-					i-1,
-					Category);
-
-				var Reward_Table_Entry = GenericRewardTableEntry.Create(
-					New_Reward_ID,
-					RewardChoiceEnum.GiveAll,
-					new(){ Procedural_Tech_Reward }
-				);
-				Reward_Table_Mbin.GenericTable.Add(Reward_Table_Entry);
-
+				var Prod = CloneMbin(Prod_mbin.Table.Find(PROD => PROD.ID == CopyTech));
+				Prod.ID = NewTechID;
+				Prod.DeploysInto = NewTechDeployID + "Deploy";
+				Prod.Description = CraftedFreighterModDescrId;
+				Prod_mbin.Table.Add(Prod);
 			}
 		}
 	}
 
 	//...........................................................
 
-	protected void SetCraftabletoTrueAndAddRequirements( List<CraftableUpgradeMod> Mods )
+	protected void SetCraftabletoTrueAndAddRequirements(List<CraftableUpgradeMod> Mods)
 	{
 		var Prod_mbin = ExtractMbin<GcProductTable>("METADATA/REALITY/TABLES/NMS_REALITY_GCPRODUCTTABLE.MBIN");
 
-		foreach( var Mod in Mods ) {
+		foreach(var Mod in Mods)
+		{
 			string ProductBase = Mod.UpgradeBase;
 			int HighestClassNo = Mod.HighestClassNo;
 			int LowestClassNo = Mod.LowestClassNo;
 
-			if( Mod.HighestClassNo == 0 ) { //X-Class Mods
+			if(Mod.HighestClassNo == 0)
+			{ //X-Class Mods
 				var Prod = Prod_mbin.Table.Find(PROD => PROD.ID == ProductBase);
 				RequirementPerClass ClassRequirement = Requirements[4];
 
@@ -362,8 +346,10 @@ public class CraftableUpgradeModsSandXonly: cmk.NMS.Script.ModClass
 				Prod.Requirements.Add(ClassRequirement.Materials[2]);
 				Prod.RecipeCost = ClassRequirement.Price;
 			}
-			else {
-				for( int i = HighestClassNo; i <= HighestClassNo; i++ ) { //Normal Mods
+			else
+			{
+				for(int i = LowestClassNo; i <= HighestClassNo; i++)
+				{ //Normal Mods
 					string Product = ProductBase + i.ToString();
 					RequirementPerClass ClassRequirement = Requirements[i - 1];
 					if( HighestClassNo != 4 )
@@ -383,7 +369,7 @@ public class CraftableUpgradeModsSandXonly: cmk.NMS.Script.ModClass
 
 	//...........................................................
 
-	protected void AddUnlockableTrees( List<CraftableUpgradeMod> Mods, TreeExpansion Expansion )
+	protected void AddUnlockableTrees(List<CraftableUpgradeMod> Mods, TreeExpansion Expansion)
 	{
 		var Mbin = ExtractMbin<GcUnlockableTrees>("METADATA/REALITY/TABLES/UNLOCKABLEITEMTREES.MBIN");
 		UnlockableItemTreeEnum ExTree = Expansion.Tree;
@@ -398,10 +384,11 @@ public class CraftableUpgradeModsSandXonly: cmk.NMS.Script.ModClass
 
 		Tree.Trees.Add(ItemTree);
 
-		foreach( var Mod in Mods ) {
+		foreach(var Mod in Mods)
+		{
 			string ProductBase = Mod.UpgradeBase;
 			int HighestClassNo = Mod.HighestClassNo;
-			int LowestClassNo = Mod.HighestClassNo;
+			int LowestClassNo = Mod.LowestClassNo;
 
 			Root.Children.Add(CreateChildNode(ProductBase, LowestClassNo, HighestClassNo));
 		}
@@ -409,7 +396,7 @@ public class CraftableUpgradeModsSandXonly: cmk.NMS.Script.ModClass
 
 	//...........................................................
 
-	private GcUnlockableItemTreeNode CreateChildNode( string ProductBase, int CurrentNo, int HighestClassNo )
+	private GcUnlockableItemTreeNode CreateChildNode(string ProductBase, int CurrentNo, int HighestClassNo)
 	{
 		string Product = ProductBase + CurrentNo.ToString();
 		GcUnlockableItemTreeNode Child = new GcUnlockableItemTreeNode
@@ -418,7 +405,8 @@ public class CraftableUpgradeModsSandXonly: cmk.NMS.Script.ModClass
 			Children = new()
 		};
 
-		if( CurrentNo != HighestClassNo ) {
+		if(CurrentNo != HighestClassNo)
+		{
 			Child.Children.Add(CreateChildNode(ProductBase, CurrentNo + 1, HighestClassNo));
 		}
 
@@ -427,7 +415,7 @@ public class CraftableUpgradeModsSandXonly: cmk.NMS.Script.ModClass
 
 	//...........................................................
 
-	protected void AddXClassUnlockableTrees( List<List<CraftableUpgradeMod>> ListMods, TreeExpansion Expansion )
+	protected void AddXClassUnlockableTrees(List<List<CraftableUpgradeMod>> ListMods, TreeExpansion Expansion)
 	{
 		var Mbin = ExtractMbin<GcUnlockableTrees>("METADATA/REALITY/TABLES/UNLOCKABLEITEMTREES.MBIN");
 		UnlockableItemTreeEnum ExTree = Expansion.Tree;
@@ -440,13 +428,16 @@ public class CraftableUpgradeModsSandXonly: cmk.NMS.Script.ModClass
 
 		Tree.Trees.Add(ItemTree);
 
-		foreach( List<CraftableUpgradeMod> XMods in ListMods ) {
+		foreach(List<CraftableUpgradeMod> XMods in ListMods)
+		{
 			GcUnlockableItemTreeNode Parent = Root;
 			string Child = Root.Unlockable;
 
-			foreach( CraftableUpgradeMod XMod in XMods ) {
+			foreach(CraftableUpgradeMod XMod in XMods)
+			{
 				string ProductBase = XMod.UpgradeBase;
-				Parent.Children.Add(new GcUnlockableItemTreeNode {
+				Parent.Children.Add(new GcUnlockableItemTreeNode
+				{
 					Unlockable = ProductBase,
 					Children = new()
 				});
@@ -475,26 +466,8 @@ public class CraftableUpgradeModsSandXonly: cmk.NMS.Script.ModClass
 		SetLanguageText(LanguageId.TraditionalChinese, CraftedFreighterModDescrId, "可合成的貨船升級。 \n可以被移除及重新安裝於星際貨船上，以提升<TECHNOLOGY>科技元件<>效能。");
 		SetLanguageText(LanguageId.TenCentChinese, CraftedFreighterModDescrId, "可合成的貨船升級。 \n可以被移除及重新安裝於星際貨船上，以提升<TECHNOLOGY>科技元件<>效能。");
 		SetLanguageText(LanguageId.USEnglish, CraftedFreighterModDescrId, "A crafted freighter upgrade. \nCan be re-deployed into your own capital ship to improve its <TECHNOLOGY>Technology<>.");
-		SetLanguageText(LanguageId.Korean, CraftedFreighterModDescrId, "물류선 업그레이드. \n자신의 주력함에 다시 배치하여 <TECHNOLOGY>기술<>을 개선할 수 있습니다.");
-		SetLanguageText(LanguageId.Japanese, CraftedFreighterModDescrId, "Please provide translation in the comments. A crafted freighter upgrade.&#xA;&#xA;Can be re-deployed into your own capital ship to improve it's &lt;TECHNOLOGY&gt;Technology&lt;&gt;.");
-		// NAME strings
-		SetLanguageText(LanguageId.English, CraftedFreighterModNameId, "Freighter Module Package");
-		SetLanguageText(LanguageId.French, CraftedFreighterModNameId, "Ensemble de modules de cargo");
-		SetLanguageText(LanguageId.Italian, CraftedFreighterModNameId, "Pacchetto Modulo di Cargo");
-		SetLanguageText(LanguageId.German, CraftedFreighterModNameId, "Frachtermodule Paket");
-		SetLanguageText(LanguageId.Spanish, CraftedFreighterModNameId, "Paquete de Módulo de Carga");
-		SetLanguageText(LanguageId.Russian, CraftedFreighterModNameId, "Пакет Модулей Грузового Корабля");
-		SetLanguageText(LanguageId.Polish, CraftedFreighterModNameId, "Pakiet Modułu Frachtowca");
-		SetLanguageText(LanguageId.Dutch, CraftedFreighterModNameId, "Vlaggenschip Module Pakket");
-		SetLanguageText(LanguageId.Portuguese, CraftedFreighterModNameId, "Pacote de Módulo de Carga");
-		SetLanguageText(LanguageId.LatinAmericanSpanish, CraftedFreighterModNameId, "Paquete de Módulo de Carga");
-		SetLanguageText(LanguageId.BrazilianPortuguese, CraftedFreighterModNameId, "Pacote de Módulo de Carga");
-		SetLanguageText(LanguageId.SimplifiedChinese, CraftedFreighterModNameId, "货船模块包");
-		SetLanguageText(LanguageId.TraditionalChinese, CraftedFreighterModNameId, "货船模块包");
-		SetLanguageText(LanguageId.TenCentChinese, CraftedFreighterModNameId, "货船模块包");
-		SetLanguageText(LanguageId.USEnglish, CraftedFreighterModNameId, "Freighter Module Package");
-		SetLanguageText(LanguageId.Korean, CraftedFreighterModNameId, "화물선 모듈 패키지화물선 모듈 패키지");
-		SetLanguageText(LanguageId.Japanese, CraftedFreighterModNameId, "貨物船モジュールパッケージ");
+		//SetLanguageText(LanguageId.Korean, CraftedFreighterModDescrId, "");
+		//SetLanguageText(LanguageId.Japanese, CraftedFreighterModDescrId, "");
 	}
 }
 //=============================================================================

@@ -15,6 +15,7 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 	//readonly string FreighterRootTech = "FRIGATE_FUEL_1";
 	//readonly string FactoryTreeTech = "PRODFUEL2";
 	readonly string[] Classes = { "C", "B", "A", "S" };
+	List<LanguageString> Language_String_List = new List<LanguageString> ();
 
 	readonly QualityEnum[] QualityEnums = {
 		QualityEnum.Normal,
@@ -22,109 +23,14 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 		QualityEnum.Epic,
 		QualityEnum.Legendary
 	};
-
-	readonly Tuple <LanguageId , string, string>[] CustomLangNameStrings = new Tuple<LanguageId, string, string>[]
+	protected class LanguageString
 	{
-		//Place Holder name strings
-		new (LanguageId.English, "CL_WEAP_NAME", "Custom weapon module"),
-		new (LanguageId.English, "CL_JET_NAME", "Custom jetpack module"),
-		new (LanguageId.English, "CL_SHIP_NAME", "Custom ship module"),
-		new (LanguageId.English, "CL_SHIELD_NAME", "Custom shield module"),
-		//Custom names
-		new (LanguageId.English, "CL_MECHBOOST_NAME", "Procedural Mech Boost Module"),
-		new (LanguageId.English, "CL_AIRJET_NAME", "Procedural Jetpack Module"),
-		new (LanguageId.English, "CL_WATJET_NAME", "Procedural Dive Jetpack Module"),
-		new (LanguageId.English, "CL_COLD_NAME", "Procedural Cold Protection Module"),
-		new (LanguageId.English, "CL_HEAT_NAME", "Procedural Heat Protection Module"),
-		new (LanguageId.English, "CL_TOXIC_NAME", "Procedural Toxic Protection Module"),
-		new (LanguageId.English, "CL_RAD_NAME", "Procedural Radiation Protection Module"),
-		new (LanguageId.English, "CL_SHIPROT_NAME", "Procedural Suit Shield Module"),
-		new (LanguageId.English, "CL_SHOT_NAME", "Procedural Scatter-blaster Module"),
-		new (LanguageId.English, "CL_FLAME_NAME", "Procedural Flamer Module"),
-		new (LanguageId.English, "CL_ROCKPROC_NAME", "Procedural Rocket Module"),
-		new (LanguageId.English, "CL_ENERGY_NAME", "Procedural Hazard Module"),
-		new (LanguageId.English, "CL_DRIFT_NAME", "Procedural Drift Wheels"),
-
-		new (LanguageId.English, "CL_FATSGUN_NAME", "Ship Laser Amplifier"),
-		new (LanguageId.English, "CL_ROCK_TECH1", "Large Missle Tubes"),
-		new (LanguageId.English, "CL_ROCK_TECH2", "Missile Cooling vents"),
-		new (LanguageId.English, "CL_ROCK_TECH3", "High Yield Missles"),
-		new (LanguageId.English, "CL_MINI_TECH1", "HE Rounds"),
-		new (LanguageId.English, "CL_HYPER_NAME", "To Infinity And Beyond"),
-		new (LanguageId.English, "CL_HEATLASER_NAME", "Phase Beam Coollant"),
-		new (LanguageId.English, "CL_HEATGUN_NAME", "Photon Cannon space vents"),
-		new (LanguageId.English, "CL_HEATSHOT_NAME", "Positron Ejector Cooling Solution"),
-		new (LanguageId.English, "CL_SUPERSHOT_NAME", "Positron Ejector OverCharger"),
-
-		new (LanguageId.English, "CL_FRIEND_NAME", "FRIENDFire BobbleHead"),
-	};
-	readonly Tuple<LanguageId, string, string>[] CustomLangDescStrings = new Tuple<LanguageId, string, string>[]
-	{
-		new (LanguageId.English, "CL_WEAP_DESC", "A Procedural custom weapon module"),
-		new (LanguageId.English, "CL_JET_DESC", "A Procedural custom Jetpack module"),
-		new (LanguageId.English, "CL_SHIELD_DESC", "A Procedural custom shield module"),
-		new (LanguageId.English, "CL_SHIP_DESC", "A Procedural custom ship module"),
-
-		new (LanguageId.English, "CL_MECHBOOST_DESC", "Procedural Mech Boost Module" +
-			"\nThese will make you wonder, were the clouds always that close?" +
-			"\nThe modules improve Boost tanks and Boost Speed" +
-			"\nThis technology was manufactured by H.G. Corp"),
-		new (LanguageId.English, "CL_DRIFT_DESC", "Procedural Drift wheels." +
-			"\nEspecially usefull when the eurobeat kicks in. Just be aware of windy planets, your exocraft may or may not... get picked up" +
-			"\nThis technology was manufactured by H.G. Corp"),
-		new (LanguageId.English, "CL_AIRJET_DESC", "Procedural Jetpack Module" +
-			"\nThis modules will enhance your ability to soar the skies, by enhancing Ignition, Refill rate as well as your tanks total capacity" +
-			"\nThis technology was manufactured by H.G. Corp"),
-		new (LanguageId.English, "CL_WATJET_DESC", "Procedural Jetpack Module" +
-			"\nThis modules will enhance your ability to dive at impecable speeds, by enhancing Ignition, Refill rate as well as your tanks total capacity" +
-			"\nThis technology was manufactured by H.G. Corp"),
-		new (LanguageId.English, "CL_SHOT_DESC", "Procedural Scatter Blaster Module" +
-			"\nNot seen before these new modules bring some bouncy to the party and of course some additional damage" +
-			"\nThis technology was manufactured by H.G. Corp"),
-		new (LanguageId.English, "CL_SHIPROT_DESC", "Procedural shield Module" +
-			"This technological masterpiece will ad armour and health beyond what has seen before" +
-			"\nThis technology was manufactured by H.G. Corp"),
-		new (LanguageId.English, "CL_FLAME_DESC", "Procedural Flamer Module\nThese modules has the possibiliy of increase certain elements for your flamer." +
-			"\nIt can potentially increase the Amount of fire, Rate of fire add DOT effect and increase DOT duration." +
-			"\nThis technology was manufactured by H.G. Corp"),
-		new (LanguageId.English, "CL_ROCKPROC_DESC", "Procedural rocket Module\nThese modules has the possibiliy of increase certain elements for you shiprockets." +
-			"\nIt can potentially increase Damage, Radius, Number of Rockets, Decrease Cooldown and lastely Increase Despersion." +
-			"\nThis technology was manufactured by H.G. Corp"),
-		new (LanguageId.English, "CL_ENERGY_DESC", "Procedural hazard Module." +
-			"\nThese modules will drastically increase your Suit Energy and Suit Energy Regen." +
-			"\nThis technology was manufactured by H.G. Corp"),
-		new (LanguageId.English, "CL_PRCOLD_DESC", "Procedural Cold Protection" +
-			"\nProtection against freezing cold. These modules will drastically improve your survibility and shut the damn suit to recharge your technology" +
-			"\nThe modules bring Reduced Cold Drain, Reduced damage against the Cold and Increase your Cold Resistance. The cold never bothered me anyway." +
-			"\nThis technology was manufactured by H.G. Corp"),
-		new (LanguageId.English, "CL_PRHEAT_DESC", "Procedural Heat Protection" +
-			"\nProtection against scortching heat. These modules will drastically improve your survibility and shut the damn suit to recharge your technology" +
-			"\nThe modules bring Reduced Heat Drain, Reduced damage against the Heat and Increase your Heat Resistance. I guess drilling to the core of the planet is now possible" +
-			"\nThis technology was manufactured by H.G. Corp"),
-		new (LanguageId.English, "CL_PRTOXIC_DESC", "Procedural Toxic Protection" +
-			"\nProtection against toxic toxins. These modules will drastically improve your survibility and shut the damn suit to recharge your technology" +
-			"\nThe modules bring Reduced Toxic Drain, Reduced damage against the Toxins and Increase your Toxicity Resistance. No spiderman for you" +
-			"\nThis technology was manufactured by H.G. Corp"),
-		new (LanguageId.English, "CL_PRRAD_DESC", "Procedural Radiation Protection" +
-			"\nProtection against radioactive radiations. These modules will drastically improve your survibility and shut the damn suit to recharge your technology" +
-			"\nThe modules bring Reduced Radition Drain, Reduced damage against Raditaions and Increase your Radiation Resistance. Take that Fallout." +
-			"\nThis technology was manufactured by H.G. Corp"),
-
-		new (LanguageId.English, "CL_ROCK_DESC1", "These rocket pods hold more rockets, this might affect accuracry"),
-		new (LanguageId.English, "CL_ROCK_DESC2", "Cooling vents to missile tubes. Improves fire rate cooldown and more"),
-		new (LanguageId.English, "CL_ROCK_DESC3", "Increases blast radius. As a wise woman once said, and I quote \'EXPLOSION\'" +
-			"\nJust make sure to not be caught by it"),
-		new (LanguageId.English, "CL_MINI_DESC1", "Blast rounds. When the brrrt needs more oompf"),
-		new (LanguageId.English, "CL_HYPER_DESC", "This hyperdrive will let you shoot for the stars,..." +
-			"\nJust make sure you don't crash into them"),
-		new (LanguageId.English, "CL_FATSGUN_DESC", "If you ever thought, hey why are the laser projectiles so small, think no futher"),
-		new (LanguageId.English, "CL_HEATLASER_DESC", "Cools down your Phase Bean should now last quite a bit longer"),
-		new (LanguageId.English, "CL_HEATGUN_DESC", "Will keep your Photon Cannon from overheating"),
-		new (LanguageId.English, "CL_HEATSHOT_DESC", "Cools down Positron Ejector, should in theory offer you more shots"),
-		new (LanguageId.English, "CL_SUPERSHOT_DESC", "Positron Ejector OverCharger modules will let you you turn up a certain song\n" +
-			"Queue: Rip and Tear, Warning might be addictive")
-	};
-
+		public LanguageId Id;
+		public string Language_Base;
+		public string Name;
+		public string Description;
+		public string Subtitle;
+	}
 	protected class CustomTemplate
 	{
 		public string TemplateBaseID;
@@ -167,8 +73,7 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 		public string BaseTechID;
 		public string NewTechID;
 		public string RequiredTech;
-		public string Name;
-		public string Description;
+		public string LanguageBase;
 		public int FragmentCost;
 		public TechnologyRarityEnum TechnologyRarity;
 		public GcTechnologyCategory.TechnologyCategoryEnum TechnologyCategory;
@@ -181,9 +86,8 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 		new CustomUpgradeTech{
 			BaseTechID = "UT_ROCKETS", //from what tech we will we copy as base
 			NewTechID = "UT_ROCKETS_MISS",
-			RequiredTech = "SHIPROCKETS", 
-			Name = "CL_ROCK_TECH1",
-			Description = "CL_ROCK_DESC2",
+			RequiredTech = "SHIPROCKETS",
+			LanguageBase = "ROCK_TECH1",
 			FragmentCost = 400,
 			TechnologyRarity = TechnologyRarityEnum.VeryRare,
 			TechnologyCategory = GcTechnologyCategory.TechnologyCategoryEnum.AllShipsExceptAlien,
@@ -202,8 +106,7 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 			BaseTechID = "UT_ROCKETS",
 			NewTechID = "UT_ROCKETS_COOL",
 			RequiredTech = "SHIPROCKETS",
-			Name = "CL_ROCK_TECH2",
-			Description = "CL_ROCK_DESC2",
+			LanguageBase = "ROCK_TECH2",
 			FragmentCost = 600,
 			TechnologyRarity = TechnologyRarityEnum.VeryRare,
 			TechnologyCategory = GcTechnologyCategory.TechnologyCategoryEnum.AllShipsExceptAlien,
@@ -222,9 +125,8 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 		new CustomUpgradeTech{
 			BaseTechID = "UT_ROCKETS",
 			NewTechID = "UT_ROCKETS_BLAS",
-			RequiredTech = "SHIPROCKETS", 
-			Name = "CL_ROCK_TECH3", 
-			Description = "CL_ROCK_DESC3", 
+			RequiredTech = "SHIPROCKETS",
+			LanguageBase = "ROCK_TECH3",
 			FragmentCost = 800,
 			TechnologyRarity = TechnologyRarityEnum.VeryRare,
 			TechnologyCategory = GcTechnologyCategory.TechnologyCategoryEnum.AllShipsExceptAlien,
@@ -241,9 +143,8 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 		new CustomUpgradeTech{
 			BaseTechID = "UT_SHIPMINI",
 			NewTechID = "UT_INFRA_BLAS",
-			RequiredTech = "SHIPMINIGUN", 
-			Name = "CL_MINI_TECH1", 
-			Description = "CL_MINI_DESC1", 
+			RequiredTech = "SHIPMINIGUN",
+			LanguageBase = "MINI_TECH1",
 			FragmentCost = 500,
 			TechnologyRarity = TechnologyRarityEnum.VeryRare,
 			TechnologyCategory = GcTechnologyCategory.TechnologyCategoryEnum.AllShipsExceptAlien,
@@ -262,8 +163,7 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 			BaseTechID = "UT_QUICKWARP",
 			NewTechID = "UT_HYPER_BEYOND",
 			RequiredTech = "HYPERDRIVE",
-			Name = "CL_HYPER_NAME",
-			Description = "CL_HYPER_DESC",
+			LanguageBase = "HYPER_BEYOND",
 			FragmentCost = 25000,
 			TechnologyRarity = TechnologyRarityEnum.VeryRare,
 			TechnologyCategory = GcTechnologyCategory.TechnologyCategoryEnum.AllShipsExceptAlien,
@@ -282,8 +182,7 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 			BaseTechID = "UT_SHIPGUN",
 			NewTechID = "UT_FATSGUN",
 			RequiredTech = "SHIPGUN1",
-			Name = "CL_FATSGUN_NAME",
-			Description = "CL_FATSGUN_DESC",
+			LanguageBase = "FATSGUN",
 			FragmentCost = 500,
 			TechnologyRarity = TechnologyRarityEnum.VeryRare,
 			TechnologyCategory = GcTechnologyCategory.TechnologyCategoryEnum.AllShipsExceptAlien,
@@ -303,8 +202,7 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 			BaseTechID = "UT_SHIPGUN",
 			NewTechID = "UT_HEAT_SGUN",
 			RequiredTech = "SHIPGUN1",
-			Name = "CL_HEATGUN_NAME",
-			Description = "CL_HEATGUN_DESC",
+			LanguageBase = "HEATSGUN",
 			FragmentCost = 1000,
 			TechnologyRarity = TechnologyRarityEnum.VeryRare,
 			TechnologyCategory = GcTechnologyCategory.TechnologyCategoryEnum.AllShipsExceptAlien,
@@ -323,8 +221,7 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 			BaseTechID = "UT_SHIPLAS",
 			NewTechID = "UT_HEAT_SLASER",
 			RequiredTech = "SHIPLASER",
-			Name = "CL_HEATLASER_NAME",
-			Description = "CL_HEATLASER_DESC",
+			LanguageBase = "HEATSLASER",
 			FragmentCost = 1000,
 			TechnologyRarity = TechnologyRarityEnum.VeryRare,
 			TechnologyCategory = GcTechnologyCategory.TechnologyCategoryEnum.AllShipsExceptAlien,
@@ -343,8 +240,7 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 			BaseTechID = "UT_SHIPSHOT",
 			NewTechID = "UT_HEAT_SHOT",
 			RequiredTech = "SHIPSHOTGUN",
-			Name = "CL_HEATSHOT_NAME",
-			Description = "CL_HEATSHOT_DESC",
+			LanguageBase = "HEATSHOT",
 			FragmentCost = 1000,
 			TechnologyRarity = TechnologyRarityEnum.VeryRare,
 			TechnologyCategory = GcTechnologyCategory.TechnologyCategoryEnum.AllShipsExceptAlien,
@@ -364,8 +260,7 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 			BaseTechID = "UT_SHIPSHOT",
 			NewTechID = "UT_SUPER_SHOT",
 			RequiredTech = "SHIPSHOTGUN",
-			Name = "CL_SUPERSHOT_NAME",
-			Description = "CL_SUPERSHOT_DESC",
+			LanguageBase = "SUPERSHOT",
 			FragmentCost = 25000,
 			TechnologyRarity = TechnologyRarityEnum.VeryRare,
 			TechnologyCategory = GcTechnologyCategory.TechnologyCategoryEnum.AllShipsExceptAlien,
@@ -380,6 +275,316 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 				TechnologyRequirement.Product("TECH_COMP", 5),
 				TechnologyRequirement.Substance("BLUE2", 500),
 				TechnologyRequirement.Product("COMPOUND4", 10)
+			}
+		},
+		new CustomUpgradeTech {
+			BaseTechID = "UT_COLD",
+			NewTechID = "UT_COLD2",
+			RequiredTech = "",
+			LanguageBase = "COLDR",
+			FragmentCost = 500,
+			TechnologyRarity = TechnologyRarityEnum.VeryRare,
+			TechnologyCategory = GcTechnologyCategory.TechnologyCategoryEnum.Suit,
+			FileName = "TEXTURES/UI/FRONTEND/ICONS/TECHNOLOGY/RENDER.PROTECTCOLD.DDS",
+			StatBonuses = new List<GcStatsBonus>()
+			{
+				StatsBonus.Create(StatsTypeEnum.Suit_Protection_ColdDrain, 1.5f, 2),
+			},
+			Requirements = new List<GcTechnologyRequirement>(){
+				TechnologyRequirement.Substance("COLD1", 300),
+				TechnologyRequirement.Substance("ASTEROID1", 120),
+				TechnologyRequirement.Substance("YELLOW2", 120)
+			}
+		},
+		new CustomUpgradeTech {
+			BaseTechID = "UT_COLD",
+			NewTechID = "UT_COLD3",
+			RequiredTech = "",
+			LanguageBase = "COLDR",
+			FragmentCost = 1000,
+			TechnologyRarity = TechnologyRarityEnum.VeryRare,
+			TechnologyCategory = GcTechnologyCategory.TechnologyCategoryEnum.Suit,
+			FileName = "TEXTURES/UI/FRONTEND/ICONS/TECHNOLOGY/RENDER.PROTECTCOLD.DDS",
+			StatBonuses = new List<GcStatsBonus>()
+			{
+				StatsBonus.Create(StatsTypeEnum.Suit_Protection_ColdDrain, 2, 3),
+			},
+			Requirements = new List<GcTechnologyRequirement>(){
+				TechnologyRequirement.Substance("COLD1", 1000),
+				TechnologyRequirement.Substance("ASTEROID1", 500),
+				TechnologyRequirement.Substance("YELLOW2", 500)
+			}
+		},
+		new CustomUpgradeTech {
+			BaseTechID = "UT_COLD",
+			NewTechID = "UT_COLD4",
+			RequiredTech = "",
+			LanguageBase = "COLDR",
+			FragmentCost = 2500,
+			TechnologyRarity = TechnologyRarityEnum.VeryRare,
+			TechnologyCategory = GcTechnologyCategory.TechnologyCategoryEnum.Suit,
+			FileName = "TEXTURES/UI/FRONTEND/ICONS/TECHNOLOGY/RENDER.PROTECTCOLD.DDS",
+			StatBonuses = new List<GcStatsBonus>()
+			{
+				StatsBonus.Create(StatsTypeEnum.Suit_Protection_ColdDrain, 2, 4),
+			},
+			Requirements = new List<GcTechnologyRequirement>(){
+				TechnologyRequirement.Substance("COLD1", 300),
+				TechnologyRequirement.Substance("ASTEROID1", 120),
+				TechnologyRequirement.Product("FARMPROD4", 1)
+			}
+		},
+		new CustomUpgradeTech {
+			BaseTechID = "UT_HOT",
+			NewTechID = "UT_HEAT2",
+			RequiredTech = "",
+			LanguageBase = "HEATR",
+			FragmentCost = 500,
+			TechnologyRarity = TechnologyRarityEnum.VeryRare,
+			TechnologyCategory = GcTechnologyCategory.TechnologyCategoryEnum.Suit,
+			FileName = "TEXTURES/UI/FRONTEND/ICONS/TECHNOLOGY/RENDER.PROTECTHEAT.DDS",
+			StatBonuses = new List<GcStatsBonus>()
+			{
+				StatsBonus.Create(StatsTypeEnum.Suit_Protection_HeatDrain, 1.5f, 2),
+			},
+			Requirements = new List<GcTechnologyRequirement>(){
+				TechnologyRequirement.Substance("HOT1", 300),
+				TechnologyRequirement.Substance("ASTEROID1", 120),
+				TechnologyRequirement.Substance("YELLOW2", 120)
+			}
+		},
+		new CustomUpgradeTech {
+			BaseTechID = "UT_HOT",
+			NewTechID = "UT_HEAT3",
+			RequiredTech = "",
+			LanguageBase = "HEATR",
+			FragmentCost = 1000,
+			TechnologyRarity = TechnologyRarityEnum.VeryRare,
+			TechnologyCategory = GcTechnologyCategory.TechnologyCategoryEnum.Suit,
+			FileName = "TEXTURES/UI/FRONTEND/ICONS/TECHNOLOGY/RENDER.PROTECTHEAT.DDS",
+			StatBonuses = new List<GcStatsBonus>()
+			{
+				StatsBonus.Create(StatsTypeEnum.Suit_Protection_HeatDrain, 2, 3),
+			},
+			Requirements = new List<GcTechnologyRequirement>(){
+				TechnologyRequirement.Substance("HOT1", 1000),
+				TechnologyRequirement.Substance("ASTEROID1", 500),
+				TechnologyRequirement.Substance("YELLOW2", 500)
+			}
+		},
+		new CustomUpgradeTech {
+			BaseTechID = "UT_HOT",
+			NewTechID = "UT_HEAT4",
+			RequiredTech = "",
+			LanguageBase = "HEATR",
+			FragmentCost = 2500,
+			TechnologyRarity = TechnologyRarityEnum.VeryRare,
+			TechnologyCategory = GcTechnologyCategory.TechnologyCategoryEnum.Suit,
+			FileName = "TEXTURES/UI/FRONTEND/ICONS/TECHNOLOGY/RENDER.PROTECTHEAT.DDS",
+			StatBonuses = new List<GcStatsBonus>()
+			{
+				StatsBonus.Create(StatsTypeEnum.Suit_Protection_HeatDrain, 2, 4),
+			},
+			Requirements = new List<GcTechnologyRequirement>(){
+				TechnologyRequirement.Substance("HOT1", 300),
+				TechnologyRequirement.Substance("ASTEROID1", 120),
+				TechnologyRequirement.Product("SALVAGE_TECH5", 1)
+			}
+		},
+		new CustomUpgradeTech {
+			BaseTechID = "UT_TOX",
+			NewTechID = "UT_TOXIC2",
+			RequiredTech = "",
+			LanguageBase = "TOXICR",
+			FragmentCost = 500,
+			TechnologyRarity = TechnologyRarityEnum.VeryRare,
+			TechnologyCategory = GcTechnologyCategory.TechnologyCategoryEnum.Suit,
+			FileName = "TEXTURES/UI/FRONTEND/ICONS/TECHNOLOGY/RENDER.PROTECTTOXIC.DDS",
+			StatBonuses = new List<GcStatsBonus>()
+			{
+				StatsBonus.Create(StatsTypeEnum.Suit_Protection_ToxDrain, 1.5f, 2),
+			},
+			Requirements = new List<GcTechnologyRequirement>(){
+				TechnologyRequirement.Substance("TOXIC1", 300),
+				TechnologyRequirement.Substance("ASTEROID1", 120),
+				TechnologyRequirement.Substance("YELLOW2", 120)
+			}
+		},
+		new CustomUpgradeTech {
+			BaseTechID = "UT_TOX",
+			NewTechID = "UT_TOXIC3",
+			RequiredTech = "",
+			LanguageBase = "TOXICR",
+			FragmentCost = 1000,
+			TechnologyRarity = TechnologyRarityEnum.VeryRare,
+			TechnologyCategory = GcTechnologyCategory.TechnologyCategoryEnum.Suit,
+			FileName = "TEXTURES/UI/FRONTEND/ICONS/TECHNOLOGY/RENDER.PROTECTTOXIC.DDS",
+			StatBonuses = new List<GcStatsBonus>()
+			{
+				StatsBonus.Create(StatsTypeEnum.Suit_Protection_ToxDrain, 2, 3),
+			},
+			Requirements = new List<GcTechnologyRequirement>(){
+				TechnologyRequirement.Substance("TOXIC1", 1000),
+				TechnologyRequirement.Substance("ASTEROID1", 500),
+				TechnologyRequirement.Substance("YELLOW2", 500)
+			}
+		},
+		new CustomUpgradeTech {
+			BaseTechID = "UT_TOX",
+			NewTechID = "UT_TOXIC4",
+			RequiredTech = "",
+			LanguageBase = "TOXICR",
+			FragmentCost = 2500,
+			TechnologyRarity = TechnologyRarityEnum.VeryRare,
+			TechnologyCategory = GcTechnologyCategory.TechnologyCategoryEnum.Suit,
+			FileName = "TEXTURES/UI/FRONTEND/ICONS/TECHNOLOGY/RENDER.PROTECTTOXIC.DDS",
+			StatBonuses = new List<GcStatsBonus>()
+			{
+				StatsBonus.Create(StatsTypeEnum.Suit_Protection_ToxDrain, 2, 4),
+			},
+			Requirements = new List<GcTechnologyRequirement>(){
+				TechnologyRequirement.Substance("TOXIC1", 300),
+				TechnologyRequirement.Substance("ASTEROID1", 120),
+				TechnologyRequirement.Product("OXY_CRAFT", 1)
+			}
+		},
+		new CustomUpgradeTech {
+			BaseTechID = "UT_RAD",
+			NewTechID = "UT_RAD2",
+			RequiredTech = "",
+			LanguageBase = "RADR",
+			FragmentCost = 500,
+			TechnologyRarity = TechnologyRarityEnum.VeryRare,
+			TechnologyCategory = GcTechnologyCategory.TechnologyCategoryEnum.Suit,
+			FileName = "TEXTURES/UI/FRONTEND/ICONS/TECHNOLOGY/RENDER.PROTECTRADS.DDS",
+			StatBonuses = new List<GcStatsBonus>()
+			{
+				StatsBonus.Create(StatsTypeEnum.Suit_Protection_RadDrain, 1.5f, 2),
+			},
+			Requirements = new List<GcTechnologyRequirement>(){
+				TechnologyRequirement.Substance("RADIO1", 300),
+				TechnologyRequirement.Substance("ASTEROID1", 120),
+				TechnologyRequirement.Substance("YELLOW2", 120)
+			}
+		},
+		new CustomUpgradeTech {
+			BaseTechID = "UT_RAD",
+			NewTechID = "UT_RAD3",
+			RequiredTech = "",
+			LanguageBase = "RADR",
+			FragmentCost = 1000,
+			TechnologyRarity = TechnologyRarityEnum.VeryRare,
+			TechnologyCategory = GcTechnologyCategory.TechnologyCategoryEnum.Suit,
+			FileName = "TEXTURES/UI/FRONTEND/ICONS/TECHNOLOGY/RENDER.PROTECTRADS.DDS",
+			StatBonuses = new List<GcStatsBonus>()
+			{
+				StatsBonus.Create(StatsTypeEnum.Suit_Protection_RadDrain, 2, 3),
+			},
+			Requirements = new List<GcTechnologyRequirement>(){
+				TechnologyRequirement.Substance("RADIO1", 1000),
+				TechnologyRequirement.Substance("ASTEROID1", 500),
+				TechnologyRequirement.Substance("YELLOW2", 500)
+			}
+		},
+		new CustomUpgradeTech {
+			BaseTechID = "UT_RAD",
+			NewTechID = "UT_RAD4",
+			RequiredTech = "",
+			LanguageBase = "RADR",
+			FragmentCost = 2500,
+			TechnologyRarity = TechnologyRarityEnum.VeryRare,
+			TechnologyCategory = GcTechnologyCategory.TechnologyCategoryEnum.Suit,
+			FileName = "TEXTURES/UI/FRONTEND/ICONS/TECHNOLOGY/RENDER.PROTECTRADS.DDS",
+			StatBonuses = new List<GcStatsBonus>()
+			{
+				StatsBonus.Create(StatsTypeEnum.Suit_Protection_RadDrain, 2, 4),
+			},
+			Requirements = new List<GcTechnologyRequirement>(){
+				TechnologyRequirement.Substance("RADIO1", 300),
+				TechnologyRequirement.Substance("ASTEROID1", 120),
+				TechnologyRequirement.Product("WATER_CRAFT", 1)
+			}
+		},
+		new CustomUpgradeTech {
+			BaseTechID = "UT_WATER",
+			NewTechID = "UT_WATER3",
+			RequiredTech = "",
+			LanguageBase = "WATERR",
+			FragmentCost = 1000,
+			TechnologyRarity = TechnologyRarityEnum.VeryRare,
+			TechnologyCategory = GcTechnologyCategory.TechnologyCategoryEnum.Suit,
+			FileName = "TEXTURES/UI/FRONTEND/ICONS/TECHNOLOGY/RENDER.HELMET.DDS",
+			StatBonuses = new List<GcStatsBonus>()
+			{
+				StatsBonus.Create(StatsTypeEnum.Suit_Protection_WaterDrain, 2, 3),
+			},
+			Requirements = new List<GcTechnologyRequirement>(){
+				TechnologyRequirement.Substance("YELLOW2", 150),
+				TechnologyRequirement.Substance("ASTEROID1", 120),
+				TechnologyRequirement.Product("JELLY", 50)
+			}
+		},
+		new CustomUpgradeTech {
+			BaseTechID = "UT_WATER",
+			NewTechID = "UT_WATER4",
+			RequiredTech = "",
+			LanguageBase = "WATERR",
+			FragmentCost = 2500,
+			TechnologyRarity = TechnologyRarityEnum.VeryRare,
+			TechnologyCategory = GcTechnologyCategory.TechnologyCategoryEnum.Suit,
+			FileName = "TEXTURES/UI/FRONTEND/ICONS/TECHNOLOGY/RENDER.HELMET.DDS",
+			StatBonuses = new List<GcStatsBonus>()
+			{
+				StatsBonus.Create(StatsTypeEnum.Suit_Protection_WaterDrain, 5, 4),
+			},
+			Requirements = new List<GcTechnologyRequirement>(){
+				TechnologyRequirement.Substance("ASTEROID1", 500),
+				TechnologyRequirement.Product("VENTGEM", 100),
+				TechnologyRequirement.Product("PRODFUEL2", 100)
+			}
+		},
+		new CustomUpgradeTech {
+			BaseTechID = "MECH_ARMY_R_ARM",
+			NewTechID = "UT_EXOFLAME",
+			RequiredTech = "",
+			LanguageBase = "EXOFLAME",
+			FragmentCost = 2500,
+			TechnologyRarity = TechnologyRarityEnum.VeryRare,
+			TechnologyCategory = GcTechnologyCategory.TechnologyCategoryEnum.Suit,
+			FileName = "TEXTURES/UI/FRONTEND/ICONS/TECHNOLOGY/VEHICLE/RENDER.MECH.ARMY.RARM.DDS",
+			StatBonuses = new List<GcStatsBonus>()
+			{
+				StatsBonus.Create(StatsTypeEnum.Vehicle_GunDamage, 3, 3),
+				StatsBonus.Create(StatsTypeEnum.Vehicle_GunHeatTime, 0.75f, 1),
+				StatsBonus.Create(StatsTypeEnum.Vehicle_GunRate, 0.08f, 1),
+				StatsBonus.Create(StatsTypeEnum.Weapon_FireDOT, 1, 4),
+				StatsBonus.Create(StatsTypeEnum.Weapon_FireDOT_Duration, 3, 4),
+				StatsBonus.Create(StatsTypeEnum.Weapon_FireDOT_DPS, 25, 1),
+			},
+			Requirements = new List<GcTechnologyRequirement>(){
+				TechnologyRequirement.Product("GRENFUEL1", 3),
+				TechnologyRequirement.Product("FUEL2", 60),
+				TechnologyRequirement.Product("TECH_COMP", 2)
+			}
+		},
+		new CustomUpgradeTech {
+			BaseTechID = "MECH_ARMY_L_ARM",
+			NewTechID = "UT_EXOSTUN",
+			RequiredTech = "",
+			LanguageBase = "EXOSTUN",
+			FragmentCost = 2500,
+			TechnologyRarity = TechnologyRarityEnum.VeryRare,
+			TechnologyCategory = GcTechnologyCategory.TechnologyCategoryEnum.Suit,
+			FileName = "TEXTURES/UI/FRONTEND/ICONS/TECHNOLOGY/VEHICLE/RENDER.STUNDAMAGEMOD.DDS",
+			StatBonuses = new List<GcStatsBonus>()
+			{
+				StatsBonus.Create(StatsTypeEnum.Vehicle_GunDamage, 20, 3),
+				StatsBonus.Create(StatsTypeEnum.Vehicle_GunHeatTime, 0.5f, 1),
+				StatsBonus.Create(StatsTypeEnum.Vehicle_GunRate, 0.5f, 1),
+			},
+			Requirements = new List<GcTechnologyRequirement>(){
+				TechnologyRequirement.Product("POWERCELL", 2),
+				TechnologyRequirement.Product("CASING", 5),
 			}
 		},
 	};
@@ -397,9 +602,9 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 		public int MaxStats;
 		public float MultiplierPerRank;
 		public string IconFileName;
-		public string Name;
-		public string ProcName;
-		public string Description;
+		public string ProcTechName;
+		public string LanguageBase;
+		public string LanguageBaseProcOverride;
 		public string TradeData;
 		public List<GcProceduralTechnologyStatLevel> StatBonuses;
 	}
@@ -415,9 +620,9 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 			MaxStats = 4,
 			MultiplierPerRank = 0.2f,
 			IconFileName = "GRENADE.DDS",
-			Name = "CL_ROCKPROC_NAME",
-			ProcName = "UP_SHIPSHOT",
-			Description = "CL_ROCKPROC_DESC",
+			ProcTechName = "UP_SHIPGUN",
+			LanguageBase = "ROCKPROC",
+			LanguageBaseProcOverride = "PRROCK",
 			TradeData = "ShipTechSpecialist",
 			StatBonuses = new List<GcProceduralTechnologyStatLevel>() {
 				ProceduralTechnologyStatLevel.Create(StatsTypeEnum.Ship_Weapons_Guns_Damage, 1000, 2500, WeightingCurveEnum.MaxIsUncommon, true),
@@ -438,12 +643,11 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 			MaxStats = 4,
 			MultiplierPerRank = 0.2f,
 			IconFileName = "HEAT.DDS",
-			Name = "CL_FLAME_NAME",
-			ProcName = "UP_SHOT",
-			Description = "CL_FLAME_DESC",
+			ProcTechName = "UP_SHOT",
+			LanguageBase = "FLAME",
+			LanguageBaseProcOverride = "",
 			TradeData = "WeapTechSpecialist",
 			StatBonuses = new List<GcProceduralTechnologyStatLevel>() {
-				ProceduralTechnologyStatLevel.Create(StatsTypeEnum.Weapon_Projectile_BulletsPerShot, 0.5f, 0.75f, WeightingCurveEnum.MaxIsRare, true),
 				ProceduralTechnologyStatLevel.Create(StatsTypeEnum.Weapon_Projectile_Damage, 1.1f, 2.5f, WeightingCurveEnum.MaxIsRare, true),
 				ProceduralTechnologyStatLevel.Create(StatsTypeEnum.Weapon_Projectile_Rate, 1.25f, 1.5f, WeightingCurveEnum.MaxIsUncommon, true),
 				ProceduralTechnologyStatLevel.Create(StatsTypeEnum.Weapon_FireDOT_DPS, 10, 15, WeightingCurveEnum.MaxIsUncommon, true),
@@ -462,9 +666,9 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 			MaxStats = 2,
 			MultiplierPerRank = 0.3f,
 			IconFileName = "LIFESUPPORT.DDS",
-			Name = "CL_ENERGY_NAME",
-			ProcName = "UP_LIFEBOOST",
-			Description = "CL_ENERGY_DESC",
+			ProcTechName = "UP_LIFEBOOST",
+			LanguageBase = "ENERGY",
+			LanguageBaseProcOverride = "",
 			TradeData = "SuitTechSpecialist",
 			StatBonuses = new List<GcProceduralTechnologyStatLevel>() {
 				ProceduralTechnologyStatLevel.Create(StatsTypeEnum.Suit_Energy, 1.5f, 2.5f, WeightingCurveEnum.MaxIsUncommon, true),
@@ -483,9 +687,9 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 			MaxStats = 3,
 			MultiplierPerRank = 0.3f,
 			IconFileName = "COLD.DDS",
-			Name = "CL_COLD_NAME",
-			ProcName = "UP_COLDPROT",
-			Description = "CL_PRCOLD_DESC",
+			ProcTechName = "UP_COLDPROT",
+			LanguageBase = "PRCOLD",
+			LanguageBaseProcOverride = "",
 			TradeData = "SuitTechSpecialist",
 			StatBonuses = new List<GcProceduralTechnologyStatLevel>() {
 				ProceduralTechnologyStatLevel.Create(StatsTypeEnum.Suit_Protection_Cold, 400, 500, WeightingCurveEnum.MaxIsUncommon, true),
@@ -505,9 +709,9 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 			MaxStats = 3,
 			MultiplierPerRank = 0.3f,
 			IconFileName = "HEAT.DDS",
-			Name = "CL_HEAT_NAME",
-			ProcName = "UP_HOTPROT",
-			Description = "CL_PRHEAT_DESC",
+			ProcTechName = "UP_HOTPROT",
+			LanguageBase = "PRHEAT",
+			LanguageBaseProcOverride = "",
 			TradeData = "SuitTechSpecialist",
 			StatBonuses = new List<GcProceduralTechnologyStatLevel>() {
 				ProceduralTechnologyStatLevel.Create(StatsTypeEnum.Suit_Protection_Heat, 400, 500, WeightingCurveEnum.MaxIsUncommon, true),
@@ -527,9 +731,9 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 			MaxStats = 3,
 			MultiplierPerRank = 0.3f,
 			IconFileName = "TOXIC.DDS",
-			Name = "CL_TOXIC_NAME",
-			ProcName = "UP_TOXPROT",
-			Description = "CL_PRTOXIC_DESC",
+			ProcTechName = "UP_TOX",
+			LanguageBase = "PRTOXIC",
+			LanguageBaseProcOverride = "",
 			TradeData = "SuitTechSpecialist",
 			StatBonuses = new List<GcProceduralTechnologyStatLevel>() {
 				ProceduralTechnologyStatLevel.Create(StatsTypeEnum.Suit_Protection_Radiation, 400, 500, WeightingCurveEnum.MaxIsUncommon, true),
@@ -549,9 +753,9 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 			MaxStats = 3,
 			MultiplierPerRank = 0.3f,
 			IconFileName = "RADIOACTIVE.DDS",
-			Name = "CL_RAD_NAME",
-			ProcName = "UP_RADPROT",
-			Description = "CL_PRRAD_DESC",
+			ProcTechName = "UP_RAD",
+			LanguageBase = "PRRAD",
+			LanguageBaseProcOverride = "",
 			TradeData = "SuitTechSpecialist",
 			StatBonuses = new List<GcProceduralTechnologyStatLevel>() {
 				ProceduralTechnologyStatLevel.Create(StatsTypeEnum.Suit_Protection_Toxic, 400, 500, WeightingCurveEnum.MaxIsUncommon, true),
@@ -571,9 +775,9 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 			MaxStats = 2,
 			MultiplierPerRank = 0.25f,
 			IconFileName = "HEALTH.DDS",
-			Name = "CL_SHIPROT_NAME",
-			ProcName = "UP_SHIELDBOOST",
-			Description = "CL_SHIPROT_DESC",
+			ProcTechName = "UP_SHIELDBOOST",
+			LanguageBase = "SUITSHIELD",
+			LanguageBaseProcOverride = "",
 			TradeData = "SuitTechSpecialist",
 			StatBonuses = new List<GcProceduralTechnologyStatLevel>() {
 				ProceduralTechnologyStatLevel.Create(StatsTypeEnum.Suit_Armour_Shield_Strength, 0.5f, 1, WeightingCurveEnum.MaxIsUncommon, true),
@@ -592,9 +796,9 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 			MaxStats = 3,
 			MultiplierPerRank = 0.2f,
 			IconFileName = "SHOTGUN.DDS",
-			Name = "CL_SHOT_NAME",
-			ProcName = "UP_SHOT",
-			Description = "CL_SHOT_DESC",
+			ProcTechName = "UP_SHOT",
+			LanguageBase = "SHOT",
+			LanguageBaseProcOverride = "",
 			TradeData = "WeapTechSpecialist",
 			StatBonuses = new List<GcProceduralTechnologyStatLevel>() {
 				ProceduralTechnologyStatLevel.Create(StatsTypeEnum.Weapon_Projectile_BulletsPerShot, 0.5f, 0.75f, WeightingCurveEnum.MaxIsRare, true),
@@ -614,9 +818,9 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 			MaxStats = 4,
 			MultiplierPerRank = 0.25f,
 			IconFileName = "JETPACK.DDS",
-			Name = "CL_AIRJET_NAME",
-			ProcName = "UP_JETBOOST",
-			Description = "CL_AIRJET_DESC",
+			ProcTechName = "UP_JETBOOST",
+			LanguageBase = "AIRJET",
+			LanguageBaseProcOverride = "",
 			TradeData = "SuitTechSpecialist",
 			StatBonuses = new List<GcProceduralTechnologyStatLevel>() {
 				ProceduralTechnologyStatLevel.Create(StatsTypeEnum.Suit_Jetpack_Refill, 1.75f, 3f, WeightingCurveEnum.MaxIsUncommon, true),
@@ -636,9 +840,9 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 			MaxStats = 2,
 			MultiplierPerRank = 0.25f,
 			IconFileName = "JETPACK.DDS",
-			Name = "CL_WATJET_NAME",
-			ProcName = "UP_WATERJET",
-			Description = "CL_WATJET_DESC",
+			ProcTechName = "UP_JETBOOST",
+			LanguageBase = "WATJET",
+			LanguageBaseProcOverride = "",
 			TradeData = "SuitTechSpecialist",
 			StatBonuses = new List<GcProceduralTechnologyStatLevel>() {
 				ProceduralTechnologyStatLevel.Create(StatsTypeEnum.Suit_Jetpack_WaterEfficiency, 5, 25, WeightingCurveEnum.MaxIsUncommon, true),
@@ -657,9 +861,9 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 			MaxStats = 3,
 			MultiplierPerRank = 0.25f,
 			IconFileName = "VEHICLEBOOST.DDS",
-			Name = "CL_DRIFT_NAME",
-			ProcName = "UP_JETBOOST",
-			Description = "CL_DRIFT_DESC",
+			ProcTechName = "UP_JETBOOST",
+			LanguageBase = "DRIFT",
+			LanguageBaseProcOverride = "",
 			TradeData = "VehicleTechSpecialist",
 			StatBonuses = new List<GcProceduralTechnologyStatLevel>() {
 				ProceduralTechnologyStatLevel.Create(StatsTypeEnum.Vehicle_SkidGrip, -0.05f, -0.1f, WeightingCurveEnum.MaxIsUncommon, true),
@@ -679,9 +883,9 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 			MaxStats = 3,
 			MultiplierPerRank = 0.25f,
 			IconFileName = "VEHICLEBOOST.DDS",
-			Name = "CL_MECHBOOST_NAME",
-			ProcName = "UP_JETBOOST",
-			Description = "CL_MECHBOOST_DESC",
+			ProcTechName = "UP_BOOST",
+			LanguageBase = "MECHBOOST",
+			LanguageBaseProcOverride = "",
 			TradeData = "VehicleTechSpecialist",
 			StatBonuses = new List<GcProceduralTechnologyStatLevel>() {
 				ProceduralTechnologyStatLevel.Create(StatsTypeEnum.Vehicle_BoostTanks, 2.5f, 5, WeightingCurveEnum.MaxIsUncommon, true),
@@ -745,6 +949,8 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 	//====================================================================
 	protected override void Execute()
 	{
+		FillLanguageList();
+		AddLanguageStrings();
 		TreeExpansion ShipTreeExpansion = new TreeExpansion { Tree = UnlockableItemTreeEnum.ShipTech, CostType = CostTypeNanite, RootTech = ShipRootTech };
 		TreeExpansion WeaponTreeExpansion = new TreeExpansion { Tree = UnlockableItemTreeEnum.WeapTech, CostType = CostTypeNanite, RootTech = WeaponRootTech };
 		TreeExpansion ExoCraftTreeExpansion = new TreeExpansion { Tree = UnlockableItemTreeEnum.ExocraftTech, CostType = CostTypeNanite, RootTech = ExoRootTech };
@@ -761,7 +967,7 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 		CreateCustomTempates();
 		CreateCustomTech();
 		CreateCustomProceduralMods();
-		GcUnlockableTrees();
+		AddToUnlockableItemTree();
 		EditExistingTech();
 
 		foreach (var ModData in AllModData)
@@ -775,28 +981,297 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 			}
 		}
 
-		foreach (var LanguageData in CustomLangNameStrings)
-		{
-			LanguageId language = LanguageData.Item1;
-			string languageID = LanguageData.Item2;
-			string languageIDL = languageID + "_L"; 
-			string languageString = LanguageData.Item3;
-			string languageStringU = languageString.ToUpper();
-
-			AddLanguageStrings(language, languageIDL, languageString);
-			AddLanguageStrings(language, languageID, languageStringU);
-		}
-
-		foreach (var LanguageData in CustomLangDescStrings)
-		{
-			LanguageId language = LanguageData.Item1;
-			string languageID = LanguageData.Item2;
-			string languageString = LanguageData.Item3;
-
-			AddLanguageStrings(language, languageID, languageString);
-		}
 	}
 
+
+	protected void FillLanguageList()
+	{
+		Language_String_List = new List<LanguageString>()
+		{
+			new LanguageString () {
+				Id = LanguageId.English,
+				Language_Base = "FATSGUN",
+				Name = "Ship Laser Amplifier",
+				Description = "This new technology upgrade engineered by the engineers at H.G. Corp. will amplify your ship laser.",
+				Subtitle = "Thick laser"
+			},
+			new LanguageString () {
+				Id = LanguageId.English,
+				Language_Base = "ROCK_TECH1",
+				Name = "Extended Rocket Tubes",
+				Description = "This new technology upgrade engineered by the engineers at H.G. Corp. will increase the capacity on your rocket tubes.",
+				Subtitle = "Extended Rocket Tubes"
+			},
+			new LanguageString () {
+				Id = LanguageId.English,
+				Language_Base = "ROCK_TECH2",
+				Name = "Rocket Cooling vents",
+				Description = "This new technology upgrade engineered by the engineers at H.G. Corp. will assist in venting the heat from your rocket tubes.",
+				Subtitle = "Rocket Cooling vents"
+			},
+			new LanguageString () {
+				Id = LanguageId.English,
+				Language_Base = "ROCK_TECH3",
+				Name = "High Yield Rockets",
+				Description = @"This new technology upgrade engineered by the engineers at H.G. Corp. will amplify your the yield on your rockets.&#xA;
+					&lt;SPECIAL&gt;As a wise woman once said&lt;&gt; &lt;TECHNOLOGY&gt;EXPLOSION&lt;&gt;.&#xA;
+					&lt;SPECIAL&gt;Be warned that the explosion radius will affect everyone inside of it. You have been warned.&lt;&gt;",
+				Subtitle = "High Yield Rockets"
+			},
+			new LanguageString () {
+				Id = LanguageId.English,
+				Language_Base = "MINI_TECH1",
+				Name = "HE Rounds",
+				Description = "This new technology upgrade engineered by the engineers at H.G. Corp. adds explosive filler to your Infraknife rounds.",
+				Subtitle = "HE Rounds"
+			},
+			new LanguageString () {
+				Id = LanguageId.English,
+				Language_Base = "HYPER_BEYOND",
+				Name = "Overchared HyperDrive",
+				Description = @"This new technology upgrade engineered by the engineers at H.G. Corp. has pushed the hyperdrive to the extreme.&#xA;
+					This hyperdrive will let you shoot for the stars,...Just make sure you do not crash into them.",
+				Subtitle = "To Infinity And Beyond"
+			},
+			new LanguageString () {
+				Id = LanguageId.English,
+				Language_Base = "SUPERSHOT",
+				Name = "Positron Ejector OverCharger",
+				Description = @"This new technology upgrade engineered by the engineers at H.G. Corp. has improved various elements on your Positron Ejector.&#xA;
+					Queue: Rip and Tear, Warning might be addictive.",
+				Subtitle = "Positron Ejector OverCharger"
+			},
+			new LanguageString () {
+				Id = LanguageId.English,
+				Language_Base = "HEATSHOT",
+				Name = "Positron Ejector Cooling Solution",
+				Description = "This new technology upgrade engineered by the engineers at H.G. Corp. will assist in venting the heat from your Positron Ejector.",
+				Subtitle = "Positron Ejector Cooling Solution"
+			},
+			new LanguageString () {
+				Id = LanguageId.English,
+				Language_Base = "HEATSLASER",
+				Name = "Phase Beam Coollant",
+				Description = "This new technology upgrade engineered by the engineers at H.G. Corp. will assist in venting the heat from your Phase Beam .",
+				Subtitle = "Phase Beam Coollant"
+			},
+			new LanguageString () {
+				Id = LanguageId.English,
+				Language_Base = "HEATSGUN",
+				Name = "Photon Cannon space vents",
+				Description = "This new technology upgrade engineered by the engineers at H.G. Corp. will assist in venting the heat from your Photon Cannon.",
+				Subtitle = "Photon Cannon space vents"
+			},
+			new LanguageString () {
+				Id = LanguageId.English,
+				Language_Base = "ROCKPROC",
+				Name = "H.G. Corp. Procedural Rocket Launcher Module",
+				Description = @"H.G. Corp. Procedural Rocket Launcher Module.&#xA;
+					These modules have the possibiliy of certain metrics on your Rocket Launcher.&#xA;
+					It can potentially increase Damage, Radius, Number of Rockets, Decrease Cooldown and Increase Dispersion.",
+				Subtitle = "H.G. Corp. Procedural Rocket Launcher Module"
+			},
+			new LanguageString () {
+				Id = LanguageId.English,
+				Language_Base = "FLAME",
+				Name = "H.G. Corp. Procedural Incinerator Module",
+				Description = @"H.G. Corp. Procedural Flamer Module.&#xA;
+					These modules come with improvements to your Incinerator.&#xA;
+					It can potentially increase the Amount of fire, firerate add a damage over time effect and increase damage over time duration.",
+				Subtitle = "H.G. Corp. Procedural Incinerator Module"
+			},
+			new LanguageString () {
+				Id = LanguageId.English,
+				Language_Base = "ENERGY",
+				Name = "H.G. Corp. Procedural Hazard Module",
+				Description = @"H.G. Corp. Procedural hazard Module.&#xA;
+					These modules will drastically increase your Suit Energy and Suit Energy Regeneration.",
+				Subtitle = "H.G. Corp. Procedural Hazard Module"
+			},
+			new LanguageString () {
+				Id = LanguageId.English,
+				Language_Base = "PRCOLD",
+				Name = "H.G. Corp. Procedural Cold Protection Module",
+				Description = @"H.G. Corp. Procedural Cold Protection.&#xA;
+					These modules will drastically improve your survibility in cold Biomes.&#xA;
+					The modules are enhanced with Reduced Cold Drain, Reduced Cold Damage and Cold Resistance.&#xA;
+					Toghether with Protection against freezing colds it will assist in reducing the wailing of your suit protection assistant.&#xA;
+					The cold never bothered me anyway.",
+				Subtitle = "H.G. Corp. Procedural Cold Protection Module"
+			},
+			new LanguageString () {
+				Id = LanguageId.English,
+				Language_Base = "PRHEAT",
+				Name = "H.G. Corp. Procedural Heat Protection Module",
+				Description = @"H.G. Corp. Procedural Heat Protection.&#xA;
+					These modules will drastically improve your survibility in hot Biomes.&#xA;
+					The modules are enhanced with Reduced Heat Drain, Reduced Heat Damage and Heat Resistance.&#xA;
+					Toghether with Protection against scortching heat it will assist in reducing the wailing of your suit protection assistant.&#xA;
+					I guess drilling to the core of the planet is now possible.",
+				Subtitle = "H.G. Corp. Procedural Heat Protection Module"
+			},
+			new LanguageString () {
+				Id = LanguageId.English,
+				Language_Base = "PRTOXIC",
+				Name = "H.G. Corp. Procedural Toxic Protection Module",
+				Description = @"H.G. Corp. Procedural Toxic Protection.&#xA;
+					These modules will drastically improve your survibility in Toxic Biomes.&#xA;
+					The modules are enhanced with Reduced Toxic Drain, Reduced Toxic Damage and Toxic Resistance.&#xA;
+					Toghether with Protection against toxic toxins it will assist in reducing the wailing of your suit protection assistant.",
+				Subtitle = "H.G. Corp. Procedural Toxic Protection Module"
+			},
+			new LanguageString () {
+				Id = LanguageId.English,
+				Language_Base = "PRRAD",
+				Name = "H.G. Corp. Procedural Radiation Protection Module",
+				Description = @"H.G. Corp. Procedural Radiation Protection.&#xA;
+					These modules will drastically improve your survibility in Radioactive Biomes.&#xA;
+					The modules are enhanced with Reduced Radiation Drain, Reduced Radiation Damage and Radiation Resistance.&#xA;
+					Toghether with Protection against radioactive radiation it will assist in reducing the wailing of your suit protection assistant.&#xA;
+					Wandering the wastelands will be a breeze for you now.",
+				Subtitle = "H.G. Corp. Procedural Radiation Protection Module"
+			},
+			new LanguageString () {
+				Id = LanguageId.English,
+				Language_Base = "SUITSHIELD",
+				Name = "H.G. Corp. Procedural Suit Shield Module",
+				Description = @"H.G. Corp. Procedural shield Module.&#xA;
+					Suit shield module that increases armour and suit structural integrity.&#xA;
+					This technological masterpiece will add armour and structural integrity to your suit to what was before thought impossible",
+				Subtitle = "H.G. Corp. Procedural Suit Shield Module"
+			},
+			new LanguageString () {
+				Id = LanguageId.English,
+				Language_Base = "SHOT",
+				Name = "H.G. Corp. Procedural Scatter-blaster Module",
+				Description = @"H.G. Corp. Procedural Scatter Blaster Module.&#xA;
+					This Module improves the Scatter-blaster damage and also adds  redirection to the shots.&#xA;
+					As never seen before these new modules bring some boune to the party and some demon slaying capabilties.",
+				Subtitle = "H.G. Corp. Procedural Scatter-blaster Module"
+			},
+			new LanguageString () {
+				Id = LanguageId.English,
+				Language_Base = "AIRJET",
+				Name = "H.G. Corp. Procedural Jetpack Module",
+				Description = @"H.G. Corp. Procedural Jetpack Module.&#xA;
+					These modules enhances your Ignition, Refill rate as well as total capacity of the fuel tanks.&#xA;
+					Your ability to soar the skies will be drastically enhanced, just do not fly to close to the sun.",
+				Subtitle = "H.G. Corp. Procedural Jetpack Module"
+			},
+			new LanguageString () {
+				Id = LanguageId.English,
+				Language_Base = "WATJET",
+				Name = "H.G. Corp. Procedural Dive Jetpack Module",
+				Description = @"H.G. Corp. Procedural Jetpack Module.&#xA;
+					These modules enhances your Ignition, Refill rate as well as total capacity of the fuel tanks.&#xA;
+					Now you can dive at impecable speeds.",
+				Subtitle = "H.G. Corp. Procedural Dive Jetpack Module"
+			},
+			new LanguageString () {
+				Id = LanguageId.English,
+				Language_Base = "DRIFT",
+				Name = "H.G. Corp. Procedural Drift Wheels",
+				Description = @"H.G. Corp. Procedural Drift wheels.&#xA;
+					These upgrade modules descrease the grip your tires have.&#xA;
+					Especially usefull when the eurobeat kicks in. Just be aware of windy planets, your exocraft may or may not... drift away",
+				Subtitle = "H.G. Corp. Procedural Drift Wheels"
+			},
+			new LanguageString () {
+				Id = LanguageId.English,
+				Language_Base = "MECHBOOST",
+				Name = "H.G. Corp. Procedural Mech Boost Module",
+				Description = @"H.G. Corp. Procedural Mech Boost Module.&#xA;
+					These upgrade modules will drastically improve your Minotaur boost capacity.&#xA;
+					These will make you wonder, were the clouds always that close?&#xA;
+					The modules improve Boost tanks and Boost Speed",
+				Subtitle = "Procedural Mech Boost Module"
+			},
+			new LanguageString () {
+				Id = LanguageId.English,
+				Language_Base = "COLDR",
+				Name = "H.G. Corp. Suit Cold Resistance Shield",
+				Description = "This new technology upgrade engineered by the engineers at H.G. Corp. will increase your suit Cold Resistance.",
+				Subtitle = "H.G. Corp. Suit Cold Resistance Shield"
+			},
+			new LanguageString () {
+				Id = LanguageId.English,
+				Language_Base = "RADR",
+				Name = "H.G. Corp. Suit Radiation Resistance Shield",
+				Description = "This new technology upgrade engineered by the engineers at H.G. Corp. will increase your suit Radiation Resistance.",
+				Subtitle = "H.G. Corp. Suit Radiation Resistance Shield"
+			},
+			new LanguageString () {
+				Id = LanguageId.English,
+				Language_Base = "HEATR",
+				Name = "H.G. Corp. Suit Heat Resistance Shield",
+				Description = "This new technology upgrade engineered by the engineers at H.G. Corp. will increase your suit Heat Resistance.",
+				Subtitle = "H.G. Corp. Suit Heat Resistance Shield"
+			},
+			new LanguageString () {
+				Id = LanguageId.English,
+				Language_Base = "TOXICR",
+				Name = "H.G. Corp. Suit Cold Toxic Shield",
+				Description = "This new technology upgrade engineered by the engineers at H.G. Corp. will increase your suit Toxic Resistance.",
+				Subtitle = "H.G. Corp. Suit Toxic Resistance Shield"
+			},
+			new LanguageString () {
+				Id = LanguageId.English,
+				Language_Base = "WATERR",
+				Name = "H.G. Corp. Suit Oxygen Rebreather",
+				Description = "This new technology upgrade engineered by the engineers at H.G. Corp. will increase the ability to swim underwater for extended periods.",
+				Subtitle = "H.G. Corp. Suit Oxygen Rebreather"
+			},
+			new LanguageString () {
+				Id = LanguageId.English,
+				Language_Base = "WATERG",
+				Name = "H.G. Corp. Suit Gills",
+				Description = "This new technology upgrade engineered by the engineers at H.G. Corp. will add the ability to swim underwater for intraveller periods of time.",
+				Subtitle = "H.G. Corp. Suit Gills"
+			},
+			new LanguageString () {
+				Id = LanguageId.English,
+				Language_Base = "PRROCK1",
+				Name = "Rocket Launcher Module",
+				Description = @"A &lt;TRADEABLE&gt;moderate&lt;&gt; upgrade for the &lt;TECHNOLOGY&gt;Starship Rocket Launcher&lt;&gt;. Use &lt;VAL_ON&gt;&lt;IMG&gt;FE_ALT1&lt;&gt;&lt;&gt; to begin upgrade &lt;VAL_ON&gt;installation process&lt;&gt;.&#xA;&#xA;The module is flexible, and exact upgrade statistics are &lt;SPECIAL&gt;unknown&lt;&gt; until installation is complete.&#xA;&#xA;Potential improvements include: &lt;STELLAR&gt;damage&lt;&gt;, &lt;STELLAR&gt;fire rate&lt;&gt; and &lt;STELLAR&gt;overheat times&lt;&gt;.",
+				Subtitle = ""
+			},
+			new LanguageString () {
+				Id = LanguageId.English,
+				Language_Base = "PRROCK2",
+				Name = "Rocket Launcher Module",
+				Description = @"A &lt;TECHNOLOGY&gt;significant&lt;&gt; upgrade for the &lt;TECHNOLOGY&gt;Starship Rocket Launcher&lt;&gt;. Use &lt;VAL_ON&gt;&lt;IMG&gt;FE_ALT1&lt;&gt;&lt;&gt; to begin upgrade &lt;VAL_ON&gt;installation process&lt;&gt;.&#xA;&#xA;The module is flexible, and exact upgrade statistics are &lt;SPECIAL&gt;unknown&lt;&gt; until installation is complete.&#xA;&#xA;Potential improvements include: &lt;STELLAR&gt;damage&lt;&gt;, &lt;STELLAR&gt;fire rate&lt;&gt; and &lt;STELLAR&gt;overheat times&lt;&gt;.",
+				Subtitle = "Rocket Launcher Module"
+			},
+			new LanguageString () {
+				Id = LanguageId.English,
+				Language_Base = "PRROCK3",
+				Name = "Rocket Launcher Module",
+				Description = @"An &lt;SPECIAL&gt;extremely powerful&lt;&gt; upgrade for the &lt;TECHNOLOGY&gt;Starship Rocket Launcher&lt;&gt;. Use &lt;VAL_ON&gt;&lt;IMG&gt;FE_ALT1&lt;&gt;&lt;&gt; to begin upgrade &lt;VAL_ON&gt;installation process&lt;&gt;.&#xA;&#xA;The module is flexible, and exact upgrade statistics are &lt;SPECIAL&gt;unknown&lt;&gt; until installation is complete.&#xA;&#xA;Potential improvements include: &lt;STELLAR&gt;damage&lt;&gt;, &lt;STELLAR&gt;fire rate&lt;&gt; and &lt;STELLAR&gt;overheat times&lt;&gt;.",
+				Subtitle = ""
+			},
+			new LanguageString () {
+				Id = LanguageId.English,
+				Language_Base = "PRROCK4",
+				Name = "Rocket Launcher Module",
+				Description = @"A &lt;COMMODITY&gt;supremely powerful&lt;&gt; upgrade for the &lt;TECHNOLOGY&gt;Starship Rocket Launcher&lt;&gt;. Use &lt;VAL_ON&gt;&lt;IMG&gt;FE_ALT1&lt;&gt;&lt;&gt; to begin upgrade &lt;VAL_ON&gt;installation process&lt;&gt;.&#xA;&#xA;The module is flexible, and exact upgrade statistics are &lt;SPECIAL&gt;unknown&lt;&gt; until installation is complete.&#xA;&#xA;Potential improvements include: &lt;STELLAR&gt;damage&lt;&gt;, &lt;STELLAR&gt;fire rate&lt;&gt; and &lt;STELLAR&gt;overheat times&lt;&gt;.",
+				Subtitle = ""
+			},
+			new LanguageString () {
+				Id = LanguageId.English,
+				Language_Base = "EXOFLAME",
+				Name = "H.G. Corp. Exocraft Flamer",
+				Description = "This new technology upgrade engineered by the engineers at H.G. Corp. now extend your exocraft arsenal with the Liquidator Flamer.",
+				Subtitle = "H.G. Corp. Exocraft Flamer"
+			},
+			new LanguageString () {
+				Id = LanguageId.English,
+				Language_Base = "EXOSTUN",
+				Name = "H.G. Corp. Exocraft Stun Cannon",
+				Description = "This new technology upgrade engineered by the engineers at H.G. Corp. now extend your exocraft arsenal with the Liquidator Stun Cannon.",
+				Subtitle = "H.G. Corp. Exocraft Stun Cannon"
+			}
+		};
+	}
 	protected void FillRequirementsArray()
 	{
 		Requirements = new []{
@@ -847,8 +1322,6 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 			}
 		};
 	}
-
-	// This will add extra statbonus/re
 	protected void EditExistingTech() 
 	{
 		var techMbin = ExtractMbin<GcTechnologyTable>("METADATA/REALITY/TABLES/NMS_REALITY_GCTECHNOLOGYTABLE.MBIN");
@@ -864,7 +1337,6 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 		});
  
 		var addBounce = new GcStatsBonus { Stat = new GcStatsTypes { StatsType = StatsTypeEnum.Weapon_Projectile_Bounce }, Bonus = 2, Level = 3 };
-		var moreProjectiles = new GcStatsBonus { Stat = new GcStatsTypes { StatsType = StatsTypeEnum.Weapon_Projectile }, Bonus = 1, Level = 1 };
 		var addDot = new GcStatsBonus { Stat = new GcStatsTypes { StatsType = StatsTypeEnum.Weapon_FireDOT }, Bonus = 50, Level = 1 };
 		var addDotDuratiom = new GcStatsBonus { Stat = new GcStatsTypes { StatsType = StatsTypeEnum.Weapon_FireDOT_Duration }, Bonus = 10, Level = 1 };
 		var addDotDPS = new GcStatsBonus { Stat = new GcStatsTypes { StatsType = StatsTypeEnum.Weapon_FireDOT_DPS }, Bonus = 50, Level = 3 };
@@ -877,13 +1349,11 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 		flame.StatBonuses.Find(STAT => STAT.Stat.StatsType == StatsTypeEnum.Weapon_Projectile_Rate).Bonus = 12;
 
 		flame.StatBonuses.Add(addBounce);
-		flame.StatBonuses.Add(moreProjectiles);
 		flame.StatBonuses.Add(addDot);
 		flame.StatBonuses.Add(addDotDPS);
 		flame.StatBonuses.Add(addDotDuratiom);
 
 	}
-
 	protected void CreateCustomTempates()
 	{
 		var techMbin = ExtractMbin<GcTechnologyTable>("METADATA/REALITY/TABLES/NMS_REALITY_GCTECHNOLOGYTABLE.MBIN");
@@ -907,11 +1377,17 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 		{
 			var tech = CloneMbin(mbin.Table.Find(TECH => TECH.ID == customTech.BaseTechID)); // clone Large Rocket Tubes
 			tech.ID = customTech.NewTechID;
- 
-			tech.Name = customTech.Name;
-			tech.NameLower = customTech.Name +"_L";
- 
-			tech.Description = customTech.Description;
+
+			string description_id = customTech.LanguageBase + "_DESC";
+			string name_id = customTech.LanguageBase + "_NAME";
+			string name_lc_id = customTech.LanguageBase + "_NAME_LC";
+			string sub_id = customTech.LanguageBase + "_SUB";
+
+			tech.Name = name_id;
+			tech.NameLower = name_lc_id; 
+			tech.Description = description_id;
+			tech.Subtitle = sub_id;
+
 			tech.RequiredTech = customTech.RequiredTech;
 			tech.Rarity.TechnologyRarity = customTech.TechnologyRarity;
 			tech.TechShopRarity.TechnologyRarity = customTech.TechnologyRarity;
@@ -933,7 +1409,7 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 			mbin.Table.Add(tech);
 		}
 	}
-	//DONE
+
 	protected void CreateCustomProceduralMods()
 	{
 		var Prod_mbin = ExtractMbin<GcProductTable>("METADATA/REALITY/TABLES/NMS_REALITY_GCPRODUCTTABLE.MBIN");
@@ -942,6 +1418,8 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 
 		foreach (CustomProcMod Mod in CustomProceduralMods)
 		{
+			int baseForClassMulitplier = 0;
+			string classOfTech = "";
 			string baseTechName = Mod.BaseTechID;
 			string baseDeployString = Mod.BaseDeploy;
 			bool staticDeploy = Mod.StaticDeloy;
@@ -952,11 +1430,15 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 			int newMaxStats = Mod.MaxStats;
 			float newMultiplierPerRank = Mod.MultiplierPerRank;
 			string newIconFileName = Mod.IconFileName;
-			string newName = Mod.Name;
-			string newNameL = Mod.Name + "_L";
-			string newDescription = Mod.Description;
+
+			string description_id = Mod.LanguageBase + "_DESC";
+			string name_id = Mod.LanguageBase + "_NAME";
+			string name_lc_id = Mod.LanguageBase + "_NAME_LC";
+			string sub_id = Mod.LanguageBase + "_SUB";
+
 			string newTradeData = Mod.TradeData;
-			string newProcgenName = Mod.ProcName;
+			string newProcgenName = Mod.ProcTechName;
+			string newProcGenBase = Mod.LanguageBaseProcOverride;
 			List<GcProceduralTechnologyStatLevel> newStatBonuses = Mod.StatBonuses;
 
 			int highestClassNo = Mod.HighestClassNo;
@@ -971,25 +1453,38 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 			GcTradeData addTradePorduct = field.GetValue(Reality_mbin.TradeSettings) as GcTradeData;
 
 			for (int i = lowestClassNo; i <= highestClassNo; i++)
-			{ 
+			{
+				baseForClassMulitplier = i;
+				classOfTech = Classes[i-1];
+
+				if( highestClassNo < 3) {
+					baseForClassMulitplier = i +1;
+					classOfTech = Classes[i];
+				}
+
 				string copyTech = baseTechName + i.ToString();
 				string copyDeployTech = baseDeployString;
 				if( !staticDeploy )
 					copyDeployTech = baseDeployString + i.ToString();
 
 				string newTechID = newTechName + i.ToString();
-				string newTechDeployID = newTechDeployName.Replace("UPC_", "UPC_" + Classes[i-1]).ToUpper() + "_" + Classes[i-1];
-				float multiplier = 1 + (newMultiplierPerRank * (i - 1));
+				string newTechDeployID = newTechDeployName.Replace("UPC_", "UPC_" + classOfTech).ToUpper() + "_" + classOfTech;
+
+				float multiplier = 1 + (baseForClassMulitplier * newMultiplierPerRank);
 
 				if (newMinStats < newMaxStats)
 					newMinStats++;
  
 				// Log.AddInformation($"Print copyDeployTech = {copyDeployTech}");
 				var proc = CloneMbin(Proc_mbin.Table.Find(PROC => PROC.ID == copyDeployTech));
-				proc.ID = newTechDeployID;
+
 				proc.Name = newProcgenName;
-				proc.NameLower = newNameL;
-				proc.Description = newDescription;
+				proc.ID = newTechDeployID;
+				if ( newProcGenBase != "") {
+					proc.NameLower = newProcGenBase + i + "_NAME_LC";
+					proc.Description = newProcGenBase + i + "_DESC";
+				}
+
 				proc.Template = newTemplate;
 				proc.NumStatsMin = newMinStats;
 				proc.NumStatsMax = newMinStats;
@@ -997,11 +1492,21 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 					proc.Quality = QualityEnums[i-1];
 
 				proc.StatLevels.Clear();
-				foreach (var statLevel in newStatBonuses)
-				{
-					statLevel.ValueMin *= multiplier;
-					statLevel.ValueMax *= multiplier;
-					proc.StatLevels.Add(statLevel);
+
+				foreach( var statLevel in newStatBonuses) {
+					Log.AddInformation($"Print {statLevel.Stat.StatsType}");
+					float multipliedValMin = statLevel.ValueMin * multiplier;
+					float multipliedValMax = statLevel.ValueMax * multiplier;
+					Log.AddInformation($"Print {statLevel.ValueMin} * {multiplier} = {multipliedValMin}");
+					Log.AddInformation($"Print {statLevel.ValueMax} * {multiplier} = {multipliedValMax}");
+					proc.StatLevels.Add(
+						ProceduralTechnologyStatLevel.Create(
+							statLevel.Stat.StatsType,
+							(statLevel.ValueMin * multiplier),
+							(statLevel.ValueMax * multiplier),
+							statLevel.WeightingCurve.WeightingCurve,
+							statLevel.AlwaysChoose)
+					);
 				}
 				Proc_mbin.Table.Add(proc);
 
@@ -1011,9 +1516,10 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 				var prod = CloneMbin(Prod_mbin.Table.Find(PROD => PROD.ID == copyTech));
 
 				prod.ID = newTechID;
-				prod.Name = newName;
-				prod.NameLower = newNameL;
-				prod.Description = newDescription;
+				prod.Name = name_id;
+				prod.NameLower = name_lc_id;
+				prod.Description = description_id;
+				prod.Subtitle = sub_id;
 				//0........................................................58 
 				//TEXTURES/UI/FRONTEND/ICONS/U4PRODUCTS/PROCTECH/PROCTECH.B. LASER.DDS
 				var iconFilePath = prod.Icon.Filename.Value.Substring(0, 58);
@@ -1025,17 +1531,23 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 			}
 		}
 	}
-	protected void GcUnlockableTrees()
+	protected void AddToUnlockableItemTree()
 	{
 		var mbin = ExtractMbin<GcUnlockableTrees>("METADATA/REALITY/TABLES/UNLOCKABLEITEMTREES.MBIN");
 		var shipTree = mbin.Trees[(int)GcUnlockableItemTreeGroups.UnlockableItemTreeEnum.ShipTech];
 		var weapTree = mbin.Trees[(int)UnlockableItemTreeEnum.WeapTech];
+		var suitTree = mbin.Trees[(int)UnlockableItemTreeEnum.SuitTech];
+		var exoTree = mbin.Trees[(int)UnlockableItemTreeEnum.ExocraftTech];
 
 		var ship_guns = shipTree.Trees[0].Root.Children.Find(UNLOCKABLE => UNLOCKABLE.Unlockable == "SHIPGUN1");
 		var ship_hyper_drive = shipTree.Trees[0].Root.Children.Find(UNLOCKABLE => UNLOCKABLE.Unlockable == "HYPERDRIVE");
 
 		var weap_bolt = weapTree.Trees[0].Root.Children.Find(UNLOCKABLE => UNLOCKABLE.Unlockable == "BOLT");
 		var weap_grenade = weap_bolt.Children.Find(UNLOCKABLE => UNLOCKABLE.Unlockable == "GRENADE");
+
+		var suit_protect = suitTree.Trees[0].Root.Children.Find(UNLOCKABLE => UNLOCKABLE.Unlockable == "PROTECT");
+
+		var exo_laser = exoTree.Trees[0].Root.Children.Find(UNLOCKABLE => UNLOCKABLE.Unlockable == "VEHICLE_LASER");
 
 		var ship_rocket = ship_guns.Children.Find(UNLOCKABLE => UNLOCKABLE.Unlockable == "SHIPROCKETS");
 		ship_rocket.Children.Add(new GcUnlockableItemTreeNode
@@ -1092,7 +1604,8 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 		});
 
 		var ship_infra = ship_guns.Children.Find(UNLOCKABLE => UNLOCKABLE.Unlockable == "SHIPMINIGUN");
-		ship_infra.Children.Add(new GcUnlockableItemTreeNode
+		var resonator = ship_infra.Children.Find(UNLOCKABLE => UNLOCKABLE.Unlockable == "UT_SHIPMINI");		
+		resonator.Children.Add(new GcUnlockableItemTreeNode
 		{
 			Unlockable = "UT_INFRA_BLAS",
 			Children = new()
@@ -1107,6 +1620,110 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 		weapTree.Trees[0].Root.Children.Insert(0, new GcUnlockableItemTreeNode
 		{
 			Unlockable = "FLAME",
+			Children = new()
+		});
+
+		var cold = suit_protect.Children.Find(UNLOCKABLE => UNLOCKABLE.Unlockable == "UT_COLD");
+		cold.Children.Add(new GcUnlockableItemTreeNode {
+			Unlockable = "UT_COLD2",
+			Children = new()
+			{
+				new GcUnlockableItemTreeNode
+				{
+					Unlockable = "UT_COLD3",
+					Children = new()
+					{
+						new GcUnlockableItemTreeNode
+						{
+							Unlockable = "UT_COLD4",
+							Children = new()
+						}
+					}
+				}
+			}
+		});
+
+		var hot = suit_protect.Children.Find(UNLOCKABLE => UNLOCKABLE.Unlockable == "UT_HOT");
+		hot.Children.Add(new GcUnlockableItemTreeNode {
+			Unlockable = "UT_HEAT2",
+			Children = new()
+			{
+				new GcUnlockableItemTreeNode
+				{
+					Unlockable = "UT_HEAT3",
+					Children = new()
+					{
+						new GcUnlockableItemTreeNode
+						{
+							Unlockable = "UT_HEAT4",
+							Children = new()
+						}
+					}
+				}
+			}
+		});
+
+		var tox = suit_protect.Children.Find(UNLOCKABLE => UNLOCKABLE.Unlockable == "UT_TOX");
+		tox.Children.Add(new GcUnlockableItemTreeNode {
+			Unlockable = "UT_TOXIC2",
+			Children = new()
+			{
+				new GcUnlockableItemTreeNode
+				{
+					Unlockable = "UT_TOXIC3",
+					Children = new()
+					{
+						new GcUnlockableItemTreeNode
+						{
+							Unlockable = "UT_TOXIC4",
+							Children = new()
+						}
+					}
+				}
+			}
+		});
+
+		var rad = suit_protect.Children.Find(UNLOCKABLE => UNLOCKABLE.Unlockable == "UT_RAD");
+		rad.Children.Add(new GcUnlockableItemTreeNode {
+			Unlockable = "UT_RAD2",
+			Children = new()
+			{
+				new GcUnlockableItemTreeNode
+				{
+					Unlockable = "UT_RAD3",
+					Children = new()
+					{
+						new GcUnlockableItemTreeNode
+						{
+							Unlockable = "UT_RAD4",
+							Children = new()
+						}
+					}
+				}
+			}
+		});
+
+		var water = suit_protect.Children.Find(UNLOCKABLE => UNLOCKABLE.Unlockable == "UT_WATER");
+		water.Children.Add(new GcUnlockableItemTreeNode {
+			Unlockable = "UT_WATER3",
+			Children = new()
+			{
+				new GcUnlockableItemTreeNode
+				{
+					Unlockable = "UT_WATER4",
+					Children = new()
+				}
+			}
+		});
+
+		var exolaser1 = exo_laser.Children.Find(UNLOCKABLE => UNLOCKABLE.Unlockable == "VEHICLE_LASER1");
+		exolaser1.Children.Add(new GcUnlockableItemTreeNode {
+			Unlockable = "UT_EXOFLAME",
+			Children = new()
+		});
+		var exogun = exo_laser.Children.Find(UNLOCKABLE => UNLOCKABLE.Unlockable == "VEHICLE_GUN");
+		exogun.Children.Add(new GcUnlockableItemTreeNode {
+			Unlockable = "UT_EXOSTUN",
 			Children = new()
 		});
 	}
@@ -1205,8 +1822,19 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 		return Child;
 	}
 
-	protected void AddLanguageStrings(LanguageId Language, string LanugageID, string LanugageString)
+	protected void AddLanguageStrings()
 	{
-		SetLanguageText(Language, LanugageID, LanugageString); 
+		foreach( LanguageString language_string_item in Language_String_List ) {
+			string description_id = language_string_item.Language_Base + "_DESC";
+			string name_id = language_string_item.Language_Base + "_NAME";
+			string name_lc_id = language_string_item.Language_Base + "_NAME_LC";
+			string sub_id = language_string_item.Language_Base + "_SUB";
+
+			SetLanguageText(language_string_item.Id, description_id, language_string_item.Description);
+			SetLanguageText(language_string_item.Id, name_id, language_string_item.Name);
+			SetLanguageText(language_string_item.Id, name_lc_id, language_string_item.Name);
+			SetLanguageText(language_string_item.Id, sub_id, language_string_item.Subtitle);
+
+		}
 	}
 }

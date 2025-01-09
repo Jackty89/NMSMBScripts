@@ -19,7 +19,7 @@ public class CraftableWiringLoom : cmk.NMS.Script.ModClass
     protected void FillArray()
     {
         NewRequirementsArray = new Tuple<string, GcTechnologyRequirement[]>[] {
-            new("ALIEN_INV_TOKEN", new [] {
+            new("TECH_COMP", new [] {
                 new GcTechnologyRequirement { ID = "CAVE1",   Type = Product,   Amount = 100},
                 new GcTechnologyRequirement { ID = "ROBOT2",     Type = Substance, Amount = 100},
                 new GcTechnologyRequirement { ID = "MICROCHIP",   Type = Product,   Amount = 2}

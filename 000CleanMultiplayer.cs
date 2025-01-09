@@ -37,7 +37,9 @@ public class CleanMultiplayer : cmk.NMS.Script.ModClass
 		//interaction.ActivationCost = 1;
 		//interaction.InteractDistance = 0.01f;
 		//interaction.InteractAngle = 1;
-		interaction = new GcInteractionComponentData();
+		//LinkableNMSTemplate<GcInteractionComponentData>
+		//interaction.Template = new GcInteractionComponentData();
+		interaction = (new GcInteractionComponentData()).AsLinkable(); 
 
 		mbin.Components.Clear();
 		mbin.Components.Add(interaction);

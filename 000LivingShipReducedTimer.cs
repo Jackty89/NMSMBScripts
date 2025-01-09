@@ -9,7 +9,7 @@ public class LivingShipReducedTimer : cmk.NMS.Script.ModClass
 	protected override void Execute()
 	{
 		
-		var mbin = ExtractMbin<GcMissionTable>("METADATA/SIMULATION/MISSIONS/SPACEPOIMISSIONTABLE.MBIN");
+		var mbin = ExtractMbin<GcMissionTable>("METADATA/SIMULATION/MISSIONS/TABLES/MISSIONTABLE.MBIN");
 		foreach( var mission in mbin.Missions ) {
 			GcGenericMissionStage(mission.Stages);
 		}

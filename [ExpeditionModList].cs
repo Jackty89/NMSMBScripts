@@ -8,7 +8,6 @@ public class ExpeditionModList : cmk.NMS.Script.ModClass
         bool runSandXonly                                           = true;
         bool balancedInventory                                      = true;
         bool noShipStart                                            = false;
-        bool challengeMode                                          = false;
         bool uninstallExtraTech                                     = false;
 
         Script<AddDerelictFreighterLootToStore>().IsExecutable      = true;
@@ -17,14 +16,18 @@ public class ExpeditionModList : cmk.NMS.Script.ModClass
         Script<AtlasOrbWordoRama>().IsExecutable                    = true;
 
         Script<BasePartsDeluxe>().IsExecutable                      = !noShipStart; // included in NoShipStart
-        Script<BuildAboveAndUnderWater>().IsExecutable              = true;
         Script<BurnBabyBurn>().IsExecutable                         = !enableCustomModsGalore; // CMG also adds incinerator
         Script<CheapPetSlots>().IsExecutable                        = true;
 		Script<ClaimExpeditionShipsForFree>().IsExecutable          = true;
 		Script<CleanMultiplayer>().IsExecutable                     = true;
         Script<CraftableAlienToken>().IsExecutable                  = false;
-        Script<CraftableModules>().IsExecutable                     = false;
+        Script<CraftableWiringLoom>().IsExecutable                  = false;
+        Script<CraftableEmergencySignalScanner>().IsExecutable      = false;
+    	Script<CraftableModules>().IsExecutable                     = false;
         Script<CraftableModulesPersonal>().IsExecutable             = true;
+		
+        Script<CraftableUpgradeMods_OLD>().IsExecutable             = false;
+        Script<CraftableUpgradeModsSandXonly_OLD>().IsExecutable    = false;
 
         var CraftableUpgradeMods = Script<CraftableUpgradeMods>();
         CraftableUpgradeMods.IsExecutable                           = !runSandXonly;
@@ -34,13 +37,6 @@ public class ExpeditionModList : cmk.NMS.Script.ModClass
         CraftableUpgradeModsSandXonly.IsExecutable                  = runSandXonly;
         CraftableUpgradeModsSandXonly.RecipeCostPriceMultiplier     = 1;
         
-        var CustomModsGaloreNuke = Script<CustomModsGaloreNuke>();
-        CustomModsGaloreNuke.IsExecutable                           = false;
-        if (runSandXonly)
-        {
-            CustomModsGaloreNuke.MinProcModLimit                    = 4;
-            CustomModsGaloreNuke.RecipeCostPriceMultiplier          = 1;
-        }
         
         var CustomModsGalore = Script<CustomModsGalore>();
         CustomModsGalore.IsExecutable                               = enableCustomModsGalore;
@@ -67,6 +63,7 @@ public class ExpeditionModList : cmk.NMS.Script.ModClass
         ExocraftRechargeRate.RechargeRate                           = 15f;
 
         Script<ExtendedExocraftAndShipScanner>().IsExecutable       = true;
+        Script<FishingSpeed>().IsExecutable       					= true;
         var FrigateTimerReduction = Script<FrigateTimerReduction>();
         FrigateTimerReduction.IsExecutable                          = true;
         FrigateTimerReduction.Multiplier                            = 0.1f;
@@ -76,14 +73,6 @@ public class ExpeditionModList : cmk.NMS.Script.ModClass
         //Inventory Edits
         Script<InventoryRebalance>().IsExecutable                   = balancedInventory;
         Script<InventoryUnbalance>().IsExecutable                   = false;
-
-        var InventoryRebalanceParams = Script<InventoryRebalanceParams>();
-        InventoryRebalanceParams.IsExecutable                       = !balancedInventory; //this mod changes the values for BOTH normal AND survival/perma
-        InventoryRebalanceParams.SubstanceDefaultStackSizeNormal    = 50000;
-        InventoryRebalanceParams.ProductDefaultStackSizeNormal      = 50;
-        InventoryRebalanceParams.TechWidthNormal                    = 8;
-        InventoryRebalanceParams.TechHeightNormal                   = 4;
-        InventoryRebalanceParams.RefundNormal                       = 0.75f;
 
         Script<KeepTalkingChef>().IsExecutable                      = true;
 
@@ -118,7 +107,7 @@ public class ExpeditionModList : cmk.NMS.Script.ModClass
 
         Script<QuickSilverRewards>().IsExecutable                   = false;
         
-        Script<RealisticTimers>().IsExecutable                      = challengeMode;
+        Script<RealisticTimers>().IsExecutable                      = false;
 
         Script<ReducedPulseSpeedLines>().IsExecutable               = true;
         Script<RepeatInventoryExpansion>().IsExecutable             = true;
@@ -128,9 +117,9 @@ public class ExpeditionModList : cmk.NMS.Script.ModClass
         SettlementTimerReduction.IsExecutable                       = true;
         SettlementTimerReduction.Multiplier                         = 0.25f;  // 25% of vanilla value
 
-        Script<ShipStore>().IsExecutable                           = false;
-        Script<ShipStoreV2>().IsExecutable                         = true;
-        Script<ShipStoreV3_WIP>().IsExecutable                         = true;
+        Script<ShipStore>().IsExecutable                            = false;
+        Script<ShipStoreV2>().IsExecutable                          = true;
+        Script<ShipStoreV3_WIP>().IsExecutable                      = false;
 
 
         // CoreMissionEdits might not be necessary, DEBUG options edits work just fine
@@ -144,10 +133,14 @@ public class ExpeditionModList : cmk.NMS.Script.ModClass
         SlotMaster.ImproveAlien                                     = true;
         SlotMaster.ImproveInventory                                 = false;
         SlotMaster.ImproveFreighter                                 = false;
+        
+        Script<SuperUpgradeModuleOptions>().IsExecutable            = true;
+        Script<SupportPackets>().IsExecutable                       = true;
 
         Script<SustainAbility>().IsExecutable                       = true;
         Script<TaintedMetalCrafting>().IsExecutable                 = true;
-
+        Script<TurretsDoDamage>().IsExecutable                      = true;
+        
         var UninstallCoreWeapons = Script<UninstallCoreWeapons>();
         UninstallCoreWeapons.IsExecutable                           = true;
         UninstallCoreWeapons.UninstallExtra                         = uninstallExtraTech;
@@ -167,7 +160,7 @@ public class ExpeditionModList : cmk.NMS.Script.ModClass
         FastRefiners.IsExecutable                                   = true;
         FastRefiners.TimeToMake                                     = 1f;
         
-        Script<test>().IsExecutable                                 = false;
+		Script<AntiOphidiophobia>().IsExecutable                    = false;
     }
 
     //..............PickUpGeoBaysAndHarvesters.............................................
