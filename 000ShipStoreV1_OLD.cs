@@ -43,10 +43,10 @@ public class ShipStore : cmk.NMS.Script.ModClass
 		List<GcConsumableItem> consumables = new List<GcConsumableItem>();
 		List<GcGenericRewardTableEntry> generic_rewards = new List<GcGenericRewardTableEntry>();
 
-		var product_mbin = ExtractMbin<GcProductTable>("METADATA/REALITY/TABLES/NMS_REALITY_GCPRODUCTTABLE.MBIN", false, false);
-		var consumable_mbin = ExtractMbin<GcConsumableItemTable>("METADATA/REALITY/TABLES/CONSUMABLEITEMTABLE.MBIN", false, false);
-		var reward_mbin = ExtractMbin<GcRewardTable>("METADATA/REALITY/TABLES/REWARDTABLE.MBIN", false, false);
-		var realitymanagerdata_mbin = ExtractMbin<GcRealityManagerData>("METADATA/REALITY/DEFAULTREALITY.MBIN", false, false).TradeSettings;
+		var product_mbin = ExtractMbin<GcProductTable>("METADATA/REALITY/TABLES/NMS_REALITY_GCPRODUCTTABLE.MBIN", false);
+		var consumable_mbin = ExtractMbin<GcConsumableItemTable>("METADATA/REALITY/TABLES/CONSUMABLEITEMTABLE.MBIN", false);
+		var reward_mbin = ExtractMbin<GcRewardTable>("METADATA/REALITY/TABLES/REWARDTABLE.MBIN", false);
+		var realitymanagerdata_mbin = ExtractMbin<GcRealityManagerData>("METADATA/REALITY/DEFAULTREALITY.MBIN", false).TradeSettings;
 
 		foreach( ShipClassEnum ship_type in Ship_Types ) {
 			ship_stats =  GetShipStats(ship_type);
@@ -65,7 +65,7 @@ public class ShipStore : cmk.NMS.Script.ModClass
 
 				for( int i = 1; i <= Total_Seeds_Per_Class; i++ ) {
 					if( Cancel.IsCancellationRequested ) break;
-					var seed = random.NextInt64();
+					ulong seed = (ulong)random.NextInt64();
 					int slot_number = random.Next(20, 100);
 					string reward_name =  short_name + i;
 
@@ -270,7 +270,7 @@ public class ShipStore : cmk.NMS.Script.ModClass
 
 	protected GcProductData CreateCustomConsumableProducts( string product_name, int price, string custom_language_name, string ship_class )
 	{
-		var prod_mbin = ExtractMbin<GcProductTable>("METADATA/REALITY/TABLES/NMS_REALITY_GCPRODUCTTABLE.MBIN", false, false);
+		var prod_mbin = ExtractMbin<GcProductTable>("METADATA/REALITY/TABLES/NMS_REALITY_GCPRODUCTTABLE.MBIN", false);
 		var new_consumable_product = CloneMbin(prod_mbin.Table.Find(PRODUCT => PRODUCT.ID == "SENTINEL_LOOT"));
 
 		new_consumable_product.ID = product_name;
@@ -291,7 +291,7 @@ public class ShipStore : cmk.NMS.Script.ModClass
 
 	protected GcConsumableItem CreateCustomConsumable( string product_name )
 	{
-		var cons_mbin = ExtractMbin<GcConsumableItemTable>("METADATA/REALITY/TABLES/CONSUMABLEITEMTABLE.MBIN", false, false);
+		var cons_mbin = ExtractMbin<GcConsumableItemTable>("METADATA/REALITY/TABLES/CONSUMABLEITEMTABLE.MBIN", false);
 		var new_consumable = CloneMbin(cons_mbin.Table.Find(CONSUMABLE => CONSUMABLE.ID == "SENTINEL_LOOT"));
 
 		new_consumable.ID = product_name;
@@ -300,7 +300,7 @@ public class ShipStore : cmk.NMS.Script.ModClass
 		return new_consumable;
 	}
 
-	protected GcGenericRewardTableEntry CrateNewShipRewards( string ship_name, long ship_seed, ShipClassEnum ship_type, InventoryClassEnum ship_class, string ship_model, int ship_number_of_slots, List<GcInventoryElement> ship_technologies, List<GcInventoryBaseStatEntry> ship_stats, string reward_name )
+	protected GcGenericRewardTableEntry CrateNewShipRewards( string ship_name, ulong ship_seed, ShipClassEnum ship_type, InventoryClassEnum ship_class, string ship_model, int ship_number_of_slots, List<GcInventoryElement> ship_technologies, List<GcInventoryBaseStatEntry> ship_stats, string reward_name )
 	{
 		var ship = RewardTableItem.SpecificShip(
 			ship_name,

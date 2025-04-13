@@ -75,9 +75,9 @@ public class EqualPlantTimers : cmk.NMS.Script.ModClass
 			"PLANT_TOXIC",
 		};
 
-		var mbin = ExtractMbin<GcRewardTable>("METADATA/REALITY/TABLES/REWARDTABLE.MBIN");
+		var mbin = ExtractMbin<GcRewardTable >("METADATA/REALITY/TABLES/REWARDTABLE.MBIN");
 		foreach( var plantId in plantList ) {
-			//Log.AddInformation($"Print plant  = {plantId }");
+			//Log.Information($"Print plant  = {plantId }");
 			var reward_item = mbin.GenericTable.Find(REWARD => REWARD.Id == plantId).List.List[0].Reward as GcRewardSpecificSubstance;
 			reward_item.AmountMin = HarvestAmount;
 			reward_item.AmountMax = HarvestAmount;
@@ -86,7 +86,7 @@ public class EqualPlantTimers : cmk.NMS.Script.ModClass
 
 	protected void AddCustomProductDescription( string plantID )
 	{
-		var prod_mbin = ExtractMbin<GcProductTable>("METADATA/REALITY/TABLES/NMS_REALITY_GCPRODUCTTABLE.MBIN");
+		var prod_mbin = ExtractMbin<GcProductTable>("METADATA/REALITY/TABLES/NMS_BASEPARTPRODUCTS.MBIN");
 		var product   = prod_mbin.Table.Find(PRODUCT => PRODUCT.ID == plantID);
 
 		var oldDescriptionID    = product.Description;

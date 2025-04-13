@@ -15,7 +15,7 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 	//readonly string FreighterRootTech = "FRIGATE_FUEL_1";
 	//readonly string FactoryTreeTech = "PRODFUEL2";
 	readonly string[] Classes = { "C", "B", "A", "S" };
-	List<LanguageString> Language_String_List = new List<LanguageString> ();
+	List<LanguageString> Language_String_List = new List<LanguageString>();
 
 	readonly QualityEnum[] QualityEnums = {
 		QualityEnum.Normal,
@@ -149,7 +149,7 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 			TechnologyRarity = TechnologyRarityEnum.VeryRare,
 			TechnologyCategory = GcTechnologyCategory.TechnologyCategoryEnum.AllShipsExceptAlien,
 			FileName = "TEXTURES/UI/FRONTEND/ICONS/TECHNOLOGY/RENDER.PHOTONACCELMOD.DDS",
-			StatBonuses = new List<GcStatsBonus>() 
+			StatBonuses = new List<GcStatsBonus>()
 			{
 				StatsBonus.Create(StatsTypeEnum.Ship_Weapons_Guns_Damage_Radius, 10, 3)
 			},
@@ -970,12 +970,10 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 		AddToUnlockableItemTree();
 		EditExistingTech();
 
-		foreach (var ModData in AllModData)
-		{
+		foreach( var ModData in AllModData ) {
 			TreeExpansion Expansion = ModData.Tree;
 			List<List<CraftableUpgradeMod>> ListOfMods = ModData.Mods;
-			foreach (var Mods in ListOfMods)
-			{
+			foreach( var Mods in ListOfMods ) {
 				SetCraftabletoTrueAndAddRequirements(Mods);
 				AddUnlockableTrees(Mods, Expansion);
 			}
@@ -1274,7 +1272,7 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 	}
 	protected void FillRequirementsArray()
 	{
-		Requirements = new []{
+		Requirements = new[]{
 			//C-Class
 			new RequirementPerClass{
 				Materials = new [] {
@@ -1322,7 +1320,7 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 			}
 		};
 	}
-	protected void EditExistingTech() 
+	protected void EditExistingTech()
 	{
 		var techMbin = ExtractMbin<GcTechnologyTable>("METADATA/REALITY/TABLES/NMS_REALITY_GCTECHNOLOGYTABLE.MBIN");
 		var shipRockets = techMbin.Table.Find(TECH => TECH.ID == "SHIPROCKETS");
@@ -1331,11 +1329,11 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 		shipRockets.StatBonuses.Find(STAT => STAT.Stat.StatsType == StatsTypeEnum.Ship_Weapons_Guns_HeatTime).Bonus = 1;
 		shipRockets.StatBonuses.Find(STAT => STAT.Stat.StatsType == StatsTypeEnum.Ship_Weapons_Guns_Dispersion).Bonus = 1;
 		shipRockets.StatBonuses.Add(new() {
-			Stat = new GcStatsTypes{ StatsType = StatsTypeEnum.Ship_Weapons_Guns_BulletsPerShot },
-			Bonus = 1, 
+			Stat = new GcStatsTypes { StatsType = StatsTypeEnum.Ship_Weapons_Guns_BulletsPerShot },
+			Bonus = 1,
 			Level = 1
 		});
- 
+
 		var addBounce = new GcStatsBonus { Stat = new GcStatsTypes { StatsType = StatsTypeEnum.Weapon_Projectile_Bounce }, Bonus = 2, Level = 3 };
 		var addDot = new GcStatsBonus { Stat = new GcStatsTypes { StatsType = StatsTypeEnum.Weapon_FireDOT }, Bonus = 50, Level = 1 };
 		var addDotDuratiom = new GcStatsBonus { Stat = new GcStatsTypes { StatsType = StatsTypeEnum.Weapon_FireDOT_Duration }, Bonus = 10, Level = 1 };
@@ -1358,8 +1356,7 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 	{
 		var techMbin = ExtractMbin<GcTechnologyTable>("METADATA/REALITY/TABLES/NMS_REALITY_GCTECHNOLOGYTABLE.MBIN");
 
-		foreach (var customTemplate in CustomTemplates)
-		{
+		foreach( var customTemplate in CustomTemplates ) {
 			var template = CloneMbin(techMbin.Table.Find(TECH => TECH.ID == customTemplate.TemplateBaseID));
 			template.ID = customTemplate.TemplateID;
 			template.Group = customTemplate.Group;
@@ -1373,8 +1370,7 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 	{
 		var mbin = ExtractMbin<GcTechnologyTable>("METADATA/REALITY/TABLES/NMS_REALITY_GCTECHNOLOGYTABLE.MBIN");
 
-		foreach (var customTech in CustomTechnology)
-		{
+		foreach( var customTech in CustomTechnology ) {
 			var tech = CloneMbin(mbin.Table.Find(TECH => TECH.ID == customTech.BaseTechID)); // clone Large Rocket Tubes
 			tech.ID = customTech.NewTechID;
 
@@ -1384,7 +1380,7 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 			string sub_id = customTech.LanguageBase + "_SUB";
 
 			tech.Name = name_id;
-			tech.NameLower = name_lc_id; 
+			tech.NameLower = name_lc_id;
 			tech.Description = description_id;
 			tech.Subtitle = sub_id;
 
@@ -1394,16 +1390,14 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 			tech.FragmentCost = customTech.FragmentCost;
 			tech.Category.TechnologyCategory = customTech.TechnologyCategory;
 			tech.Icon.Filename = customTech.FileName;
- 
+
 			tech.Requirements.Clear();
-			foreach (var requirement in customTech.Requirements)
-			{
+			foreach( var requirement in customTech.Requirements ) {
 				tech.Requirements.Add(requirement);
 			}
 
 			tech.StatBonuses.Clear();
-			foreach (var statBonus in customTech.StatBonuses)
-			{
+			foreach( var statBonus in customTech.StatBonuses ) {
 				tech.StatBonuses.Add(statBonus);
 			}
 			mbin.Table.Add(tech);
@@ -1416,8 +1410,7 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 		var Proc_mbin = ExtractMbin<GcProceduralTechnologyTable>("METADATA/REALITY/TABLES/NMS_REALITY_GCPROCEDURALTECHNOLOGYTABLE.MBIN");
 		var Reality_mbin = ExtractMbin<GcRealityManagerData>("METADATA/REALITY/DEFAULTREALITY.MBIN");
 
-		foreach (CustomProcMod Mod in CustomProceduralMods)
-		{
+		foreach( CustomProcMod Mod in CustomProceduralMods ) {
 			int baseForClassMulitplier = 0;
 			string classOfTech = "";
 			string baseTechName = Mod.BaseTechID;
@@ -1452,12 +1445,11 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 			var field = Reality_mbin.TradeSettings.GetType().GetField(newTradeData);
 			GcTradeData addTradePorduct = field.GetValue(Reality_mbin.TradeSettings) as GcTradeData;
 
-			for (int i = lowestClassNo; i <= highestClassNo; i++)
-			{
+			for( int i = lowestClassNo; i <= highestClassNo; i++ ) {
 				baseForClassMulitplier = i;
 				classOfTech = Classes[i-1];
 
-				if( highestClassNo < 3) {
+				if( highestClassNo < 3 ) {
 					baseForClassMulitplier = i +1;
 					classOfTech = Classes[i];
 				}
@@ -1472,15 +1464,15 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 
 				float multiplier = 1 + (baseForClassMulitplier * newMultiplierPerRank);
 
-				if (newMinStats < newMaxStats)
+				if( newMinStats < newMaxStats )
 					newMinStats++;
- 
-				// Log.AddInformation($"Print copyDeployTech = {copyDeployTech}");
+
+				Log.Information($"Print copyDeployTech = {copyDeployTech}");
 				var proc = CloneMbin(Proc_mbin.Table.Find(PROC => PROC.ID == copyDeployTech));
 
 				proc.Name = newProcgenName;
 				proc.ID = newTechDeployID;
-				if ( newProcGenBase != "") {
+				if( newProcGenBase != "" ) {
 					proc.NameLower = newProcGenBase + i + "_NAME_LC";
 					proc.Description = newProcGenBase + i + "_DESC";
 				}
@@ -1493,12 +1485,12 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 
 				proc.StatLevels.Clear();
 
-				foreach( var statLevel in newStatBonuses) {
-					Log.AddInformation($"Print {statLevel.Stat.StatsType}");
+				foreach( var statLevel in newStatBonuses ) {
+					//Log.Information($"Print {statLevel.Stat.StatsType}");
 					float multipliedValMin = statLevel.ValueMin * multiplier;
 					float multipliedValMax = statLevel.ValueMax * multiplier;
-					Log.AddInformation($"Print {statLevel.ValueMin} * {multiplier} = {multipliedValMin}");
-					Log.AddInformation($"Print {statLevel.ValueMax} * {multiplier} = {multipliedValMax}");
+					//Log.Information($"Print {statLevel.ValueMin} * {multiplier} = {multipliedValMin}");
+					//Log.Information($"Print {statLevel.ValueMax} * {multiplier} = {multipliedValMax}");
 					proc.StatLevels.Add(
 						ProceduralTechnologyStatLevel.Create(
 							statLevel.Stat.StatsType,
@@ -1511,7 +1503,7 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 				Proc_mbin.Table.Add(proc);
 
 				// Create custum products for the tech
-				// Log.AddInformation($"Print copyTech = {copyTech}");
+				// Log.Information($"Print copyTech = {copyTech}");
 
 				var prod = CloneMbin(Prod_mbin.Table.Find(PROD => PROD.ID == copyTech));
 
@@ -1526,7 +1518,7 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 				prod.Icon.Filename = iconFilePath + newIconFileName;
 				prod.DeploysInto = newTechDeployID;
 				Prod_mbin.Table.Add(prod);
- 
+
 				addTradePorduct.OptionalProducts.AddUnique(newTechID);
 			}
 		}
@@ -1550,13 +1542,12 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 		var exo_laser = exoTree.Trees[0].Root.Children.Find(UNLOCKABLE => UNLOCKABLE.Unlockable == "VEHICLE_LASER");
 
 		var ship_rocket = ship_guns.Children.Find(UNLOCKABLE => UNLOCKABLE.Unlockable == "SHIPROCKETS");
-		ship_rocket.Children.Add(new GcUnlockableItemTreeNode
-		{
+		ship_rocket.Children.Add(new GcUnlockableItemTreeNode {
 			Unlockable = "UT_ROCKETS_MISS",
-			Children = new() 
-			{ 
-				new GcUnlockableItemTreeNode 
-				{ 
+			Children = new()
+			{
+				new GcUnlockableItemTreeNode
+				{
 					Unlockable = "UT_ROCKETS_COOL",
 					Children = new()
 					{
@@ -1566,14 +1557,14 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 							Children = new()
 						}
 					}
-				} 
+				}
 			}
 		});
 
 		var up_shipgun = ship_guns.Children.Find(UNLOCKABLE => UNLOCKABLE.Unlockable == "UT_SHIPGUN");
 		up_shipgun.Children.Add(new GcUnlockableItemTreeNode {
 			Unlockable = "UT_FATSGUN",
-			Children = new() 
+			Children = new()
 			{
 				new GcUnlockableItemTreeNode
 				{
@@ -1590,7 +1581,7 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 		});
 
 		var ship_shotgun = ship_guns.Children.Find(UNLOCKABLE => UNLOCKABLE.Unlockable == "SHIPSHOTGUN");
-		var up_ship_shotgun = ship_shotgun.Children.Find(UNLOCKABLE => UNLOCKABLE.Unlockable == "UT_SHIPSHOT");		
+		var up_ship_shotgun = ship_shotgun.Children.Find(UNLOCKABLE => UNLOCKABLE.Unlockable == "UT_SHIPSHOT");
 		up_ship_shotgun.Children.Add(new GcUnlockableItemTreeNode {
 			Unlockable = "UT_HEAT_SHOT",
 			Children = new()
@@ -1604,9 +1595,8 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 		});
 
 		var ship_infra = ship_guns.Children.Find(UNLOCKABLE => UNLOCKABLE.Unlockable == "SHIPMINIGUN");
-		var resonator = ship_infra.Children.Find(UNLOCKABLE => UNLOCKABLE.Unlockable == "UT_SHIPMINI");		
-		resonator.Children.Add(new GcUnlockableItemTreeNode
-		{
+		var resonator = ship_infra.Children.Find(UNLOCKABLE => UNLOCKABLE.Unlockable == "UT_SHIPMINI");
+		resonator.Children.Add(new GcUnlockableItemTreeNode {
 			Unlockable = "UT_INFRA_BLAS",
 			Children = new()
 		});
@@ -1617,8 +1607,7 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 			Children = new()
 		});
 
-		weapTree.Trees[0].Root.Children.Insert(0, new GcUnlockableItemTreeNode
-		{
+		weapTree.Trees[0].Root.Children.Insert(0, new GcUnlockableItemTreeNode {
 			Unlockable = "FLAME",
 			Children = new()
 		});
@@ -1727,12 +1716,11 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 			Children = new()
 		});
 	}
-	protected void SetCraftabletoTrueAndAddRequirements(List<CraftableUpgradeMod> Mods)
+	protected void SetCraftabletoTrueAndAddRequirements( List<CraftableUpgradeMod> Mods )
 	{
 		var prod_mbin = ExtractMbin<GcProductTable>("METADATA/REALITY/TABLES/NMS_REALITY_GCPRODUCTTABLE.MBIN");
 
-		foreach (var Mod in Mods)
-		{
+		foreach( var Mod in Mods ) {
 			string productBase = Mod.UpgradeBase;
 			int highestClassNo = Mod.HighestClassNo;
 			int lowestClassNo = Mod.LowestClassNo;
@@ -1742,8 +1730,7 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 			if( lowestClassNo > highestClassNo )
 				lowestClassNo = highestClassNo;
 
-			if (Mod.HighestClassNo == 0)
-			{
+			if( Mod.HighestClassNo == 0 ) {
 				var prod = prod_mbin.Table.Find(PROD => PROD.ID == productBase);
 				RequirementPerClass classRequirement = Requirements[4];
 
@@ -1754,10 +1741,8 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 				prod.Requirements.Add(classRequirement.Materials[2]);
 				prod.RecipeCost = classRequirement.Price;
 			}
-			else
-			{
-				for (int i = lowestClassNo; i <= highestClassNo; i++)
-				{
+			else {
+				for( int i = lowestClassNo; i <= highestClassNo; i++ ) {
 					string product = productBase + i.ToString();
 					RequirementPerClass classRequirement = Requirements[i - 1];
 
@@ -1775,7 +1760,7 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 			}
 		}
 	}
-	protected void AddUnlockableTrees(List<CraftableUpgradeMod> Mods, TreeExpansion Expansion)
+	protected void AddUnlockableTrees( List<CraftableUpgradeMod> Mods, TreeExpansion Expansion )
 	{
 		var Mbin = ExtractMbin<GcUnlockableTrees>("METADATA/REALITY/TABLES/UNLOCKABLEITEMTREES.MBIN");
 		UnlockableItemTreeEnum ExTree = Expansion.Tree;
@@ -1791,13 +1776,12 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 
 		Tree.Trees.Add(ItemTree);
 
-		foreach (var Mod in Mods)
-		{
+		foreach( var Mod in Mods ) {
 			string productBase = Mod.UpgradeBase;
 			int highestClassNo = Mod.HighestClassNo;
 			int lowestClassNo = Mod.LowestClassNo;
- 
-			if (lowestClassNo != MinProcModLimit)
+
+			if( lowestClassNo != MinProcModLimit )
 				lowestClassNo = MinProcModLimit;
 			if( lowestClassNo > highestClassNo )
 				lowestClassNo = highestClassNo;
@@ -1805,17 +1789,15 @@ public class CustomModsGalore : cmk.NMS.Script.ModClass
 			Root.Children.Add(CreateChildNode(productBase, lowestClassNo, highestClassNo));
 		}
 	}
-	private GcUnlockableItemTreeNode CreateChildNode(string ProductBase, int CurrentNo, int HighestClassNo)
+	private GcUnlockableItemTreeNode CreateChildNode( string ProductBase, int CurrentNo, int HighestClassNo )
 	{
 		string Product = ProductBase + CurrentNo.ToString();
-		GcUnlockableItemTreeNode Child = new GcUnlockableItemTreeNode
-		{
+		GcUnlockableItemTreeNode Child = new GcUnlockableItemTreeNode {
 			Unlockable = Product,
 			Children = new()
 		};
 
-		if (CurrentNo != HighestClassNo)
-		{
+		if( CurrentNo != HighestClassNo ) {
 			Child.Children.Add(CreateChildNode(ProductBase, CurrentNo + 1, HighestClassNo));
 		}
 

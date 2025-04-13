@@ -133,7 +133,6 @@ public class MyModList : cmk.NMS.Script.ModClass
 		Script<ShipStore>().IsExecutable = false;
 		Script<ShipStoreV2>().IsExecutable = true;
 		// CoreMissionEdits might not be necessary, DEBUG options edits work just fine
-		Script<SkipTutorial>().IsExecutable = false; //!noShipStart; // also in no shipstart
 
 		var SlotMaster = Script<SlotMaster>();
 		SlotMaster.IsExecutable = false;
@@ -170,7 +169,6 @@ public class MyModList : cmk.NMS.Script.ModClass
 
 
 		Script<AntiOphidiophobia>().IsExecutable = false;
-		Script<test>().IsExecutable = false;
 	}
 }
 //..............PickUpGeoBaysAndHarvesters.............................................

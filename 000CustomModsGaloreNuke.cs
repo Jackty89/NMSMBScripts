@@ -806,7 +806,7 @@ public class CustomModsGaloreNuke : cmk.NMS.Script.ModClass
                 if (newMinStats < newMaxStats)
                     newMinStats++;
                 
-                Log.AddInformation($"Print copyDeployTech  = {copyDeployTech}");
+                //Log.Information($"Print copyDeployTech  = {copyDeployTech}");
                 var proc         = CloneMbin(Proc_mbin.Table.Find(PROC => PROC.ID == copyDeployTech));
                 proc.ID          = newTechDeployID;
                 proc.Name        = newProcgenName;
@@ -828,7 +828,7 @@ public class CustomModsGaloreNuke : cmk.NMS.Script.ModClass
                 Proc_mbin.Table.Add(proc);
 
                 // Create custum products for the tech
-                Log.AddInformation($"Print copyTech  = {copyTech}");
+                //Log.Information($"Print copyTech  = {copyTech}");
 
                 var prod = CloneMbin(Prod_mbin.Table.Find(PROD => PROD.ID == copyTech));
 

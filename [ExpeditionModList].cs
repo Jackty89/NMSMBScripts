@@ -123,7 +123,6 @@ public class ExpeditionModList : cmk.NMS.Script.ModClass
 
 
         // CoreMissionEdits might not be necessary, DEBUG options edits work just fine
-        Script<SkipTutorial>().IsExecutable                         = false; //!noShipStart; // also in no shipstart
 
         var SlotMaster = Script<SlotMaster>();
         SlotMaster.IsExecutable                                     = true;
