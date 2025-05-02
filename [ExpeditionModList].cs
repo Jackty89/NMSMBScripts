@@ -26,11 +26,6 @@ public class ExpeditionModList : cmk.NMS.Script.ModClass
         Script<CraftableEmergencySignalScanner>().IsExecutable      = false;
     	Script<CraftableModules>().IsExecutable                     = false;
         Script<CraftableModulesPersonal>().IsExecutable             = true;
-		
-        Script<CraftableUpgradeMods_OLD>().IsExecutable             = false;
-        Script<CraftableUpgradeMods_NEW>().IsExecutable             = false;
-        Script<CraftableUpgradeModsSandXonly_OLD>().IsExecutable    = false;
-        Script<CraftableUpgradeModsSandXonly_NEW>().IsExecutable    = false;
 
         var CraftableUpgradeMods = Script<CraftableUpgradeMods>();
         CraftableUpgradeMods.IsExecutable                           = !runSandXonly;
