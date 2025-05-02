@@ -16,6 +16,7 @@ public class ExpeditionModList : cmk.NMS.Script.ModClass
         Script<AtlasOrbWordoRama>().IsExecutable                    = true;
 
         Script<BasePartsDeluxe>().IsExecutable                      = !noShipStart; // included in NoShipStart
+        Script<BuildAboveAndUnderWater>().IsExecutable              = false;
         Script<BurnBabyBurn>().IsExecutable                         = !enableCustomModsGalore; // CMG also adds incinerator
         Script<CheapPetSlots>().IsExecutable                        = true;
 		Script<ClaimExpeditionShipsForFree>().IsExecutable          = true;
@@ -27,7 +28,9 @@ public class ExpeditionModList : cmk.NMS.Script.ModClass
         Script<CraftableModulesPersonal>().IsExecutable             = true;
 		
         Script<CraftableUpgradeMods_OLD>().IsExecutable             = false;
+        Script<CraftableUpgradeMods_NEW>().IsExecutable             = false;
         Script<CraftableUpgradeModsSandXonly_OLD>().IsExecutable    = false;
+        Script<CraftableUpgradeModsSandXonly_NEW>().IsExecutable    = false;
 
         var CraftableUpgradeMods = Script<CraftableUpgradeMods>();
         CraftableUpgradeMods.IsExecutable                           = !runSandXonly;
@@ -45,6 +48,7 @@ public class ExpeditionModList : cmk.NMS.Script.ModClass
             CustomModsGalore.MinProcModLimit                        = 4;
             CustomModsGalore.RecipeCostPriceMultiplier              = 1;
         }
+        Script<CustomModsGaloreNuke>().IsExecutable                 = false;
 
         Script<CustomDebugOptions>().IsExecutable                   = false;
         Script<CustomDescriptions>().IsExecutable                   = false;
@@ -73,6 +77,7 @@ public class ExpeditionModList : cmk.NMS.Script.ModClass
         //Inventory Edits
         Script<InventoryRebalance>().IsExecutable                   = balancedInventory;
         Script<InventoryUnbalance>().IsExecutable                   = false;
+        Script<InventoryRebalanceParams>().IsExecutable             = false;
 
         Script<KeepTalkingChef>().IsExecutable                      = true;
 
